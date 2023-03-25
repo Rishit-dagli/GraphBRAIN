@@ -1,13 +1,15 @@
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from dataset.download_elements import download_periodic
 import csv
+
 
 def atoms():
     filename = download_periodic()
     symbols = set()
-    with open(filename, 'r') as file:
+    with open(filename, "r") as file:
         reader = csv.reader(file)
         for row in reader:
             symbols.add(str(row[1]))
@@ -17,6 +19,7 @@ def atoms():
         "hydrogen_bonds": {0, 1, 2, 3, 4},
         "orbital_hybridization": {"s", "sp", "sp2", "sp3"},
     }
+
 
 def bonds():
     return {
