@@ -31,7 +31,40 @@ class EdgeNetwork(tf.keras.layers.Layer):
         return aggregated_features
 
 
+class MessagePassing(layers.Layer):
+    def __init__(self, units, steps=4, edge_update="GRU", **kwargs):
+        super().__init__(**kwargs)
+        self.units = units
+        self.steps = steps
+        self.edge_update = edge_update
 
+    def build(self, input_shape):
+        self.atom_dim = input_shape[0][-1]
+        self.message_step = EdgeNetwork()
+        self.pad_length = max(0, self.units - self.atom_dim)
+        if self.edge_update == "GRU":
+            self.update_step = tf.keras.layers.GRUCell(self.atom_dim + self.pad_length)
+        elif self.edge_update == "LSTM":
+            self.update_step = tf.keras.layers.LSTMCell(self.atom_dim + self.pad_length)
+        elif self.edge_update == "SimpleRNN":
+            self.update_step = tf.keras.layers.SimpleRNNCell(self.atom_dim + self.pad_length)
+        else:
+            self.update_step = tf.keras.layers.StackedRNNCell(self.atom_dim + self.pad_length)
+        self.built = True
+
+    def call(self, inputs):
+        atom_features, bond_features, pair_indices = inputs
+        atom_features_updated = tf.pad(atom_features, [(0, 0), (0, self.pad_length)])
+
+        # Perform message passing
+        for i in range(self.steps):
+            atom_features_aggregated = self.message_step(
+                [atom_features_updated, bond_features, pair_indices]
+            )
+            atom_features_updated, _ = self.update_step(
+                atom_features_aggregated, atom_features_updated
+            )
+        return atom_features_updated
     
 class TransformerEncoderReadout(tf.keras.layers.Layer):
     def __init__(
