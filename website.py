@@ -40,23 +40,26 @@ with col2:
 
 # Display markdown content
 
+tab1, tab2 = st.tabs(["Description and Instructions", "Model"])
 
-st.markdown(
-    f'<h2 style="color:#FFFFFF;font-size:18px;">{"The blood - brain barrier is a protective layer that separates the brain from the rest of the body’s circulatory system. This barrier is highly selective and prevents solutes in the circulating blood from non-selectively crossing into the extracellular fluid of the central nervous system where neurons reside."}</h2>',
-    unsafe_allow_html=True,
-)
-st.markdown(
-    f'<h1 style="color:#FFFFFF;font-size:20px;">{"Instructions"}</h1>',
-    unsafe_allow_html=True,
-)
-instruction_1 = "A SMILES string is a representation of the molecule as an ASCII string."
-instruction_2 = "When you give us the SMILE string for a molecule, we will predict whether it is permeable through the blood-brain barrier and render its structure in 3D."
-instruction_3 = "There are 4 sample buttons below the input box to help demonstrate the functionality of our website"
-instruction_4 = "NOTE: YOU MAY HAVE TO SCROLL DOWN TO SEE THE 3D RENDERING OF THE MOLECULE"
-st.markdown(
-    f'<ul style="color:#FFFFFF"><li>{instruction_1}</li><li>{instruction_2}</li><li>{instruction_3}</li><li>{instruction_4}</li></ul>',
-    unsafe_allow_html=True,
-)
+with tab1:
+    st.markdown(
+        f'<h2 style="color:#FFFFFF;font-size:18px;">{"The blood - brain barrier is a protective layer that separates the brain from the rest of the body’s circulatory system. This barrier is highly selective and prevents solutes in the circulating blood from non-selectively crossing into the extracellular fluid of the central nervous system where neurons reside."}</h2>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        f'<h1 style="color:#FFFFFF;font-size:20px;">{"Instructions"}</h1>',
+        unsafe_allow_html=True,
+    )
+# with st.expander("Click here to see instructions"):
+    instruction_1 = "A SMILES string is a representation of the molecule as an ASCII string."
+    instruction_2 = "When you give us the SMILE string for a molecule, we will predict whether it is permeable through the blood-brain barrier and render an interactive molecular structure in 3d."
+    instruction_3 = "There are 4 sample buttons below the input box to help demonstrate the functionality of our website"
+    instruction_4 = "NOTE: YOU MAY HAVE TO SCROLL DOWN TO SEE THE 3D RENDERING OF THE MOLECULE"
+    st.markdown(
+        f'<ul style="color:#FFFFFF"><li>{instruction_1}</li><li>{instruction_2}</li><li>{instruction_3}</li><li>{instruction_4}</li></ul>',
+        unsafe_allow_html=True,
+    )
 
 
 def embed_molview(smile):
@@ -68,27 +71,28 @@ def embed_molview(smile):
         st.error('Error fetching 3D rendering')
         st.error(e)
 
+with tab2:
+    smiles = st.text_input('', placeholder='Input SMILES string here')
 
-smiles = st.text_input('', placeholder='Input SMILES string here')
+    samples = ['CCC', 'CCCC', 'CCCCC', 'CCCCCC']
+    gap2, col5, col6, col7, col8, gap3 = st.columns([1, 1, 1, 1, 1, 1])
 
-samples = ['CCC', 'CCCC', 'CCCCC', 'CCCCCC']
-gap2, col5, col6, col7, col8, gap3 = st.columns([1, 1, 1, 1, 1, 1])
-with col5:
-    b1 = st.button('Propane')
-with col6:
-    b2 = st.button('Butane')
-with col7:
-    b3 = st.button('Pentane')
-with col8:
-    b4 = st.button('Hexane')
+    with col5:
+        b1 = st.button('Propane')
+    with col6:
+        b2 = st.button('Butane')
+    with col7:
+        b3 = st.button('Pentane')
+    with col8:
+        b4 = st.button('Hexane')
 
-if smiles and not (b1 or b2 or b3 or b4):
-    embed_molview(smiles)
-elif b1:
-    embed_molview(samples[0])
-elif b2:
-    embed_molview(samples[1])
-elif b3:
-    embed_molview(samples[2])
-elif b4:
-    embed_molview(samples[3])
+    if smiles and not (b1 or b2 or b3 or b4):
+        embed_molview(smiles)
+    elif b1:
+        embed_molview(samples[0])
+    elif b2:
+        embed_molview(samples[1])
+    elif b3:
+        embed_molview(samples[2])
+    elif b4:
+        embed_molview(samples[3])
