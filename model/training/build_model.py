@@ -31,7 +31,7 @@ class EdgeNetwork(tf.keras.layers.Layer):
         return aggregated_features
 
 
-class MessagePassing(layers.Layer):
+class MessagePassing(tf.keras.layers.Layer):
     def __init__(self, units, steps=4, edge_update="GRU", **kwargs):
         super().__init__(**kwargs)
         self.units = units
@@ -122,16 +122,29 @@ def create_model(
     num_attention_heads=8,
     dense_units=[512],
     activation=["relu"],
+    edge_update="GRU",
 ):
     atom_features = tf.keras.layers.Input((atom_dim), dtype="float32", name="atom_features")
     bond_features = tf.keras.layers.Input((bond_dim), dtype="float32", name="bond_features")
     pair_indices = tf.keras.layers.Input((2), dtype="int32", name="pair_indices")
     molecule_indicator = tf.keras.layers.Input((), dtype="int32", name="molecule_indicator")
 
-    x = MessagePassing(message_units, message_steps)(
+    # Leverage the functional API to create a model with 3 inputs aka the graph
+    # and outputs one scalar.
+    x = MessagePassing(message_units, message_steps, edge_update)(
         [atom_features, bond_features, pair_indices]
     )
 
     x = TransformerEncoderReadout(
         num_attention_heads, message_units, dense_units, batch_size
     )([x, molecule_indicator])
+
+    for i in range(len(dense_units)):
+        x = tf.keras.layers.Dense(dense_units[i], activation=activation[i])(x)
+    x = tf.keras.layers.Dense(1, activation="sigmoid")(x)
+
+    model = tf.keras.Model(
+        inputs=[atom_features, bond_features, pair_indices, molecule_indicator],
+        outputs=[x],
+    )
+    return model
