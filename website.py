@@ -45,11 +45,12 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+
 def embed_molview(smile):
     molview_url = f'https://embed.molview.org/v1/?mode=balls&smiles={smile}'
     try:
         # Embed 3D rendering of molecule
-        st.components.v1.html(f'<iframe src="{molview_url}" width="600" height="400"></iframe>', height=400)
+        st.components.v1.iframe(molview_url, height=400, scrolling=True)
     except Exception as e:
         st.error('Error fetching 3D rendering')
         st.error(e)
@@ -68,7 +69,7 @@ with col7:
 with col8:
     b4 = st.button('Hexane')
 
-if smiles:
+if smiles and not (b1 or b2 or b3 or b4):
     embed_molview(smiles)
 elif b1:
     embed_molview(samples[0])
