@@ -20,11 +20,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# div.stButton > button: first - child
-# {{
-#     background - color: rgb(255, 255, 255);
-# }}
-
 col1, mid, col2 = st.columns([7, 1, 25])
 with col1:
     st.image(u, width=150)
