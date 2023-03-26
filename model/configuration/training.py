@@ -75,4 +75,7 @@ def model():
         "plot_model": True,
         "save_model": True,
         "epochs": 200,
+        # Either MirroredStrategy, TPUStrategy, MultiWorkerMirroredStrategy,
+        # CentralStorageStrategy, ParameterServerStrategy
+        "strategy": "TPUStrategy",
     }
