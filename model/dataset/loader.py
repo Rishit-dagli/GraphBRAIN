@@ -1,5 +1,14 @@
 import tensorflow as tf
 import einops
+from .download_dataset import download_dataset
+import pandas as pd
+import numpy as np
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
+from utils.conversions import smile_to_graph
 
 
 def repeatx(x, num):
@@ -61,3 +70,28 @@ def loader(
         .map(merged_batch, num_parallel_calls)
         .prefetch(prefetech_buffer_size)
     )
+
+
+def split_data(data, train_size=0.8, val_size=0.15, test_size=0.05):
+    permuted_indices = np.random.permutation(np.arange(data.shape[0]))
+    train_index = permuted_indices[: int(data.shape[0] * train_size)]
+    x_train = smile_to_graph(data.iloc[train_index].smiles)
+    y_train = data.iloc[train_index].p_np
+
+    valid_index = permuted_indices[
+        int(data.shape[0] * train_size) : int(data.shape[0] * (1.0 - test_size))
+    ]
+    x_valid = smile_to_graph(data.iloc[valid_index].smiles)
+    y_valid = data.iloc[valid_index].p_np
+
+    test_index = permuted_indices[int(data.shape[0] * (1.0 - test_size)) :]
+    x_test = smile_to_graph(data.iloc[test_index].smiles)
+    y_test = data.iloc[test_index].p_np
+    return x_train, y_train, x_valid, y_valid, x_test, y_test
+
+
+def bbbp_dataset(filename="BBBP.csv", train_size=0.8, val_size=0.15, test_size=0.05):
+    if not os.path.exists(filename):
+        raise ValueError("Dataset not found. Please download the dataset first.")
+    data = pd.read_csv(filename, usecols=[1, 2, 3])
+    return split_data(data, train_size, val_size, test_size)
