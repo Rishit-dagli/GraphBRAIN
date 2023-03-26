@@ -1,15 +1,5 @@
-# import os
-# import random
-# import urllib.request
-#
-# import cv2
-# import numpy as np
 import streamlit as st
-# import tensorflow as tf
-# from appwrite.client import Client
-# from appwrite.input_file import InputFile
-# from appwrite.services.storage import Storage
-# from PIL import Image
+
 
 shape = 224
 
@@ -21,25 +11,8 @@ page_title = "BMP"
 st.set_page_config(page_title=page_title, page_icon=u)
 
 
-# def add_bg_from_url():
-#     st.markdown(
-#         f"""
-#          <style>
-#          .stApp {{
-#              background-image: url("https://media.discordapp.net/attachments/1043363043947581533/1088974077542281226/30cc0fae-84ce-4013-9dc9-45317c4115b8.jpeg?width=936&height=936");
-#              background-attachment: fixed;
-#              background-size: cover
-#          }}
-#          </style>
-#          """,
-#         unsafe_allow_html=True,
-#     )
-#
-#
-# add_bg_from_url()
-
 u = "https://storage.googleapis.com/rishit-dagli.appspot.com/My_project-1_1.png"
-# st.image(u, width=150)
+
 col1, mid, col2 = st.columns([7, 1, 25])
 with col1:
     st.image(u, width=150)
@@ -72,44 +45,36 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-sample_output_image = "https://storage.googleapis.com/rishit-dagli.appspot.com/My_project-1_1.png"
-def load_sample_output():
-    # Construct MolView URL
-    molview_url = 'https://embed.molview.org/v1/?mode=balls&smiles=' + smiles
-
+def embed_molview(smile):
+    molview_url = f'https://embed.molview.org/v1/?mode=balls&smiles={smile}'
     try:
         # Embed 3D rendering of molecule
-        # st.components.v1.html(f'<iframe src="{molview_url}" width="600" height="400"></iframe>', height=400)
-        st.components.v1.iframe(molview_url, height=400)
+        st.components.v1.html(f'<iframe src="{molview_url}" width="600" height="400"></iframe>', height=400)
     except Exception as e:
         st.error('Error fetching 3D rendering')
         st.error(e)
-    # col9.image(sample_output_image, width=500)
-    # col10.write("Vfjhbels")
 
 
 smiles = st.text_input('', placeholder='Input SMILES string here')
 
+samples = ['CCC', 'CCCC', 'CCCCC', 'CCCCCC']
 gap2, col5, col6, col7, col8, gap3 = st.columns([1, 1, 1, 1, 1, 1])
 with col5:
-    st.button('Sample 1', on_click=load_sample_output)
+    b1 = st.button('Propane')
 with col6:
-    st.button('Sample 2', on_click=load_sample_output)
+    b2 = st.button('Butane')
 with col7:
-    st.button('Sample 3', on_click=load_sample_output)
+    b3 = st.button('Pentane')
 with col8:
-    st.button('Sample 4', on_click=load_sample_output)
-
-col9, col10 = st.columns([1, 100000000000000000000000])
+    b4 = st.button('Hexane')
 
 if smiles:
-    # Construct MolView URL
-    molview_url = f'https://embed.molview.org/v1/?mode=balls&smiles={smiles}'
-
-    try:
-        # Embed 3D rendering of molecule
-        st.components.v1.html(f'<iframe src="{molview_url}" width="600" height="400"></iframe>', height=400)
-
-    except Exception as e:
-        st.error('Error fetching 3D rendering')
-        st.error(e)
+    embed_molview(smiles)
+elif b1:
+    embed_molview(samples[0])
+elif b2:
+    embed_molview(samples[1])
+elif b3:
+    embed_molview(samples[2])
+elif b4:
+    embed_molview(samples[3])
