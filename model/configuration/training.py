@@ -27,11 +27,13 @@ def bonds():
         "conjugation_state": {True, False},
     }
 
+
 def edge_network():
     return {
         "kernel_initializer": "glorot_uniform",
         "bias_initializer": "zeros",
     }
+
 
 def model():
     # At the moment we only support the following few naive customizations.
