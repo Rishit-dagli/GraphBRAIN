@@ -22,4 +22,5 @@ def molecule_to_graph(molecule: Chem.rdchem.Mol):
             pairs.append([atom.GetIdx(), neighbor.GetIdx()])
             bonds.append(bond_encoder.encode(bond))
 
+    # This constitutes the major use of graaphs, each molecule is a graph with the atoms as nodes and the bonds as edges.
     return tf.constant(atoms), tf.constant(bonds), tf.constant(pairs)
