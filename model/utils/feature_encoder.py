@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
+
 class FeatureEncoder:
     def __init__(self, allowed_feature_sets):
         self.total_features = 0
