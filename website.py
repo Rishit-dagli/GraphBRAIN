@@ -51,11 +51,15 @@ with tab1:
         f'<h1 style="color:#FFFFFF;font-size:20px;">{"Instructions"}</h1>',
         unsafe_allow_html=True,
     )
-# with st.expander("Click here to see instructions"):
-    instruction_1 = "A SMILES string is a representation of the molecule as an ASCII string."
+    # with st.expander("Click here to see instructions"):
+    instruction_1 = (
+        "A SMILES string is a representation of the molecule as an ASCII string."
+    )
     instruction_2 = "When you give us the SMILE string for a molecule, we will predict whether it is permeable through the blood-brain barrier and render an interactive molecular structure in 3d."
     instruction_3 = "There are 4 sample buttons below the input box to help demonstrate the functionality of our website"
-    instruction_4 = "NOTE: YOU MAY HAVE TO SCROLL DOWN TO SEE THE 3D RENDERING OF THE MOLECULE"
+    instruction_4 = (
+        "NOTE: YOU MAY HAVE TO SCROLL DOWN TO SEE THE 3D RENDERING OF THE MOLECULE"
+    )
     st.markdown(
         f'<ul style="color:#FFFFFF"><li>{instruction_1}</li><li>{instruction_2}</li><li>{instruction_3}</li><li>{instruction_4}</li></ul>',
         unsafe_allow_html=True,
@@ -63,31 +67,31 @@ with tab1:
 
 
 def embed_molview(smile):
-    molview_url = f'https://embed.molview.org/v1/?mode=balls&smiles={smile}'
+    molview_url = f"https://embed.molview.org/v1/?mode=balls&smiles={smile}"
     try:
         # Embed 3D rendering of molecule
         st.components.v1.iframe(molview_url, height=400, scrolling=True)
     except Exception as e:
-        st.error('Error fetching 3D rendering')
+        st.error("Error fetching 3D rendering")
         st.error(e)
 
 
 prediction = None
 
 with tab2:
-    smiles = st.text_input('', placeholder='Input SMILES string here')
+    smiles = st.text_input("", placeholder="Input SMILES string here")
 
-    samples = ['CCC', 'CCCC', 'CCCCC', 'CCCCCC']
+    samples = ["CCC", "CCCC", "CCCCC", "CCCCCC"]
     gap2, col5, col6, col7, col8, gap3 = st.columns([1, 1, 1, 1, 1, 1])
 
     with col5:
-        b1 = st.button('Propane')
+        b1 = st.button("Propane")
     with col6:
-        b2 = st.button('Butane')
+        b2 = st.button("Butane")
     with col7:
-        b3 = st.button('Pentane')
+        b3 = st.button("Pentane")
     with col8:
-        b4 = st.button('Hexane')
+        b4 = st.button("Hexane")
 
     output = st.empty()
 
@@ -103,4 +107,6 @@ with tab2:
         embed_molview(samples[3])
 
     if prediction is not None:
-        output.write(f'Prediction: The molecule is {"permeable" if prediction == 1 else "not permeable"} through the blood-brain barrier.')
+        output.write(
+            f'Prediction: The molecule is {"permeable" if prediction == 1 else "not permeable"} through the blood-brain barrier.'
+        )
