@@ -1,6 +1,5 @@
 import streamlit as st
 
-
 shape = 224
 
 u = "https://media.discordapp.net/attachments/1043363043947581533/1089608908940775505/GraphBRAIN_logo.png?width=1000&height=1000"
@@ -10,8 +9,21 @@ page_title = "Graph Brain"
 # Set page title and favicon.
 st.set_page_config(page_title=page_title, page_icon=u)
 
+st.markdown(
+    f"""
+     <style>
+     .stApp {{
+         background-color:black
+     }}
+     </style>
+     """,
+    unsafe_allow_html=True,
+)
 
-u = "https://media.discordapp.net/attachments/1043363043947581533/1089608908940775505/GraphBRAIN_logo.png?width=1000&height=1000"
+# div.stButton > button: first - child
+# {{
+#     background - color: rgb(255, 255, 255);
+# }}
 
 col1, mid, col2 = st.columns([7, 1, 25])
 with col1:
