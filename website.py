@@ -1,8 +1,6 @@
 import streamlit as st
 
-shape = 224
-
-u = "https://media.discordapp.net/attachments/1043363043947581533/1089608908940775505/GraphBRAIN_logo.png?width=1000&height=1000"
+u = "http://store.rishit.tech/GraphBRAIN_logo.png"
 page_title = "Graph Brain"
 
 
