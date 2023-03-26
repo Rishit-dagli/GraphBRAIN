@@ -1,12 +1,18 @@
 import tensorflow as tf
 
+
 class FeatureEncoder:
     def __init__(self, allowed_feature_sets):
         self.total_features = 0
         self.feature_mappings = {}
         for feature_name, feature_set in allowed_feature_sets.items():
             sorted_feature_set = sorted(list(feature_set))
-            self.feature_mappings[feature_name] = dict(zip(sorted_feature_set, range(self.total_features, len(feature_set) + self.total_features)))
+            self.feature_mappings[feature_name] = dict(
+                zip(
+                    sorted_feature_set,
+                    range(self.total_features, len(feature_set) + self.total_features),
+                )
+            )
             self.total_features += len(feature_set)
 
     def encode(self, inputs):
@@ -15,7 +21,9 @@ class FeatureEncoder:
             feature_value = getattr(self, feature_name)(inputs)
             if feature_value not in feature_mapping:
                 continue
-            output = tf.tensor_scatter_nd_update(output, [[feature_mapping[feature_value]]], [1.0])
+            output = tf.tensor_scatter_nd_update(
+                output, [[feature_mapping[feature_value]]], [1.0]
+            )
         return output
 
 
@@ -34,7 +42,6 @@ class AtomFeatureEncoder(FeatureEncoder):
 
     def get_hybridization(self, atom):
         return atom.GetHybridization().name.lower()
-
 
 
 class BondFeatureEncoder(FeatureEncoder):

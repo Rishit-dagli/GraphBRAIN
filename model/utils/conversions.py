@@ -3,8 +3,10 @@ from rdkit import Chem
 from .apply_feature_encoder import atom_feature_encoder, bond_feature_encoder
 import tensorflow as tf
 
+
 def smile_to_molecule(smile: str):
     return Chem.MolFromSmiles(smile, sanitize=True)
+
 
 def molecule_to_graph(molecule: Chem.rdchem.Mol):
     atoms = []
