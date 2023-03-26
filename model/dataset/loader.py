@@ -23,7 +23,6 @@ def repeatx(x, num):
 
 def merged_batch(x_batch, y_batch):
     atom_features, bond_features, pair_indices = x_batch
-    # To implement
     num_atoms = atom_features.row_lengths()
     num_bonds = bond_features.row_lengths()
 
