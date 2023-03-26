@@ -37,3 +37,21 @@ class AtomFeatureEncoder(FeatureEncoder):
 
 
 
+class BondFeatureEncoder(FeatureEncoder):
+    def __init__(self, allowed_feature_sets):
+        super().__init__(allowed_feature_sets)
+        self.total_features += 1
+
+    def encode(self, bond):
+        output = tf.zeros((self.total_features,))
+        if bond is None:
+            output = tf.tensor_scatter_nd_update(output, [[-1]], [1.0])
+            return output
+        output = super().encode(bond)
+        return output
+
+    def get_bond_type(self, bond):
+        return bond.GetBondType().name.lower()
+
+    def is_conjugated(self, bond):
+        return bond.GetIsConjugated()
