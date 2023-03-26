@@ -42,9 +42,9 @@ def smile_to_graph(smiles):
         molecule = _smile_to_molecule(smiles)
         atom_features, bond_features, pair_indices = _molecule_to_graph(molecule)
 
-        atoms.append(atom_features)
-        bonds.append(bond_features)
-        pairs.append(pair_indices)
+        atoms.append(atom_features.numpy())
+        bonds.append(bond_features.numpy())
+        pairs.append(pair_indices.numpy())
 
     # Ragged tensors are used to represent the variable length of the molecules.
     # This is a requirement for the graph neural network, since the only reason
