@@ -34,7 +34,7 @@ with col2:
         unsafe_allow_html=True,
     )
     st.markdown(
-        f'<h2 style="color:#FFFFFF;font-size:20px;">{"The goal of our project is to predict the permeability of molecules through the blood-brain barrier."}</h2>',
+        f'<h2 style="color:#FFFFFF;font-size:20px;">{"""The goal of our project is to predict whether a molecule is permeable through the blood-brain barrier."""}</h2>',
         unsafe_allow_html=True,
     )
 
@@ -50,10 +50,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 instruction_1 = "A SMILES string is a representation of the molecule as an ASCII string."
-instruction_2 = "When you give us the SMILE string for a molecule, we will predict its Brain Membrane Permeability and output a diagrametical representaion of the molecule."
-instruction_3 = "Here are some sample inputs for you to test out our interface-"
+instruction_2 = "When you give us the SMILE string for a molecule, we will predict whether it is permeable through the blood-brain barrier and render its structure in 3D."
+instruction_3 = "There are 4 sample buttons below the input box to help demonstrate the functionality of our website"
+instruction_4 = "NOTE: YOU MAY HAVE TO SCROLL DOWN TO SEE THE 3D RENDERING OF THE MOLECULE"
 st.markdown(
-    f'<ul style="color:#FFFFFF"><li>{instruction_1}</li><li>{instruction_2}</li><li>{instruction_3}</li></ul>',
+    f'<ul style="color:#FFFFFF"><li>{instruction_1}</li><li>{instruction_2}</li><li>{instruction_3}</li><li>{instruction_4}</li></ul>',
     unsafe_allow_html=True,
 )
 
