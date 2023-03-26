@@ -71,6 +71,9 @@ def embed_molview(smile):
         st.error('Error fetching 3D rendering')
         st.error(e)
 
+
+prediction = None
+
 with tab2:
     smiles = st.text_input('', placeholder='Input SMILES string here')
 
@@ -86,6 +89,8 @@ with tab2:
     with col8:
         b4 = st.button('Hexane')
 
+    output = st.empty()
+
     if smiles and not (b1 or b2 or b3 or b4):
         embed_molview(smiles)
     elif b1:
@@ -96,3 +101,6 @@ with tab2:
         embed_molview(samples[2])
     elif b4:
         embed_molview(samples[3])
+
+    if prediction is not None:
+        output.write(f'Prediction: The molecule is {"permeable" if prediction == 1 else "not permeable"} through the blood-brain barrier.')
