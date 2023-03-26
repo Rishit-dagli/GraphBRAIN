@@ -3,22 +3,22 @@ import streamlit as st
 
 shape = 224
 
-u = "https://storage.googleapis.com/rishit-dagli.appspot.com/My_project-1_1.png"
-page_title = "BMP"
+u = "https://media.discordapp.net/attachments/1043363043947581533/1089608908940775505/GraphBRAIN_logo.png?width=1000&height=1000"
+page_title = "Graph Brain"
 
 
 # Set page title and favicon.
 st.set_page_config(page_title=page_title, page_icon=u)
 
 
-u = "https://storage.googleapis.com/rishit-dagli.appspot.com/My_project-1_1.png"
+u = "https://media.discordapp.net/attachments/1043363043947581533/1089608908940775505/GraphBRAIN_logo.png?width=1000&height=1000"
 
 col1, mid, col2 = st.columns([7, 1, 25])
 with col1:
     st.image(u, width=150)
 with col2:
     st.markdown(
-        f'<h1 style="color:#FFFFFF;font-size:35px;">{"Weed Detech"}</h1>',
+        f'<h1 style="color:#FFFFFF;font-size:35px;">{"Graph Brain"}</h1>',
         unsafe_allow_html=True,
     )
     st.markdown(
