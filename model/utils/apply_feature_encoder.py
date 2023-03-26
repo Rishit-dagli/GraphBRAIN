@@ -1,4 +1,4 @@
-from .feature_encoder import AtomFeatureEncoder, BondFeatureEncoder
+from feature_encoder import AtomFeatureEncoder, BondFeatureEncoder
 import sys
 import os
 
