@@ -102,9 +102,9 @@ with tab2:
 
     if smiles and not (b1 or b2 or b3 or b4):
         embed_molview(smiles)
-        smile = []
-        smile.append(smiles)
-        result = predict(smile, model)
+#         smile = []
+#         smile.append(smiles)
+        result = predict(["CC"], model)
         prediction = float(result)
     elif b1:
         embed_molview(samples[0])
