@@ -103,3 +103,4 @@ with tab2:
         output.write(
             f'Prediction: The molecule is {"permeable" if prediction == 1 else "not permeable"} through the blood-brain barrier.'
         )
+        
