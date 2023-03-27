@@ -105,7 +105,8 @@ with tab2:
 #         smile = []
 #         smile.append(smiles)
         result = predict(["CC"], model)
-        prediction = float(result)
+        st.write(result)
+        prediction = int(result)
     elif b1:
         embed_molview(samples[0])
         smiles = samples[0]
@@ -135,7 +136,7 @@ with tab2:
         result = predict(smile, model)
         prediction = float(result)
 
-    if prediction is not None:
-        output.write(
-            f'Prediction: The Blood-Brain Barrier Permeability of the molecule is {prediction}.'
-        )
+#     if prediction is not None:
+#         output.write(
+#             f'Prediction: The Blood-Brain Barrier Permeability of the molecule is {prediction}.'
+#         )
