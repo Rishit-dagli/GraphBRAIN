@@ -1,5 +1,5 @@
-import streamlit as st
 import requests
+import streamlit as st
 from model.inference.load_model import load_model
 from model.inference.infer import inference
 from streamlit_lottie import st_lottie
