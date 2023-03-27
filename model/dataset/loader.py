@@ -1,6 +1,6 @@
 import tensorflow as tf
 import einops
-from download_dataset import download_dataset
+from model.dataset.download_dataset import download_dataset
 import pandas as pd
 import numpy as np
 import sys
