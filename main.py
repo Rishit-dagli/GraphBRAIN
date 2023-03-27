@@ -102,30 +102,40 @@ with tab2:
 
     if smiles and not (b1 or b2 or b3 or b4):
         embed_molview(smiles)
-        result = predict(["CC"], model)
-        prediction = int(result)
+        smile = []
+        smile.append(smiles)
+        result = predict(smile, model)
+        prediction = float(result)
     elif b1:
         embed_molview(samples[0])
         smiles = samples[0]
-        result = predict(smiles, model)
-        prediction = int(result)
+        smile = []
+        smile.append(smiles)
+        result = predict(smile, model)
+        prediction = float(result)
     elif b2:
         embed_molview(samples[1])
         smiles = samples[1]
-        result = predict(smiles, model)
-        prediction = int(result)
+        smile = []
+        smile.append(smiles)
+        result = predict(smile, model)
+        prediction = float(result)
     elif b3:
         embed_molview(samples[2])
         smiles = samples[2]
-        result = predict(smiles, model)
-        prediction = int(result)
+        smile = []
+        smile.append(smiles)
+        result = predict(smile, model)
+        prediction = float(result)
     elif b4:
         embed_molview(samples[3])
         smiles = samples[3]
-        result = predict(smiles, model)
-        prediction = int(result)
+        smile = []
+        smile.append(smiles)
+        result = predict(smile, model)
+        prediction = float(result)
 
     if prediction is not None:
         output.write(
-            f'Prediction: The molecule is {"permeable" if prediction == 1 else "not permeable"} through the blood-brain barrier.'
+            f'Prediction: The Blood-Brain Barrier Permeability of the molecule is {prediction}.'
         )
