@@ -40,8 +40,8 @@ def smile_to_graph(smiles):
     pairs = []
     # flag = False
 
-    for smiles in smiles:
-        molecule = _smile_to_molecule(smiles)
+    for smile in smiles:
+        molecule = _smile_to_molecule(smile)
         atom_features, bond_features, pair_indices = _molecule_to_graph(molecule)
 
         # if tf.rank(atom_features) == 2 and tf.rank(bond_features) == 2:
