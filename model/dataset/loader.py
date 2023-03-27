@@ -22,34 +22,34 @@ def repeatx(x, num):
 
 
 def merged_batch(x_batch, y_batch):
-    atom_features, bond_features, pair_indices = x_batch
-    num_atoms = atom_features.row_lengths()
-    num_bonds = bond_features.row_lengths()
-    molecule_indices = tf.range(len(num_atoms))
-    molecule_indicator = tf.repeat(molecule_indices, num_atoms)
-    gather_indices = tf.repeat(molecule_indices[:-1], num_bonds[1:])
-    increment = tf.cumsum(num_atoms[:-1])
-    increment = tf.pad(tf.gather(increment, gather_indices), [(num_bonds[0], 0)])
-    pair_indices = pair_indices.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
-    pair_indices = pair_indices + increment[:, tf.newaxis]
-    atom_features = atom_features.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
-    bond_features = bond_features.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
     # atom_features, bond_features, pair_indices = x_batch
     # num_atoms = atom_features.row_lengths()
     # num_bonds = bond_features.row_lengths()
-
-    # molecule_indices = tf.cumsum(tf.ones_like(num_atoms)) - tf.ones_like(num_atoms)
-    # molecule_indicator = repeatx(molecule_indices, num_atoms)
-
+    # molecule_indices = tf.range(len(num_atoms))
+    # molecule_indicator = tf.repeat(molecule_indices, num_atoms)
     # gather_indices = tf.repeat(molecule_indices[:-1], num_bonds[1:])
-    # increment = tf.cumsum(num_atoms[:-1], axis=0)
-
+    # increment = tf.cumsum(num_atoms[:-1])
     # increment = tf.pad(tf.gather(increment, gather_indices), [(num_bonds[0], 0)])
-    # # Ragged Tensors to Tensor
     # pair_indices = pair_indices.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
     # pair_indices = pair_indices + increment[:, tf.newaxis]
     # atom_features = atom_features.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
     # bond_features = bond_features.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
+    atom_features, bond_features, pair_indices = x_batch
+    num_atoms = atom_features.row_lengths()
+    num_bonds = bond_features.row_lengths()
+
+    molecule_indices = tf.cumsum(tf.ones_like(num_atoms)) - tf.ones_like(num_atoms)
+    molecule_indicator = repeatx(molecule_indices, num_atoms)
+
+    gather_indices = tf.repeat(molecule_indices[:-1], num_bonds[1:])
+    increment = tf.cumsum(num_atoms[:-1], axis=0)
+
+    increment = tf.pad(tf.gather(increment, gather_indices), [(num_bonds[0], 0)])
+    # Ragged Tensors to Tensor
+    pair_indices = pair_indices.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
+    pair_indices = pair_indices + increment[:, tf.newaxis]
+    atom_features = atom_features.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
+    bond_features = bond_features.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
 
     return (atom_features, bond_features, pair_indices, molecule_indicator), y_batch
 
