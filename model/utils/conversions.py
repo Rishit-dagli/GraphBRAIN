@@ -1,6 +1,6 @@
 import rdkit
 from rdkit import Chem
-from apply_feature_encoder import atom_feature_encoder, bond_feature_encoder
+from model.utils.apply_feature_encoder import atom_feature_encoder, bond_feature_encoder
 import tensorflow as tf
 import einops
 
