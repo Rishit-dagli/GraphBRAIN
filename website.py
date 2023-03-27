@@ -27,7 +27,9 @@ with col2:
         unsafe_allow_html=True,
     )
     st.markdown(
-        f'<h2 style="color:#FFFFFF;font-size:20px;">{"""The goal of our project is to predict whether a molecule is permeable through the blood-brain barrier."""}</h2>',
+        (
+            f'<h2 style="color:#FFFFFF;font-size:20px;">{"""The goal of our project is to predict whether a molecule is permeable through the blood-brain barrier."""}</h2>'
+        ),
         unsafe_allow_html=True,
     )
 
@@ -37,7 +39,9 @@ tab1, tab2 = st.tabs(["Description and Instructions", "Model"])
 
 with tab1:
     st.markdown(
-        f'<h2 style="color:#FFFFFF;font-size:18px;">{"The blood - brain barrier is a protective layer that separates the brain from the rest of the body’s circulatory system. This barrier is highly selective and prevents solutes in the circulating blood from non-selectively crossing into the extracellular fluid of the central nervous system where neurons reside."}</h2>',
+        (
+            f'<h2 style="color:#FFFFFF;font-size:18px;">{"The blood - brain barrier is a protective layer that separates the brain from the rest of the body’s circulatory system. This barrier is highly selective and prevents solutes in the circulating blood from non-selectively crossing into the extracellular fluid of the central nervous system where neurons reside."}</h2>'
+        ),
         unsafe_allow_html=True,
     )
     st.markdown(
@@ -48,13 +52,22 @@ with tab1:
     instruction_1 = (
         "A SMILES string is a representation of the molecule as an ASCII string."
     )
-    instruction_2 = "When you give us the SMILE string for a molecule, we will predict whether it is permeable through the blood-brain barrier and render an interactive molecular structure in 3d."
-    instruction_3 = "There are 4 sample buttons below the input box to help demonstrate the functionality of our website"
+    instruction_2 = (
+        "When you give us the SMILE string for a molecule, we will predict whether it"
+        " is permeable through the blood-brain barrier and render an interactive"
+        " molecular structure in 3d."
+    )
+    instruction_3 = (
+        "There are 4 sample buttons below the input box to help demonstrate the"
+        " functionality of our website"
+    )
     instruction_4 = (
         "NOTE: YOU MAY HAVE TO SCROLL DOWN TO SEE THE 3D RENDERING OF THE MOLECULE"
     )
     st.markdown(
-        f'<ul style="color:#FFFFFF"><li>{instruction_1}</li><li>{instruction_2}</li><li>{instruction_3}</li><li>{instruction_4}</li></ul>',
+        (
+            f'<ul style="color:#FFFFFF"><li>{instruction_1}</li><li>{instruction_2}</li><li>{instruction_3}</li><li>{instruction_4}</li></ul>'
+        ),
         unsafe_allow_html=True,
     )
 
@@ -101,5 +114,7 @@ with tab2:
 
     if prediction is not None:
         output.write(
-            f'Prediction: The molecule is {"permeable" if prediction == 1 else "not permeable"} through the blood-brain barrier.'
+            "Prediction: The molecule is"
+            f" {'permeable' if prediction == 1 else 'not permeable'} through the"
+            " blood-brain barrier."
         )

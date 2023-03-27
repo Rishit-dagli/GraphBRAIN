@@ -2,6 +2,7 @@ import wget
 import hashlib
 import tensorflow as tf
 
+
 def _download() -> str:
     url = "http://store.rishit.tech/model.tar.gz"
     filename = wget.download(url)
@@ -24,7 +25,8 @@ def download_model() -> str:
     else:
         raise ValueError("MD5 Checksum failed")
 
-def load_model(filename = None) -> tf.keras.Model:
+
+def load_model(filename=None) -> tf.keras.Model:
     if filename is None:
         filename = download_model()
     model = tf.keras.models.load_model(filename)

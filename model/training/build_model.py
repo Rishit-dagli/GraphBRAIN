@@ -1,8 +1,11 @@
 import tensorflow as tf
 import einops
 
+
 class EdgeNetwork(tf.keras.layers.Layer):
-    def build(self, input_shape, kernel_initializer="glorot_uniform", bias_initializer="zeros"):
+    def build(
+        self, input_shape, kernel_initializer="glorot_uniform", bias_initializer="zeros"
+    ):
         self.atom_dim = input_shape[0][-1]
         self.bond_dim = input_shape[1][-1]
         self.kernel = self.add_weight(
@@ -11,18 +14,24 @@ class EdgeNetwork(tf.keras.layers.Layer):
             name="kernel",
         )
         self.bias = self.add_weight(
-            shape=(self.atom_dim * self.atom_dim), initializer=bias_initializer, name="bias",
+            shape=(self.atom_dim * self.atom_dim),
+            initializer=bias_initializer,
+            name="bias",
         )
         self.built = True
 
     def call(self, inputs):
         atom_features, bond_features, pair_indices = inputs
-        bond_features = tf.einsum('ik,kj->ij', [bond_features, self.kernel]) + self.bias
+        bond_features = tf.einsum("ik,kj->ij", [bond_features, self.kernel]) + self.bias
         bond_features = tf.reshape(bond_features, (-1, self.atom_dim, self.atom_dim))
         atom_features_neighbors = tf.gather(atom_features, pair_indices[:, 1])
-        atom_features_neighbors = einops.rearrange(atom_features_neighbors, '... -> ... ()')
-        transformed_features = tf.einsum('ik,kj->ij', [bond_features, atom_features_neighbors])
-        transformed_features = einops.rearrange(transformed_features,  "... () -> ...")
+        atom_features_neighbors = einops.rearrange(
+            atom_features_neighbors, "... -> ... ()"
+        )
+        transformed_features = tf.einsum(
+            "ik,kj->ij", [bond_features, atom_features_neighbors]
+        )
+        transformed_features = einops.rearrange(transformed_features, "... () -> ...")
         aggregated_features = tf.math.unsorted_segment_sum(
             transformed_features,
             pair_indices[:, 0],
@@ -47,9 +56,13 @@ class MessagePassing(tf.keras.layers.Layer):
         elif self.edge_update == "LSTM":
             self.update_step = tf.keras.layers.LSTMCell(self.atom_dim + self.pad_length)
         elif self.edge_update == "SimpleRNN":
-            self.update_step = tf.keras.layers.SimpleRNNCell(self.atom_dim + self.pad_length)
+            self.update_step = tf.keras.layers.SimpleRNNCell(
+                self.atom_dim + self.pad_length
+            )
         else:
-            self.update_step = tf.keras.layers.StackedRNNCell(self.atom_dim + self.pad_length)
+            self.update_step = tf.keras.layers.StackedRNNCell(
+                self.atom_dim + self.pad_length
+            )
         self.built = True
 
     def call(self, inputs):
@@ -65,7 +78,8 @@ class MessagePassing(tf.keras.layers.Layer):
                 atom_features_aggregated, atom_features_updated
             )
         return atom_features_updated
-    
+
+
 class TransformerEncoderReadout(tf.keras.layers.Layer):
     def __init__(
         self, num_heads=8, embed_dim=64, dense_dim=512, batch_size=32, **kwargs
@@ -75,7 +89,10 @@ class TransformerEncoderReadout(tf.keras.layers.Layer):
         self.partition_padding = PartitionPadding(batch_size)
         self.attention = tf.keras.layers.MultiHeadAttention(num_heads, embed_dim)
         self.dense_proj = tf.keras.Sequential(
-            [tf.keras.layers.Dense(dense_dim, activation="relu"), tf.keras.layers.Dense(embed_dim),]
+            [
+                tf.keras.layers.Dense(dense_dim, activation="relu"),
+                tf.keras.layers.Dense(embed_dim),
+            ]
         )
         self.layernorm_1 = tf.keras.layers.LayerNormalization()
         self.layernorm_2 = tf.keras.layers.LayerNormalization()
@@ -89,6 +106,7 @@ class TransformerEncoderReadout(tf.keras.layers.Layer):
         proj_input = self.layernorm_1(x + attention_output)
         proj_output = self.layernorm_2(proj_input + self.dense_proj(proj_input))
         return self.average_pooling(proj_output)
+
 
 class PartitionPadding(tf.keras.layers.Layer):
     def __init__(self, batch_size, **kwargs):
@@ -113,6 +131,7 @@ class PartitionPadding(tf.keras.layers.Layer):
         gather_indices = tf.squeeze(gather_indices, axis=-1)
         return tf.gather(atom_features_stacked, gather_indices, axis=0)
 
+
 def create_model(
     atom_dim,
     bond_dim,
@@ -124,10 +143,16 @@ def create_model(
     activation=["relu"],
     edge_update="GRU",
 ):
-    atom_features = tf.keras.layers.Input((atom_dim), dtype="float32", name="atom_features")
-    bond_features = tf.keras.layers.Input((bond_dim), dtype="float32", name="bond_features")
+    atom_features = tf.keras.layers.Input(
+        (atom_dim), dtype="float32", name="atom_features"
+    )
+    bond_features = tf.keras.layers.Input(
+        (bond_dim), dtype="float32", name="bond_features"
+    )
     pair_indices = tf.keras.layers.Input((2), dtype="int32", name="pair_indices")
-    molecule_indicator = tf.keras.layers.Input((), dtype="int32", name="molecule_indicator")
+    molecule_indicator = tf.keras.layers.Input(
+        (), dtype="int32", name="molecule_indicator"
+    )
 
     # Leverage the functional API to create a model with 3 inputs aka the graph
     # and outputs one scalar.
