@@ -104,7 +104,7 @@ with tab2:
         embed_molview(smiles)
 #         smile = []
 #         smile.append(smiles)
-        result = predict(["CC"], model)
+        result = predict(['CC'], model)
         st.write(result)
         prediction = int(result)
     elif b1:
