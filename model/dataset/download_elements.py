@@ -1,5 +1,6 @@
 import wget
 import hashlib
+import os
 
 
 def _download() -> str:
@@ -17,10 +18,14 @@ def _check_md5(filename: str) -> bool:
 
 
 def download_periodic() -> str:
-    print("Downloading Periodic Table dataset...")
-    filename = _download()
-    if _check_md5(filename):
-        print("Downloaded Periodic dataset")
-        return filename
+    if not os.path.exists("periodictable.csv"):
+        print("Downloading Periodic Table dataset...")
+        filename = _download()
+        if _check_md5(filename):
+            print("Downloaded Periodic dataset")
+            return filename
+        else:
+            raise ValueError("MD5 Checksum failed")
     else:
-        raise ValueError("MD5 Checksum failed")
+        print("Periodic dataset already downloaded")
+        return "periodictable.csv"
