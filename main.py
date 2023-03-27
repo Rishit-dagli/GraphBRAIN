@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 from model.inference.load_model import load_model
-from model.inference.infer import inference
+from model.inference.infer import predict
 from streamlit_lottie import st_lottie
 
 logo = "http://store.rishit.tech/GraphBRAIN_logo.png"
@@ -112,7 +112,7 @@ with tab2:
         embed_molview(samples[3])
 
     gif_runner = st_lottie(url_json)
-    result = inference(smiles, model)
+    result = predict(smiles, model)
     gif_runner.empty()
     prediction = int(result)
     if prediction is not None:
