@@ -1,5 +1,6 @@
 import requests
 import streamlit as st
+import numpy as np
 from model.inference.load_model import load_model
 from model.inference.infer import predict
 from streamlit_lottie import st_lottie
@@ -115,41 +116,40 @@ with tab2:
 
     if smiles and not (b1 or b2 or b3 or b4):
         embed_molview(smiles)
-        #         smile = []
-        #         smile.append(smiles)
-        result = predict(["CC"], model)
-        st.write(result)
-        prediction = int(result)
+        smile = []
+        smile.append(smiles)
+        result = predict(smile, model)
+        prediction = result.numpy()[0]
     elif b1:
         embed_molview(samples[0])
         smiles = samples[0]
         smile = []
         smile.append(smiles)
         result = predict(smile, model)
-        prediction = float(result)
+        prediction = result.numpy()[0]
     elif b2:
         embed_molview(samples[1])
         smiles = samples[1]
         smile = []
         smile.append(smiles)
         result = predict(smile, model)
-        prediction = float(result)
+        prediction = result.numpy()[0]
     elif b3:
         embed_molview(samples[2])
         smiles = samples[2]
         smile = []
         smile.append(smiles)
         result = predict(smile, model)
-        prediction = float(result)
+        prediction = result.numpy()[0]
     elif b4:
         embed_molview(samples[3])
         smiles = samples[3]
         smile = []
         smile.append(smiles)
         result = predict(smile, model)
-        prediction = float(result)
+        prediction = result.numpy()[0]
 
-#     if prediction is not None:
-#         output.write(
-#             f'Prediction: The Blood-Brain Barrier Permeability of the molecule is {prediction}.'
-#         )
+    if prediction is not None:
+        output.write(
+            f'Prediction: The Blood-Brain Barrier Permeability of the molecule is {prediction}.'
+        )
