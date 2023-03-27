@@ -107,6 +107,7 @@ with tab2:
     elif b1:
         embed_molview(samples[0])
         smiles = samples[0]
+        st.write(smiles)
         result = predict(smiles, model)
         prediction = int(result)
     elif b2:
