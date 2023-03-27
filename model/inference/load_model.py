@@ -1,6 +1,7 @@
 import wget
 import hashlib
 import tensorflow as tf
+import tarfile
 
 
 def _download() -> str:
@@ -29,5 +30,8 @@ def download_model() -> str:
 def load_model(filename=None) -> tf.keras.Model:
     if filename is None:
         filename = download_model()
+        file = tarfile.open(filename)
+        file.extractall("./model")
+        filename = "./model"
     model = tf.keras.models.load_model(filename)
     return model
