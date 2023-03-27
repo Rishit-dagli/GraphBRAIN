@@ -1,11 +1,15 @@
 import streamlit as st
+import requests
+from model.inference.load_model import load_model
+from model.inference.infer import inference
+from streamlit_lottie import st_lottie
 
-u = "http://store.rishit.tech/GraphBRAIN_logo.png"
+logo = "http://store.rishit.tech/GraphBRAIN_logo.png"
 page_title = "Graph Brain"
 
 
 # Set page title and favicon.
-st.set_page_config(page_title=page_title, page_icon=u)
+st.set_page_config(page_title=page_title, page_icon=logo)
 
 st.markdown(
     f"""
@@ -20,7 +24,7 @@ st.markdown(
 
 col1, mid, col2 = st.columns([7, 1, 25])
 with col1:
-    st.image(u, width=150)
+    st.image(logo, width=150)
 with col2:
     st.markdown(
         f'<h1 style="color:#FFFFFF;font-size:35px;">{"Graph Brain"}</h1>',
@@ -70,6 +74,14 @@ def embed_molview(smile):
 
 
 prediction = None
+model = load_model(filename=None)
+
+url = requests.get("https://assets1.lottiefiles.com/packages/lf20_q8ND1A8ibK.json")
+url_json = dict()
+if url.status_code == 200:
+    url_json = url.json()
+else:
+    print("Error in the URL")
 
 with tab2:
     smiles = st.text_input("", placeholder="Input SMILES string here")
@@ -99,6 +111,10 @@ with tab2:
     elif b4:
         embed_molview(samples[3])
 
+    gif_runner = st_lottie(url_json)
+    result = inference(smiles, model)
+    gif_runner.empty()
+    prediction = int(result)
     if prediction is not None:
         output.write(
             f'Prediction: The molecule is {"permeable" if prediction == 1 else "not permeable"} through the blood-brain barrier.'
