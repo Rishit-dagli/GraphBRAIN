@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/Rishit-dagli/csc111-project.git .
+# RUN git clone https://github.com/Rishit-dagli/csc111-project.git .
+COPY . .
 
 RUN pip3 install -r requirements.txt
 
