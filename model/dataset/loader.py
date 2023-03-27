@@ -71,16 +71,8 @@ def loader(
         else:
             dataset = dataset.shuffle(shuffle_buffer_size)
     if autotune:
-        return (
-            dataset.batch(batch_size)
-            .map(merged_batch, tf.data.AUTOTUNE)
-            .prefetch(tf.data.AUTOTUNE)
-        )
-    return (
-        dataset.batch(batch_size)
-        .map(merged_batch, num_parallel_calls)
-        .prefetch(prefetech_buffer_size)
-    )
+        return dataset.batch(batch_size).map(merged_batch, tf.data.AUTOTUNE).prefetch(tf.data.AUTOTUNE)
+    return dataset.batch(batch_size).map(merged_batch, num_parallel_calls).prefetch(prefetech_buffer_size)
 
 
 def split_data(data, train_size=0.8, val_size=0.15, test_size=0.05):

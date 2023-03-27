@@ -9,6 +9,6 @@ from utils.conversions import smile_to_graph
 from dataset.loader import loader
 
 
-def predict(smile: str, model: tf.keras.Model) -> float:
-    smile_data = loader(smile_to_graph(list(smile)), pd.Series([0.0]), batch_size=1, shuffle=False)
+def predict(smile: list, model: tf.keras.Model) -> float:
+    smile_data = loader(smile_to_graph(smile), pd.Series([0.0]), batch_size=1, shuffle=False)
     return tf.squeeze(model.predict(smile_data), axis=1)
