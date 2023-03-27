@@ -102,19 +102,39 @@ with tab2:
 
     if smiles and not (b1 or b2 or b3 or b4):
         embed_molview(smiles)
+        gif_runner = st_lottie(url_json)
+        result = predict(smiles, model)
+        gif_runner.empty()
+        prediction = int(result)
     elif b1:
         embed_molview(samples[0])
+        smiles = samples[0]
+        gif_runner = st_lottie(url_json)
+        result = predict(smiles, model)
+        gif_runner.empty()
+        prediction = int(result)
     elif b2:
         embed_molview(samples[1])
+        smiles = samples[1]
+        gif_runner = st_lottie(url_json)
+        result = predict(smiles, model)
+        gif_runner.empty()
+        prediction = int(result)
     elif b3:
         embed_molview(samples[2])
+        smiles = samples[2]
+        gif_runner = st_lottie(url_json)
+        result = predict(smiles, model)
+        gif_runner.empty()
+        prediction = int(result)
     elif b4:
         embed_molview(samples[3])
+        smiles = samples[3]
+        gif_runner = st_lottie(url_json)
+        result = predict(smiles, model)
+        gif_runner.empty()
+        prediction = int(result)
 
-    gif_runner = st_lottie(url_json)
-    result = predict(smiles, model)
-    gif_runner.empty()
-    prediction = int(result)
     if prediction is not None:
         output.write(
             f'Prediction: The molecule is {"permeable" if prediction == 1 else "not permeable"} through the blood-brain barrier.'
