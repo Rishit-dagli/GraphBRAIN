@@ -52,6 +52,8 @@ def loader(
     shuffle_buffer_size=1024,
     num_parallel_calls=8,
 ):
+    print(x.shape)
+    print(y.shape)
     dataset = tf.data.Dataset.from_tensor_slices((x, (y)))
     if shuffle:
         if autotune:
