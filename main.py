@@ -151,5 +151,6 @@ with tab2:
 
     if prediction is not None:
         output.write(
-            f'Prediction: The Blood-Brain Barrier Permeability of the molecule is {prediction}.'
+            "Prediction: The Blood-Brain Barrier Permeability of the molecule is"
+            f" {prediction}."
         )
