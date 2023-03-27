@@ -34,8 +34,6 @@ def merged_batch(x_batch, y_batch):
     pair_indices = pair_indices + increment[:, tf.newaxis]
     atom_features = atom_features.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
     bond_features = bond_features.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
-
-    return (atom_features, bond_features, pair_indices, molecule_indicator), y_batch
     # atom_features, bond_features, pair_indices = x_batch
     # num_atoms = atom_features.row_lengths()
     # num_bonds = bond_features.row_lengths()
@@ -53,7 +51,7 @@ def merged_batch(x_batch, y_batch):
     # atom_features = atom_features.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
     # bond_features = bond_features.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
 
-    # return (atom_features, bond_features, pair_indices, molecule_indicator), y_batch
+    return (atom_features, bond_features, pair_indices, molecule_indicator), y_batch
 
 
 def loader(
@@ -66,8 +64,6 @@ def loader(
     shuffle_buffer_size=1024,
     num_parallel_calls=8,
 ):
-    print(len(x))
-    print(y.shape)
     dataset = tf.data.Dataset.from_tensor_slices((x, (y)))
     if shuffle:
         if autotune:
