@@ -4,12 +4,13 @@ import numpy as np
 from model.inference.load_model import load_model
 from model.inference.infer import predict
 from streamlit_lottie import st_lottie
-import cv2
+import imageio as iio
 
 
 logo = "http://store.rishit.tech/GraphBRAIN_logo.png"
 page_title = "Graph Brain"
-img = cv2.imread('media/Graph.png')
+img = iio.imread('media/Graph.png')
+
 
 # Set page title and favicon.
 st.set_page_config(page_title=page_title, page_icon=logo)
