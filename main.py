@@ -2,6 +2,7 @@ import streamlit as st
 from model.inference.load_model import load_model
 from model.inference.infer import predict
 from PIL import Image
+import tensorflow as tf
 
 
 page_title = "Graph Brain"
@@ -85,6 +86,7 @@ def embed_molview(smile: str) -> None:
     except Exception as e:
         st.error("Error fetching 3D rendering")
         st.error(e)
+
 
 def load_model_in_cache() -> tf.keras.Model:
     """Load the model into the Streamlit cache."""
