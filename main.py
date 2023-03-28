@@ -6,7 +6,7 @@ import tensorflow as tf
 
 
 page_title = "Graph Brain"
-img = Image.open('media/Graph.png')
+img = Image.open("media/Graph.png")
 
 
 # Set page title and favicon.
@@ -66,9 +66,7 @@ with tab1:
         "There are 4 sample buttons below the input box to help demonstrate the"
         " functionality of our website"
     )
-    instruction_4 = (
-        "Click on \'Run the Model\' to try it out!"
-    )
+    instruction_4 = "Click on 'Run the Model' to try it out!"
     st.markdown(
         (
             f'<ul style="color:#FFFFFF"><li>{instruction_1}</li><li>{instruction_2}</li><li>{instruction_3}</li><li>{instruction_4}</li></ul>'
