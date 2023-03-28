@@ -1,4 +1,3 @@
-import requests
 import streamlit as st
 from model.inference.load_model import load_model
 from model.inference.infer import predict
@@ -33,14 +32,14 @@ with col2:
     )
     st.markdown(
         (
-            f'<h2 style="color:#FFFFFF;font-size:20px;">{"""The goal of our project is to predict whether a molecule is permeable through the blood-brain barrier."""}</h2>'
+            f'<h2 style="color:#FFFFFF;font-size:20px;">{"""The goal of the project is to predict the permeability of molecules through the blood-brain barrier."""}</h2>'
         ),
         unsafe_allow_html=True,
     )
 
 # Display markdown content
 
-tab1, tab2 = st.tabs(["Description and Instructions", "Model"])
+tab1, tab2 = st.tabs(["Description and Instructions", "Run the Model"])
 
 with tab1:
     st.markdown(
@@ -58,8 +57,8 @@ with tab1:
         "A SMILES string is a representation of the molecule as an ASCII string."
     )
     instruction_2 = (
-        "When you give us the SMILE string for a molecule, we will predict whether it"
-        " is permeable through the blood-brain barrier and render an interactive"
+        "When you give us the SMILE string for a molecule, we will predict its"
+        " permeability through the blood-brain barrier and render an interactive"
         " molecular structure in 3d."
     )
     instruction_3 = (
@@ -67,7 +66,7 @@ with tab1:
         " functionality of our website"
     )
     instruction_4 = (
-        "NOTE: YOU MAY HAVE TO SCROLL DOWN TO SEE THE 3D RENDERING OF THE MOLECULE"
+        "Click on \'Run the Model\' to try it out!"
     )
     st.markdown(
         (
@@ -77,7 +76,8 @@ with tab1:
     )
 
 
-def embed_molview(smile):
+def embed_molview(smile: str) -> None:
+    """Embed a 3D rendering of the molecule with the given SMILES string."""
     molview_url = f"https://embed.molview.org/v1/?mode=balls&smiles={smile}"
     try:
         # Embed 3D rendering of molecule
@@ -86,16 +86,37 @@ def embed_molview(smile):
         st.error("Error fetching 3D rendering")
         st.error(e)
 
+def load_model_in_cache() -> tf.keras.Model:
+    """Load the model into the Streamlit cache."""
+    if "model" not in st.session_state:
+        st.session_state["model"] = load_model(filename=None)
+    return st.session_state["model"]
+
+
+def output_for_button(button_number: int) -> float:
+    """Return the prediction for the molecule represented by the given button."""
+    embed_molview(samples[button_number])
+    smiles = samples[button_number]
+    smile = []
+    smile.append(smiles)
+    result = predict(smile, model)
+    prediction = result.numpy()[0]
+    return prediction
+
+
+def output_for_string(smiles: str) -> float:
+    """Return the prediction for the molecule represented by the given string."""
+    embed_molview(smiles)
+    smile = []
+    smile.append(smiles)
+    result = predict(smile, model)
+    prediction = result.numpy()[0]
+    return prediction
+
 
 prediction = None
-model = load_model(filename=None)
+model = load_model_in_cache()
 
-url = requests.get("https://assets1.lottiefiles.com/packages/lf20_q8ND1A8ibK.json")
-url_json = dict()
-if url.status_code == 200:
-    url_json = url.json()
-else:
-    print("Error in the URL")
 
 with tab2:
     smiles = st.text_input("", placeholder="Input SMILES string here")
@@ -115,39 +136,15 @@ with tab2:
     output = st.empty()
 
     if smiles and not (b1 or b2 or b3 or b4):
-        embed_molview(smiles)
-        smile = []
-        smile.append(smiles)
-        result = predict(smile, model)
-        prediction = result.numpy()[0]
+        prediction = output_for_string(smiles)
     elif b1:
-        embed_molview(samples[0])
-        smiles = samples[0]
-        smile = []
-        smile.append(smiles)
-        result = predict(smile, model)
-        prediction = result.numpy()[0]
+        prediction = output_for_button(0)
     elif b2:
-        embed_molview(samples[1])
-        smiles = samples[1]
-        smile = []
-        smile.append(smiles)
-        result = predict(smile, model)
-        prediction = result.numpy()[0]
+        prediction = output_for_button(1)
     elif b3:
-        embed_molview(samples[2])
-        smiles = samples[2]
-        smile = []
-        smile.append(smiles)
-        result = predict(smile, model)
-        prediction = result.numpy()[0]
+        prediction = output_for_button(2)
     elif b4:
-        embed_molview(samples[3])
-        smiles = samples[3]
-        smile = []
-        smile.append(smiles)
-        result = predict(smile, model)
-        prediction = result.numpy()[0]
+        prediction = output_for_button(3)
 
     if prediction is not None:
         output.write(
