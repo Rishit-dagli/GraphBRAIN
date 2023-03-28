@@ -4,10 +4,12 @@ import numpy as np
 from model.inference.load_model import load_model
 from model.inference.infer import predict
 from streamlit_lottie import st_lottie
+import cv2
+
 
 logo = "http://store.rishit.tech/GraphBRAIN_logo.png"
 page_title = "Graph Brain"
-
+img = cv2.imread('media/Graph.png')
 
 # Set page title and favicon.
 st.set_page_config(page_title=page_title, page_icon=logo)
@@ -25,7 +27,7 @@ st.markdown(
 
 col1, mid, col2 = st.columns([7, 1, 25])
 with col1:
-    st.image(logo, width=150)
+    st.image(img, width=150)
 with col2:
     st.markdown(
         f'<h1 style="color:#FFFFFF;font-size:35px;">{"Graph Brain"}</h1>',
@@ -154,4 +156,3 @@ with tab2:
             "Prediction: The Blood-Brain Barrier Permeability of the molecule is"
             f" {prediction}."
         )
-
