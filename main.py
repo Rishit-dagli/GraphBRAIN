@@ -154,3 +154,4 @@ with tab2:
             "Prediction: The Blood-Brain Barrier Permeability of the molecule is"
             f" {prediction}."
         )
+
