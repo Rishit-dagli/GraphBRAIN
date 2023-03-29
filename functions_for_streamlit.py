@@ -1,7 +1,6 @@
 import streamlit as st
 from model.inference.load_model import load_model
 from model.inference.infer import predict
-from PIL import Image
 import tensorflow as tf
 
 
@@ -23,7 +22,9 @@ def load_model_in_cache() -> tf.keras.Model:
     return st.session_state["model"]
 
 
-def output_for_button(button_number: int, samples: list, model: tf.keras.Model) -> float:
+def output_for_button(
+    button_number: int, samples: list, model: tf.keras.Model
+) -> float:
     """Return the prediction for the molecule represented by the given button."""
     embed_molview(samples[button_number])
     smiles = samples[button_number]
@@ -44,7 +45,8 @@ def output_for_string(smiles: str, model: tf.keras.Model) -> float:
     return prediction
 
 
-def display_desc_instr():
+def display_desc_instr() -> None:
+    """Display the description and instructions for the website."""
     st.markdown(
         (
             f'<h2 style="color:#FFFFFF;font-size:18px;">{"The blood - brain barrier is a protective layer that separates the brain from the rest of the body’s circulatory system. This barrier is highly selective and prevents solutes in the circulating blood from non-selectively crossing into the extracellular fluid of the central nervous system where neurons reside."}</h2>'
@@ -77,7 +79,8 @@ def display_desc_instr():
     )
 
 
-def display_goal():
+def display_goal() -> None:
+    """Display the goal of the project."""
     st.markdown(
         f'<h1 style="color:#FFFFFF;font-size:35px;">{"Graph Brain"}</h1>',
         unsafe_allow_html=True,
@@ -90,7 +93,8 @@ def display_goal():
     )
 
 
-def set_background_black():
+def set_background_black() -> None:
+    """Set the background of the website to black."""
     st.markdown(
         f"""
          <style>

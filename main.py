@@ -1,6 +1,13 @@
 import streamlit as st
 from PIL import Image
-from functions_for_streamlit import load_model_in_cache, output_for_button, output_for_string, display_desc_instr, display_goal, set_background_black
+from functions_for_streamlit import (
+    load_model_in_cache,
+    output_for_button,
+    output_for_string,
+    display_desc_instr,
+    display_goal,
+    set_background_black,
+)
 
 
 page_title = "Graph Brain"
