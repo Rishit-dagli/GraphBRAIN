@@ -138,5 +138,6 @@ pyta.check_all(
         "extra-imports": ["streamlit", "PIL", "python_ta"],
         "allowed-io": [],
         "max-line-length": 120,
-    }
+    },
+    output = 'pyta_output1.txt'
 )
