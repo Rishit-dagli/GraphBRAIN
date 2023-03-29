@@ -48,15 +48,15 @@ with tab2:
     output = st.empty()
 
     if smiles and not (b1 or b2 or b3 or b4):
-        prediction = output_for_string(smiles)
+        prediction = output_for_string(smiles, model)
     elif b1:
-        prediction = output_for_button(0, samples)
+        prediction = output_for_button(0, samples, model)
     elif b2:
-        prediction = output_for_button(1, samples)
+        prediction = output_for_button(1, samples, model)
     elif b3:
-        prediction = output_for_button(2, samples)
+        prediction = output_for_button(2, samples, model)
     elif b4:
-        prediction = output_for_button(3, samples)
+        prediction = output_for_button(3, samples, model)
 
     if prediction is not None:
         output.write(

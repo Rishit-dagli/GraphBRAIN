@@ -23,7 +23,7 @@ def load_model_in_cache() -> tf.keras.Model:
     return st.session_state["model"]
 
 
-def output_for_button(button_number: int, samples: list) -> float:
+def output_for_button(button_number: int, samples: list, model: tf.keras.Model) -> float:
     """Return the prediction for the molecule represented by the given button."""
     embed_molview(samples[button_number])
     smiles = samples[button_number]
@@ -34,7 +34,7 @@ def output_for_button(button_number: int, samples: list) -> float:
     return prediction
 
 
-def output_for_string(smiles: str) -> float:
+def output_for_string(smiles: str, model: tf.keras.Model) -> float:
     """Return the prediction for the molecule represented by the given string."""
     embed_molview(smiles)
     smile = []
