@@ -38,7 +38,9 @@ def _smile_to_molecule(smile: str) -> Chem.rdchem.Mol | None:
     return Chem.MolFromSmiles(smile, sanitize=True)
 
 
-def _molecule_to_graph(molecule: Chem.rdchem.Mol) -> tuple[tf.Tensor, tf.Tensor, tf.Tensor]:
+def _molecule_to_graph(
+    molecule: Chem.rdchem.Mol,
+) -> tuple[tf.Tensor, tf.Tensor, tf.Tensor]:
     """Return the graph corresponding to the given molecule.
 
     Args:
@@ -71,7 +73,9 @@ def _molecule_to_graph(molecule: Chem.rdchem.Mol) -> tuple[tf.Tensor, tf.Tensor,
     )
 
 
-def smile_to_graph(smiles: list[str]) -> tuple[tf.RaggedTensor, tf.RaggedTensor, tf.RaggedTensor]:
+def smile_to_graph(
+    smiles: list[str],
+) -> tuple[tf.RaggedTensor, tf.RaggedTensor, tf.RaggedTensor]:
     """Return the graph corresponding to the given SMILES strings.
 
     Arguments:
