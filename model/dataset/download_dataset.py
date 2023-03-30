@@ -1,3 +1,19 @@
+"""CSC111 Winter 2023 Final Project: Graph Brain
+
+This Python file defines useful function for downloading the BBBP dataset.
+
+The application has the following functions:
+- _download() -> str: Download the BBBP dataset from the Rishit's website.
+- _check_md5(filename: str) -> bool: Check the MD5 checksum of the downloaded dataset.
+- download_dataset() -> str: Download the BBBP dataset if it is not already downloaded.
+
+Copyright and Usage Information
+===============================
+This file is provided solely for the personal and private use of TAs, instructors and its author(s). All forms of
+distribution of this code, whether as given or with any changes, are expressly prohibited.
+
+This file is Copyright (c) 2023 by Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde."""
+
 import wget
 import hashlib
 import os

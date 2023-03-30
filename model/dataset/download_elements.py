@@ -3,7 +3,9 @@
 This Python file defines useful function for downloading the periodic table dataset.
 
 The application has the following functions:
-
+- _download() -> str: Download the periodic table dataset from the internet.
+- _check_md5(filename: str) -> bool: Check the MD5 checksum of the downloaded file.
+- download_dataset() -> str: Download the periodic table dataset if it is not already downloaded.
 
 Copyright and Usage Information
 ===============================
