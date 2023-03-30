@@ -36,6 +36,7 @@ import numpy as np
 import sys
 import os
 import python_ta as pyta
+
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from utils.conversions import smile_to_graph
@@ -157,7 +158,9 @@ def split_data(data, train_size=0.8, val_size=0.15, test_size=0.05) -> tuple:
     return x_train, y_train, x_valid, y_valid, x_test, y_test
 
 
-def bbbp_dataset(filename="BBBP.csv", train_size=0.8, val_size=0.15, test_size=0.05) -> tuple:
+def bbbp_dataset(
+    filename="BBBP.csv", train_size=0.8, val_size=0.15, test_size=0.05
+) -> tuple:
     """Load the BBBP dataset.
 
     Arguments:
@@ -177,7 +180,15 @@ def bbbp_dataset(filename="BBBP.csv", train_size=0.8, val_size=0.15, test_size=0
 
 pyta.check_all(
     config={
-        "extra-imports": ["tensorflow", "einops", "pandas", "numpy", "sys", "os", "python_ta"],
+        "extra-imports": [
+            "tensorflow",
+            "einops",
+            "pandas",
+            "numpy",
+            "sys",
+            "os",
+            "python_ta",
+        ],
         "allowed-io": [],
         "max-line-length": 120,
     },
