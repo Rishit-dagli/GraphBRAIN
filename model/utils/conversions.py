@@ -1,15 +1,52 @@
+"""CSC111 Winter 2023 Final Project: Graph Brain
+
+This Python file defines useful function for converting SMILES strings to graphs.
+
+The application has the following functions:
+_smile_to_molecule(smile: str) -> Chem.rdchem.Mol | None: Return the molecule corresponding to the given SMILES string.
+
+_molecule_to_graph(molecule: Chem.rdchem.Mol) -> tuple[tf.Tensor, tf.Tensor, tf.Tensor]: Return the graph corresponding
+to the given molecule.
+
+smile_to_graph(smiles: list[str]) -> tuple[tf.RaggedTensor, tf.RaggedTensor, tf.RaggedTensor]: Return the graph
+corresponding to the given SMILES strings.
+
+Copyright and Usage Information
+===============================
+This file is provided solely for the personal and private use of TAs, instructors and its author(s). All forms of
+distribution of this code, whether as given or with any changes, are expressly prohibited.
+
+This file is Copyright (c) 2023 by Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde."""
+
 import rdkit
 from rdkit import Chem
 from model.utils.apply_feature_encoder import atom_feature_encoder, bond_feature_encoder
 import tensorflow as tf
 import einops
+import python_ta as pyta
 
 
-def _smile_to_molecule(smile: str):
+def _smile_to_molecule(smile: str) -> Chem.rdchem.Mol | None:
+    """Return the molecule corresponding to the given SMILES string.
+
+    Arguments:
+        smile: a SMILES string
+
+    Returns:
+        the molecule corresponding to the given SMILES string, None on failure
+    """
     return Chem.MolFromSmiles(smile, sanitize=True)
 
 
-def _molecule_to_graph(molecule: Chem.rdchem.Mol):
+def _molecule_to_graph(molecule: Chem.rdchem.Mol) -> tuple[tf.Tensor, tf.Tensor, tf.Tensor]:
+    """Return the graph corresponding to the given molecule.
+
+    Args:
+        molecule: a molecule
+
+    Returns:
+        a tuple of tensors representing the graph corresponding to the given molecule
+    """
     atoms = []
     bonds = []
     pairs = []
@@ -34,7 +71,15 @@ def _molecule_to_graph(molecule: Chem.rdchem.Mol):
     )
 
 
-def smile_to_graph(smiles):
+def smile_to_graph(smiles: list[str]) -> tuple[tf.RaggedTensor, tf.RaggedTensor, tf.RaggedTensor]:
+    """Return the graph corresponding to the given SMILES strings.
+
+    Arguments:
+        smiles: a list of SMILES strings
+
+    Returns:
+        a tuple of ragged tensors representing the graph corresponding to the given SMILES string
+    """
     atoms = []
     bonds = []
     pairs = []
@@ -64,3 +109,13 @@ def smile_to_graph(smiles):
         tf.ragged.constant(bonds, dtype=tf.float32),
         tf.ragged.constant(pairs, dtype=tf.int64),
     )
+
+
+pyta.check_all(
+    config={
+        "extra-imports": ["tensorflow", "rdkit", "einops", "python_ta"],
+        "allowed-io": [],
+        "max-line-length": 120,
+    },
+    output="pyta_output2.txt",
+)
