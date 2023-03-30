@@ -117,5 +117,5 @@ pyta.check_all(
         "allowed-io": [],
         "max-line-length": 120,
     },
-    output="pyta_output2.txt",
+    output="pyta_output4.txt",
 )
