@@ -99,5 +99,5 @@ pyta.check_all(
         "allowed-io": [download_model, _check_md5],
         "max-line-length": 120,
     },
-    output="pyta_output2.txt",
+    output="pyta_output7.txt",
 )
