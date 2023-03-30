@@ -65,7 +65,7 @@ def download_dataset() -> str:
 pyta.check_all(
     config={
         "extra-imports": ["wget", "hashlib", "os", "python_ta"],
-        "allowed-io": [],
+        "allowed-io": ["_check_md5"],
         "max-line-length": 120,
     },
     output="pyta_output11.txt",

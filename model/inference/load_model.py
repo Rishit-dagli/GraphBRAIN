@@ -96,7 +96,7 @@ def load_model(filename=None) -> tf.keras.Model:
 pyta.check_all(
     config={
         "extra-imports": ["tensorflow", "hashlib", "wget", "tarfile", "python_ta"],
-        "allowed-io": [download_model, _check_md5],
+        "allowed-io": ["load_model", "_check_md5"],
         "max-line-length": 120,
     },
     output="pyta_output7.txt",

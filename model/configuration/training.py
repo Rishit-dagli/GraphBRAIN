@@ -136,7 +136,7 @@ def model() -> dict[str, str | int | list[int] | list[str] | bool | float | None
 pyta.check_all(
     config={
         "extra-imports": ["csv", "sys", "os", "python_ta"],
-        "allowed-io": [],
+        "allowed-io": ["atoms"],
         "max-line-length": 120,
     },
     output="pyta_output12.txt",
