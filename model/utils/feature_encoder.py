@@ -42,6 +42,7 @@ class FeatureEncoder:
         - total_features: the total number of features
         - feature_mappings: a dictionary mapping feature names to dictionaries mapping feature values to indices
     """
+
     def __init__(self, allowed_feature_sets: dict[str, set]) -> None:
         """Initialize a FeatureEncoder object.
 
@@ -88,6 +89,7 @@ class AtomFeatureEncoder(FeatureEncoder):
         - total_features: the total number of features
         - feature_mappings: a dictionary mapping feature names to dictionaries mapping feature values to indices
     """
+
     def __init__(self, allowed_feature_sets: dict[str, set]) -> None:
         """Initialize an AtomFeatureEncoder object.
 
@@ -151,6 +153,7 @@ class BondFeatureEncoder(FeatureEncoder):
         - total_features: the total number of features
         - feature_mappings: a dictionary mapping feature names to dictionaries mapping feature values to indices
     """
+
     def __init__(self, allowed_feature_sets: dict[str, set]) -> None:
         """Initialize a BondFeatureEncoder object.
 
