@@ -29,11 +29,12 @@ class EdgeNetwork(tf.keras.layers.Layer):
         - built: bool
             Whether the layer has been built
     """
+
     def build(
-            self,
-            input_shape: tf.TensorShape,
-            kernel_initializer: str = "glorot_uniform",
-            bias_initializer: str = "zeros"
+        self,
+        input_shape: tf.TensorShape,
+        kernel_initializer: str = "glorot_uniform",
+        bias_initializer: str = "zeros",
     ) -> None:
         """Build the layer.
 
@@ -102,7 +103,10 @@ class MessagePassing(tf.keras.layers.Layer):
         - edge_update: str
             Type of edge update
     """
-    def __init__(self, units: int, steps: int = 4, edge_update: str = "GRU", **kwargs) -> None:
+
+    def __init__(
+        self, units: int, steps: int = 4, edge_update: str = "GRU", **kwargs
+    ) -> None:
         """Initialize the layer.
 
         Arguments:
@@ -189,8 +193,14 @@ class TransformerEncoderReadout(tf.keras.layers.Layer):
         - average_pooling: tf.keras.layers.GlobalAveragePooling1D
             Global average pooling layer
     """
+
     def __init__(
-            self, num_heads: int = 8, embed_dim: int = 64, dense_dim: int = 512, batch_size: int = 32, **kwargs
+        self,
+        num_heads: int = 8,
+        embed_dim: int = 64,
+        dense_dim: int = 512,
+        batch_size: int = 32,
+        **kwargs
     ) -> None:
         """Initialize the layer.
 
@@ -247,6 +257,7 @@ class PartitionPadding(tf.keras.layers.Layer):
         - batch_size: int
             Batch size
     """
+
     def __init__(self, batch_size: int, **kwargs) -> None:
         """Initialize the layer.
 
@@ -287,15 +298,15 @@ class PartitionPadding(tf.keras.layers.Layer):
 
 
 def create_model(
-        atom_dim: int,
-        bond_dim: int,
-        batch_size: int = 32,
-        message_units: int = 64,
-        message_steps: int = 4,
-        num_attention_heads: int = 8,
-        dense_units: list[int] = [512],
-        activation: list[str] = ["relu"],
-        edge_update: str = "GRU",
+    atom_dim: int,
+    bond_dim: int,
+    batch_size: int = 32,
+    message_units: int = 64,
+    message_steps: int = 4,
+    num_attention_heads: int = 8,
+    dense_units: list[int] = [512],
+    activation: list[str] = ["relu"],
+    edge_update: str = "GRU",
 ) -> tf.keras.Model:
     """Create a model.
     Arguments:
