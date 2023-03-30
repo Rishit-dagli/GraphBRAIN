@@ -133,6 +133,7 @@ def model() -> dict[str, str | int | list[int] | list[str] | bool | float | None
         "strategy": "TPUStrategy",
     }
 
+
 pyta.check_all(
     config={
         "extra-imports": ["csv", "sys", "os", "python_ta"],
