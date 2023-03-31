@@ -1,22 +1,22 @@
 """CSC111 Winter 2023 Final Project: Graph Brain
 
-This Python file defines useful function for converting SMILES strings to graphs.
-
-The application has the following functions:
-_smile_to_molecule(smile: str) -> Chem.rdchem.Mol | None: Return the molecule corresponding to the given SMILES string.
-
-_molecule_to_graph(molecule: Chem.rdchem.Mol) -> tuple[tf.Tensor, tf.Tensor, tf.Tensor]: Return the graph corresponding
-to the given molecule.
-
-smile_to_graph(smiles: list[str]) -> tuple[tf.RaggedTensor, tf.RaggedTensor, tf.RaggedTensor]: Return the graph
-corresponding to the given SMILES strings.
+This Python file defines functions for converting SMILES strings to graphs.
 
 Copyright and Usage Information
 ===============================
-This file is provided solely for the personal and private use of TAs, instructors and its author(s). All forms of
-distribution of this code, whether as given or with any changes, are expressly prohibited.
+Copyright 2023 Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde
 
-This file is Copyright (c) 2023 by Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde."""
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License."""
 
 import rdkit
 from rdkit import Chem
@@ -26,14 +26,14 @@ import einops
 import python_ta as pyta
 
 
-def _smile_to_molecule(smile: str) -> Chem.rdchem.Mol | None:
-    """Return the molecule corresponding to the given SMILES string.
+def _smile_to_molecule(smile: str) -> Chem.rdchem.Mol:
+    """Returns the molecule corresponding to the given SMILES string.
 
     Arguments:
-        smile: a SMILES string
+        smile (str): a SMILES string
 
     Returns:
-        the molecule corresponding to the given SMILES string, None on failure
+        Chem.rdchem.Mol: the molecule corresponding to the given SMILES string
     """
     return Chem.MolFromSmiles(smile, sanitize=True)
 
@@ -41,13 +41,13 @@ def _smile_to_molecule(smile: str) -> Chem.rdchem.Mol | None:
 def _molecule_to_graph(
     molecule: Chem.rdchem.Mol,
 ) -> tuple[tf.Tensor, tf.Tensor, tf.Tensor]:
-    """Return the graph corresponding to the given molecule.
+    """Returns the graph corresponding to the given molecule.
 
     Args:
-        molecule: a molecule
+        molecule (Chem.rdchem.Mol): a molecule
 
     Returns:
-        a tuple of tensors representing the graph corresponding to the given molecule
+        tuple: a tuple of tensors representing the graph corresponding to the given molecule
     """
     atoms = []
     bonds = []
@@ -76,13 +76,13 @@ def _molecule_to_graph(
 def smile_to_graph(
     smiles: list[str],
 ) -> tuple[tf.RaggedTensor, tf.RaggedTensor, tf.RaggedTensor]:
-    """Return the graph corresponding to the given SMILES strings.
+    """Returns the graph corresponding to the given SMILES strings.
 
     Arguments:
-        smiles: a list of SMILES strings
+        smiles lst[str]: a list of SMILES strings
 
     Returns:
-        a tuple of ragged tensors representing the graph corresponding to the given SMILES string
+        tuple: a tuple of ragged tensors representing the graph corresponding to the given SMILES string
     """
     atoms = []
     bonds = []
