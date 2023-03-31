@@ -24,17 +24,17 @@ import python_ta as pyta
 
 
 class FeatureEncoder:
-    """A class that encodes features of atoms and bonds.
+    """A superclass that encodes features of atoms and bonds.
 
     Instance Attributes:
-        - total_features: the total number of features
-        - feature_mappings: a dictionary mapping feature names to dictionaries mapping feature values to indices
+        total_features (int): the total number of features
+        feature_mappings (dict): a dictionary mapping feature names to dictionaries mapping feature values to indices
     """
 
     def __init__(self, allowed_feature_sets: dict[str, set]) -> None:
         """Initializes a FeatureEncoder object.
 
-        Arguments:
+        Args:
             allowed_feature_sets (dict[str, set]): a dictionary mapping feature names to sets of allowed feature values
 
         Returns:
@@ -55,7 +55,7 @@ class FeatureEncoder:
     def encode(self, inputs: tf.Tensor) -> np.ndarray:
         """Encodes the features of an atom or bond.
 
-        Arguments:
+        Args:
             inputs (tf.Tensor): a tensor representing an atom or bond
 
         Returns:
@@ -71,17 +71,17 @@ class FeatureEncoder:
 
 
 class AtomFeatureEncoder(FeatureEncoder):
-    """A class that encodes features of atoms.
+    """A subclass of FeatureEncoder that encodes features of atoms based on allowed_feature_sets.
 
     Instance Attributes:
-        - total_features: the total number of features
-        - feature_mappings: a dictionary mapping feature names to dictionaries mapping feature values to indices
+        - total_features (int): the total number of features
+        - feature_mappings (dict): a dictionary mapping feature names to dictionaries mapping feature values to indices
     """
 
     def __init__(self, allowed_feature_sets: dict[str, set]) -> None:
         """Initializes an AtomFeatureEncoder object.
 
-        Arguments:
+        Args:
             allowed_feature_sets (dict[str, set]): a dictionary mapping feature names to sets of allowed feature values
 
         Returns:
@@ -92,7 +92,7 @@ class AtomFeatureEncoder(FeatureEncoder):
     def element(self, atom: tf.Tensor) -> str:
         """Returns the atomic symbol of an atom.
 
-        Arguments:
+        Args:
             atom (tf.Tensor): a tensor representing an atom
 
         Returns:
@@ -103,7 +103,7 @@ class AtomFeatureEncoder(FeatureEncoder):
     def valence_electrons(self, atom: tf.Tensor) -> int:
         """Returns the number of valence electrons of an atom.
 
-        Arguments:
+        Args:
             atom (tf.Tensor): a tensor representing an atom
 
         Returns:
@@ -112,41 +112,41 @@ class AtomFeatureEncoder(FeatureEncoder):
         return atom.GetTotalValence()
 
     def hydrogen_bonds(self, atom: tf.Tensor) -> int:
-        """Return the number of hydrogen bonds of an atom.
+        """Returns the number of hydrogen bonds of an atom.
 
-        Arguments:
-            atom: a tensor representing an atom
+        Args:
+            atom (tf.Tensor): a tensor representing an atom
 
         Returns:
-            the number of hydrogen bonds of an atom
+            str: the number of hydrogen bonds of an atom
         """
         return atom.GetTotalNumHs()
 
     def orbital_hybridization(self, atom: tf.Tensor) -> str:
-        """Return the orbital hybridization of an atom.
+        """Returns the orbital hybridization of an atom.
 
         Arguments:
-            atom: a tensor representing an atom
+            atom (tf.Tensor): a tensor representing an atom
 
         Returns:
-            the orbital hybridization of an atom
+            str: the orbital hybridization of an atom
         """
         return atom.GetHybridization().name.lower()
 
 
 class BondFeatureEncoder(FeatureEncoder):
-    """A class that encodes features of bonds.
+    """A subclass of FeatureEncoder that encodes features of bonds based on the dict allowed_feature_sets.
 
     Instance Attributes:
-        - total_features: the total number of features
-        - feature_mappings: a dictionary mapping feature names to dictionaries mapping feature values to indices
+        total_features (int): the total number of features
+        feature_mappings (dict): a dictionary mapping feature names to dictionaries mapping feature values to indices
     """
 
     def __init__(self, allowed_feature_sets: dict[str, set]) -> None:
-        """Initialize a BondFeatureEncoder object.
+        """Initializes a BondFeatureEncoder object.
 
-        Arguments:
-            allowed_feature_sets: a dictionary mapping feature names to sets of allowed feature values
+        Args:
+            allowed_feature_sets (dict[str, set]): a dictionary mapping feature names to sets of allowed feature values
 
         Returns:
             None
@@ -155,13 +155,13 @@ class BondFeatureEncoder(FeatureEncoder):
         self.total_features += 1
 
     def encode(self, bond: tf.Tensor) -> np.ndarray:
-        """Encode the features of a bond.
+        """Encodes the features of a bond.
 
-        Arguments:
-            bond: a tensor representing a bond
+        Args:
+            bond (tf.Tensor): a tensor representing a bond
 
         Returns:
-            a numpy array representing the encoded features
+            np.ndarray: a numpy array representing the encoded features
         """
         output = np.zeros((self.total_features,))
         if bond is None:
@@ -171,24 +171,24 @@ class BondFeatureEncoder(FeatureEncoder):
         return output
 
     def bond_type(self, bond: tf.Tensor) -> str:
-        """Return the bond type of a bond.
+        """Returns the bond type of a bond.
 
-        Arguments:
-            bond: a tensor representing a bond
+        Args:
+            bond (tf.Tensor): a tensor representing a bond
 
         Returns:
-            the bond type of a bond
+            str: the bond type of a bond
         """
         return bond.GetBondType().name.lower()
 
     def conjugation_state(self, bond: tf.Tensor) -> bool:
         """Return the conjugation state of a bond.
 
-        Arguments:
-            bond: a tensor representing a bond
+        Args:
+            bond (tf.Tensor): a tensor representing a bond
 
         Returns:
-            the conjugation state of a bond
+            bool: the conjugation state of a bond
         """
         return bond.GetIsConjugated()
 
