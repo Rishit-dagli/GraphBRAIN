@@ -42,7 +42,7 @@ def _check_md5(filename: str) -> bool:
         filename (str): A string representing the name of the downloaded file.
 
     Returns:
-        A boolean value indicating whether the MD5 checksum matches or not.
+        bool: A boolean value indicating whether the MD5 checksum matches or not.
     """
     expected_md5 = "294354a8981426b9d83ea05d65ea0d1b"
     with open(filename, "rb") as f:
@@ -55,7 +55,7 @@ def download_periodic() -> str:
     """Downloads the periodic table dataset if it is not already downloaded.
 
     Returns:
-        A string representing the name of the downloaded file.
+        str: A string representing the name of the downloaded file.
 
     Raises:
         ValueError: If the MD5 checksum of the downloaded dataset does not match.

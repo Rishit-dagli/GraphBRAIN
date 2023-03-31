@@ -40,7 +40,7 @@ def repeatx(x: tf.Tensor, num: int) -> tf.Tensor:
         num (int): Number of times to repeat.
 
     Returns:
-        Repeated tensor.
+        tf.Tensor: Repeated tensor.
     """
     letter = "a"
     formula = ""
@@ -59,7 +59,7 @@ def merged_batch(x_batch: tuple, y_batch: tf.Tensor) -> tuple:
         y_batch (tf.Tensor): Labels.
 
     Returns:
-        Tuple of atom features, bond features, pair indices, and molecule indicator.
+        tuple: Tuple of atom features, bond features, pair indices, and molecule indicator.
     """
     atom_features, bond_features, pair_indices = x_batch
     num_atoms = atom_features.row_lengths()

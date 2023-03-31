@@ -38,7 +38,7 @@ def predict(smile: list, model: tf.keras.Model) -> tf.Tensor:
         model (tf.keras.Model): The model to use to make the prediction.
 
     Returns:
-        The predicted permeability of the SMILES string as a `tf.Tensor` object.
+        tf.Tensor: The predicted permeability of the SMILES string as a `tf.Tensor` object.
     """
     smile_data = loader(
         smile_to_graph(smile), pd.Series([0.0]), batch_size=1, shuffle=False
