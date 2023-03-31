@@ -1,38 +1,36 @@
 """CSC111 Winter 2023 Final Project: Graph Brain
 
-This Python file defines useful function for loading the model.
-
-The application has the following functions:
-_download() -> srt: Download the model from the given URL.
-
-_check_md5(filename: str) -> bool: Check the MD5 checksum of the given file.
-
-download_model() -> str: Download the model from the given URL.
-
-load_model(filename=None) -> tf.keras.Model: Load the model from the given filename.
+This Python file defines functions for loading the model.
 
 Copyright and Usage Information
 ===============================
-This file is provided solely for the personal and private use of TAs, instructors and its author(s). All forms of
-distribution of this code, whether as given or with any changes, are expressly prohibited.
+Copyright 2023 Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde
 
-This file is Copyright (c) 2023 by Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde."""
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License."""
 
 import wget
 import hashlib
 import tensorflow as tf
 import tarfile
 import python_ta as pyta
+from typing import Optional
 
 
 def _download() -> str:
-    """Download the model from the given URL.
-
-    Arguments:
-        None
+    """Downloads the model from the given URL.
 
     Returns:
-        The filename of the downloaded model.
+        str: The filename (str) of the downloaded model.
     """
     url = "http://store.rishit.tech/model.tar.gz"
     filename = wget.download(url)
@@ -40,13 +38,13 @@ def _download() -> str:
 
 
 def _check_md5(filename: str) -> bool:
-    """Check the MD5 checksum of the given file.
+    """Checks the MD5 checksum of the given file.
 
-    Arguments:
-        filename: The filename of the file to check.
+    Args:
+        filename (str): The filename of the file to check.
 
     Returns:
-        True if the MD5 checksum of the file matches the expected checksum, False otherwise.
+        bool: True if the MD5 checksum of the file matches the expected checksum, False otherwise.
     """
     expected_md5 = "fcd1cf90bf9f6a87328a5e1b18b1a637"
     with open(filename, "rb") as f:
@@ -55,13 +53,10 @@ def _check_md5(filename: str) -> bool:
 
 
 def download_model() -> str:
-    """Download the model from the given URL.
-
-    Arguments:
-        None
+    """Downloads the model from the given URL.
 
     Returns:
-        The filename of the downloaded model.
+        str: The filename of the downloaded model.
 
     Raises:
         ValueError: If the MD5 checksum of the downloaded file does not match the expected checksum.
@@ -75,14 +70,14 @@ def download_model() -> str:
         raise ValueError("MD5 Checksum failed")
 
 
-def load_model(filename=None) -> tf.keras.Model:
-    """Load the model from the given filename.
+def load_model(filename: Optional[str] = None) -> tf.keras.Model:
+    """Loads the model from the given filename.
 
-    Arguments:
-        filename: The filename of the model to load.
+    Args:
+        filename (Optional[str]): The filename of the model to load.
 
     Returns:
-        The loaded model.
+        tf.keras.Model: The loaded model.
     """
     if filename is None:
         filename = download_model()
@@ -95,7 +90,7 @@ def load_model(filename=None) -> tf.keras.Model:
 
 pyta.check_all(
     config={
-        "extra-imports": ["tensorflow", "hashlib", "wget", "tarfile", "python_ta"],
+        "extra-imports": ["tensorflow", "hashlib", "wget", "tarfile", "typing", "python_ta"],
         "allowed-io": ["load_model", "_check_md5"],
         "max-line-length": 120,
     },
