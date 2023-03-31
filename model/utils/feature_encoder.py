@@ -2,33 +2,21 @@
 
 This Python file defines useful function for encoding features of atoms and bonds.
 
-The application has the following functions:
-
-FeatureEncoder: A class that encodes features of atoms and bonds.
-    encode(self, inputs: tf.Tensor) -> np.ndarray: Encode the features of an atom or bond.
-
-AtomFeatureEncoder: A class that encodes features of atoms.
-    element(self, atom: tf.Tensor) -> str: Return the atomic symbol of an atom.
-
-    hydrogen_bonds(self, atom: tf.Tensor) -> int: Return the number of hydrogen bonds of an atom.
-
-    orital_hybridization(self, atom: tf.Tensor) -> str: Return the orbital hybridization of an atom.
-
-    valence_electrons(self, atom: tf.Tensor) -> int: Return the number of valence electrons of an atom.
-
-BondFeatureEncoder: A class that encodes features of bonds.
-    bond_type(self, bond: tf.Tensor) -> str: Return the type of a bond.
-
-    conjugation_state(self, bond: tf.Tensor) -> bool: Return the conjugation state of a bond.
-
-    encode(self, bond: tf.Tensor) -> np.ndarray: Encode the features of a bond.
-
 Copyright and Usage Information
 ===============================
-This file is provided solely for the personal and private use of TAs, instructors and its author(s). All forms of
-distribution of this code, whether as given or with any changes, are expressly prohibited.
+Copyright 2023 Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde
 
-This file is Copyright (c) 2023 by Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde."""
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License."""
 
 import tensorflow as tf
 import numpy as np
@@ -44,10 +32,10 @@ class FeatureEncoder:
     """
 
     def __init__(self, allowed_feature_sets: dict[str, set]) -> None:
-        """Initialize a FeatureEncoder object.
+        """Initializes a FeatureEncoder object.
 
         Arguments:
-            allowed_feature_sets: a dictionary mapping feature names to sets of allowed feature values
+            allowed_feature_sets (dict[str, set]): a dictionary mapping feature names to sets of allowed feature values
 
         Returns:
             None
@@ -65,13 +53,13 @@ class FeatureEncoder:
             self.total_features += len(feature_set)
 
     def encode(self, inputs: tf.Tensor) -> np.ndarray:
-        """Encode the features of an atom or bond.
+        """Encodes the features of an atom or bond.
 
         Arguments:
-            inputs: a tensor representing an atom or bond
+            inputs (tf.Tensor): a tensor representing an atom or bond
 
         Returns:
-            a numpy array representing the encoded features
+            np.ndarray: a numpy array representing the encoded features
         """
         output = np.zeros((self.total_features,))
         for feature_name, feature_mapping in self.feature_mappings.items():
@@ -91,10 +79,10 @@ class AtomFeatureEncoder(FeatureEncoder):
     """
 
     def __init__(self, allowed_feature_sets: dict[str, set]) -> None:
-        """Initialize an AtomFeatureEncoder object.
+        """Initializes an AtomFeatureEncoder object.
 
         Arguments:
-            allowed_feature_sets: a dictionary mapping feature names to sets of allowed feature values
+            allowed_feature_sets (dict[str, set]): a dictionary mapping feature names to sets of allowed feature values
 
         Returns:
             None
@@ -102,24 +90,24 @@ class AtomFeatureEncoder(FeatureEncoder):
         super().__init__(allowed_feature_sets)
 
     def element(self, atom: tf.Tensor) -> str:
-        """Return the atomic symbol of an atom.
+        """Returns the atomic symbol of an atom.
 
         Arguments:
-            atom: a tensor representing an atom
+            atom (tf.Tensor): a tensor representing an atom
 
         Returns:
-            the atomic symbol of an atom
+            str: the atomic symbol of an atom
         """
         return atom.GetSymbol()
 
     def valence_electrons(self, atom: tf.Tensor) -> int:
-        """Return the number of valence electrons of an atom.
+        """Returns the number of valence electrons of an atom.
 
         Arguments:
-            atom: a tensor representing an atom
+            atom (tf.Tensor): a tensor representing an atom
 
         Returns:
-            the number of valence electrons of an atom
+            int: the number of valence electrons of an atom
         """
         return atom.GetTotalValence()
 
