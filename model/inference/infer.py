@@ -1,16 +1,22 @@
 """CSC111 Winter 2023 Final Project: Graph Brain
 
-This Python file defines useful function for connecting the model to the website.
-
-The application has the following functions:
-predict(smile: list, model: tf.keras.Model) -> float: Predict the permeability of the given SMILES string.
+This Python file defines functions for connecting the model to the website.
 
 Copyright and Usage Information
 ===============================
-This file is provided solely for the personal and private use of TAs, instructors and its author(s). All forms of
-distribution of this code, whether as given or with any changes, are expressly prohibited.
+Copyright 2023 Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde
 
-This file is Copyright (c) 2023 by Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde."""
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License."""
 
 import tensorflow as tf
 import sys
@@ -24,15 +30,15 @@ from utils.conversions import smile_to_graph
 from dataset.loader import loader
 
 
-def predict(smile: list, model: tf.keras.Model) -> float:
-    """Predict the permeability of the given SMILES string.
+def predict(smile: list, model: tf.keras.Model) -> tf.Tensor:
+    """Predicts the permeability of the given SMILES string.
 
     Arguments:
-        smile: The SMILES string to predict the permeability of.
-        model: The model to use to make the prediction.
+        smile (list): The SMILES string (represented as a list) to predict the permeability of.
+        model (tf.keras.Model): The model to use to make the prediction.
 
     Returns:
-        The predicted permeability of the SMILES string.
+        The predicted permeability of the SMILES string as a `tf.Tensor` object.
     """
     smile_data = loader(
         smile_to_graph(smile), pd.Series([0.0]), batch_size=1, shuffle=False
