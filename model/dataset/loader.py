@@ -1,32 +1,22 @@
 """CSC111 Winter 2023 Final Project: Graph Brain
 
-This Python file defines useful function for loading data into a tf.data.Dataset.
-
-The application has the following functions:
-    - repeatx(x: tf.TypeSpec, num) -> tf.Tensor: Repeat a tensor along a new axis.
-
-    - merged_batch(x_batch, y_batch) -> tuple: Merge the batch dimension with the atom dimension.
-
-    - loader(x: tf.TypeSpec, y: tf.TypeSpec, batch_size: int = 32, shuffle: bool = True,
-                autotune: bool = True, prefetech_buffer_size: int = 2,
-                shuffle_buffer_size: int = 1000) -> tf.data.Dataset: Load data into a tf.data.Dataset.
-
-    - load_dataset(dataset: str, batch_size: int = 32, shuffle: bool = True,
-                    autotune: bool = True, prefetech_buffer_size: int = 2,
-                    shuffle_buffer_size: int = 1000) -> tf.data.Dataset: Load a dataset into a
-                    tf.data.Dataset.
-
-    - load_smiles(smiles: str, batch_size: int = 32, shuffle: bool = True,
-                    autotune: bool = True, prefetech_buffer_size: int = 2,
-                    shuffle_buffer_size: int = 1000) -> tf.data.Dataset: Load a SMILES string into a
-                    tf.data.Dataset.
+This Python file defines functions for loading data into a tf.data.Dataset.
 
 Copyright and Usage Information
 ===============================
-This file is provided solely for the personal and private use of TAs, instructors and its author(s). All forms of
-distribution of this code, whether as given or with any changes, are expressly prohibited.
+Copyright 2023 Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde
 
-This file is Copyright (c) 2023 by Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde."""
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License."""
 
 import tensorflow as tf
 import einops
@@ -42,11 +32,12 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from utils.conversions import smile_to_graph
 
 
-def repeatx(x: tf.TypeSpec, num) -> tf.Tensor:
-    """Repeat a tensor along a new axis.
-    Arguments:
-        x: Tensor to repeat.
-        num: Number of times to repeat.
+def repeatx(x: tf.Tensor, num: int) -> tf.Tensor:
+    """Repeats a tensor along a new axis.
+
+    Args:
+        x (tf.TypeSpec): Tensor to repeat.
+        num (int): Number of times to repeat.
 
     Returns:
         Repeated tensor.
@@ -60,12 +51,12 @@ def repeatx(x: tf.TypeSpec, num) -> tf.Tensor:
     return einops.repeat(x, f"{formula}-> ({formula} b)", b=num)
 
 
-def merged_batch(x_batch, y_batch) -> tuple:
-    """Merge the batch dimension with the atom dimension.
+def merged_batch(x_batch: tuple, y_batch: tf.Tensor) -> tuple:
+    """Merges the batch dimension with the atom dimension.
 
-    Arguments:
-        x_batch: Tuple of atom features, bond features, and pair indices.
-        y_batch: Labels.
+    Args:
+        x_batch (tuple): Tuple of atom features, bond features, and pair indices.
+        y_batch (tf.Tensor): Labels.
 
     Returns:
         Tuple of atom features, bond features, pair indices, and molecule indicator.
@@ -95,17 +86,17 @@ def loader(
     shuffle_buffer_size: int = 1024,
     num_parallel_calls: int = 8,
 ) -> tf.data.Dataset:
-    """Create a tf.data.Dataset from a tuple of features and labels.
+    """Creates a tf.data.Dataset from a tuple of features and labels.
 
-    Arguments:
-        x: Tuple of atom features, bond features, and pair indices.
-        y: Labels.
-        batch_size: Batch size.
-        shuffle: Whether to shuffle the dataset.
-        autotune: Whether to use tf.data.AUTOTUNE.
-        prefetech_buffer_size: Prefetch buffer size.
-        shuffle_buffer_size: Shuffle buffer size.
-        num_parallel_calls: Number of parallel calls.
+    Args:
+        x (tf.TypeSpec): Tuple of atom features, bond features, and pair indices.
+        y (tf.TypeSpec): Labels.
+        batch_size (int): Batch size.
+        shuffle (bool): Whether to shuffle the dataset.
+        autotune (bool): Whether to use tf.data.AUTOTUNE.
+        prefetech_buffer_size (int): Prefetch buffer size.
+        shuffle_buffer_size (int): Shuffle buffer size.
+        num_parallel_calls (int): Number of parallel calls.
 
     Returns:
         tf.data.Dataset.
@@ -129,17 +120,22 @@ def loader(
     )
 
 
-def split_data(data, train_size=0.8, val_size=0.15, test_size=0.05) -> tuple:
-    """Split the data into train, validation, and test sets.
+def split_data(
+    data: pd.DataFrame,
+    train_size: float = 0.8,
+    val_size: float = 0.15,
+    test_size: float = 0.05
+) -> tuple:
+    """Splits the data into train, validation, and test sets.
 
-    Arguments:
-        data: Pandas dataframe.
-        train_size: Fraction of data to use for training.
-        val_size: Fraction of data to use for validation.
-        test_size: Fraction of data to use for testing.
+    Args:
+        data (pd.DataFrame): Pandas dataframe.
+        train_size (float): Fraction of data to use for training.
+        val_size (float): Fraction of data to use for validation.
+        test_size (float): Fraction of data to use for testing.
 
     Returns:
-        Tuple of train, validation, and test sets.
+        tuple: Tuple of train, validation, and test sets.
     """
     permuted_indices = np.random.permutation(np.arange(data.shape[0]))
     train_index = permuted_indices[: int(data.shape[0] * train_size)]
@@ -159,18 +155,21 @@ def split_data(data, train_size=0.8, val_size=0.15, test_size=0.05) -> tuple:
 
 
 def bbbp_dataset(
-    filename="BBBP.csv", train_size=0.8, val_size=0.15, test_size=0.05
+    filename: str = "BBBP.csv",
+    train_size: float = 0.8,
+    val_size: float = 0.15,
+    test_size: float = 0.05
 ) -> tuple:
-    """Load the BBBP dataset.
+    """Loads the BBBP dataset.
 
-    Arguments:
-        filename: Name of the file containing the dataset.
-        train_size: Fraction of data to use for training.
-        val_size: Fraction of data to use for validation.
-        test_size: Fraction of data to use for testing.
+    Args:
+        filename (str): Name of the file containing the dataset.
+        train_size (float): Fraction of data to use for training.
+        val_size (float): Fraction of data to use for validation.
+        test_size (float): Fraction of data to use for testing.
 
     Returns:
-        Tuple of train, validation, and test sets.
+        tuple: Tuple of train, validation, and test sets.
     """
     if not os.path.exists(filename):
         raise ValueError("Dataset not found. Please download the dataset first.")
