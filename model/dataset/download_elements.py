@@ -25,7 +25,7 @@ import python_ta as pyta
 
 
 def _download() -> str:
-    """Download the periodic table dataset from the internet.
+    """Downloads the periodic table dataset from the internet.
 
     Returns:
         A string representing the name of the downloaded file.
