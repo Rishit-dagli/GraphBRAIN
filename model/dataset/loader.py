@@ -124,7 +124,7 @@ def split_data(
     data: pd.DataFrame,
     train_size: float = 0.8,
     val_size: float = 0.15,
-    test_size: float = 0.05
+    test_size: float = 0.05,
 ) -> tuple:
     """Splits the data into train, validation, and test sets.
 
@@ -158,7 +158,7 @@ def bbbp_dataset(
     filename: str = "BBBP.csv",
     train_size: float = 0.8,
     val_size: float = 0.15,
-    test_size: float = 0.05
+    test_size: float = 0.05,
 ) -> tuple:
     """Loads the BBBP dataset.
 
