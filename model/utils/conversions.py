@@ -29,7 +29,7 @@ import python_ta as pyta
 def _smile_to_molecule(smile: str) -> Chem.rdchem.Mol:
     """Returns the molecule corresponding to the given SMILES string.
 
-    Arguments:
+    Args:
         smile (str): a SMILES string
 
     Returns:
@@ -78,7 +78,7 @@ def smile_to_graph(
 ) -> tuple[tf.RaggedTensor, tf.RaggedTensor, tf.RaggedTensor]:
     """Returns the graph corresponding to the given SMILES strings.
 
-    Arguments:
+    Args:
         smiles lst[str]: a list of SMILES strings
 
     Returns:
