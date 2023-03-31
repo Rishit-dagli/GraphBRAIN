@@ -169,7 +169,8 @@ class MessagePassing(tf.keras.layers.Layer):
 
 
 class TransformerEncoderReadout(tf.keras.layers.Layer):
-    """Transformer encoder readout layer.
+    """Transformer encoder readout layer. This layer applies multi-head attention and dense projection
+    to the input tensor and returns a global average pooling of the output.
 
     Instance Attributes:
         partition_padding (PartitionPadding): Partition padding layer
@@ -232,7 +233,8 @@ class TransformerEncoderReadout(tf.keras.layers.Layer):
 
 
 class PartitionPadding(tf.keras.layers.Layer):
-    """Partition padding layer.
+    """Partition padding layer. This layer applies padding to atom feature tensors based on a partition function.
+    The padding is necessary because the input data can have varying numbers of atoms per molecule.
 
     Instance Attributes:
         batch_size (int): Batch size
