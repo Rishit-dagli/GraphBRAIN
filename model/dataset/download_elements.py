@@ -1,18 +1,22 @@
 """CSC111 Winter 2023 Final Project: Graph Brain
 
-This Python file defines useful function for downloading the periodic table dataset.
-
-The application has the following functions:
-- _download() -> str: Download the periodic table dataset from the internet.
-- _check_md5(filename: str) -> bool: Check the MD5 checksum of the downloaded file.
-- download_dataset() -> str: Download the periodic table dataset if it is not already downloaded.
+This Python file defines  function for downloading the periodic table dataset.
 
 Copyright and Usage Information
 ===============================
-This file is provided solely for the personal and private use of TAs, instructors and its author(s). All forms of
-distribution of this code, whether as given or with any changes, are expressly prohibited.
+Copyright 2023 Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde
 
-This file is Copyright (c) 2023 by Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde."""
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License."""
 
 import wget
 import hashlib
@@ -24,7 +28,7 @@ def _download() -> str:
     """Download the periodic table dataset from the internet.
 
     Returns:
-        the name of the downloaded file.
+        A string representing the name of the downloaded file.
     """
     url = "http://store.rishit.tech/periodictable.csv"
     filename = wget.download(url)
@@ -32,13 +36,13 @@ def _download() -> str:
 
 
 def _check_md5(filename: str) -> bool:
-    """Check the MD5 checksum of the downloaded file.
+    """Checks the MD5 checksum of the downloaded file.
 
-    Arguments:
-        filename: the name of the downloaded file.
+    Args:
+        filename (str): A string representing the name of the downloaded file.
 
     Returns:
-        True if the MD5 checksum matches, False otherwise.
+        A boolean value indicating whether the MD5 checksum matches or not.
     """
     expected_md5 = "294354a8981426b9d83ea05d65ea0d1b"
     with open(filename, "rb") as f:
@@ -48,10 +52,13 @@ def _check_md5(filename: str) -> bool:
 
 
 def download_periodic() -> str:
-    """Download the periodic table dataset if it is not already downloaded.
+    """Downloads the periodic table dataset if it is not already downloaded.
 
     Returns:
-        the name of the downloaded file.
+        A string representing the name of the downloaded file.
+
+    Raises:
+        ValueError: If the MD5 checksum of the downloaded dataset does not match.
     """
     if not os.path.exists("periodictable.csv"):
         print("Downloading Periodic Table dataset...")
