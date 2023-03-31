@@ -28,7 +28,7 @@ def _download() -> str:
     """Downloads the BBBP dataset from the Rishit's website.
 
     Returns:
-        The filename of the downloaded dataset as a string.
+        str: The filename of the downloaded dataset as a string.
     """
     url = "http://store.rishit.tech/BBBP.csv"
     filename = wget.download(url)
@@ -42,7 +42,7 @@ def _check_md5(filename: str) -> bool:
         filename (str): A string representing the filename of the downloaded dataset.
 
     Returns:
-        A boolean value indicating whether the MD5 checksum matches or not.
+        bool: A boolean value indicating whether the MD5 checksum matches or not.
     """
     expected_md5 = "66286cb9e6b148bd75d80c870df580fb"
     with open(filename, "rb") as f:
@@ -54,7 +54,7 @@ def download_dataset() -> str:
     """Downloads the BBBP dataset if it is not already downloaded.
 
     Returns:
-        A string representing the filename of the downloaded dataset.
+        str: A string representing the filename of the downloaded dataset.
 
     Raises:
         ValueError: If the MD5 checksum of the downloaded dataset does not match.
