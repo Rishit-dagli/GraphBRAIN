@@ -23,8 +23,9 @@ import sys
 import os
 import python_ta as pyta
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from configuration.training import atoms, bonds
+sys.path.append(".")
+from model.configuration.training import atoms, bonds
+from model.utils.feature_encoder import AtomFeatureEncoder, BondFeatureEncoder
 
 
 def atom_feature_encoder() -> AtomFeatureEncoder:

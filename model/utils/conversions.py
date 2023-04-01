@@ -28,14 +28,19 @@ import python_ta as pyta
 
 def _smile_to_molecule(smile: str) -> Chem.rdchem.Mol:
     """Returns the molecule corresponding to the given SMILES string.
-
+    
     Args:
         smile (str): a SMILES string
 
     Returns:
         Chem.rdchem.Mol: the molecule corresponding to the given SMILES string
     """
-    return Chem.MolFromSmiles(smile, sanitize=True)
+    molecule = Chem.MolFromSmiles(smile, sanitize=False)
+    flag = Chem.SanitizeMol(molecule, catchErrors=True)
+    if flag != Chem.SanitizeFlags.SANITIZE_NONE:
+        Chem.SanitizeMol(molecule, sanitizeOps=Chem.SanitizeFlags.SANITIZE_ALL ^ flag)
+    Chem.AssignStereochemistry(molecule, cleanIt=True, force=True)
+    return molecule
 
 
 def _molecule_to_graph(

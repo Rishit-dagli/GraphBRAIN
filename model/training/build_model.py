@@ -74,15 +74,13 @@ class EdgeNetwork(tf.keras.layers.Layer):
             tf.Tensor: Aggregated features
         """
         atom_features, bond_features, pair_indices = inputs
-        bond_features = tf.einsum("ik,kj->ij", [bond_features, self.kernel]) + self.bias
+        bond_features = tf.matmul(bond_features, self.kernel) + self.bias
         bond_features = tf.reshape(bond_features, (-1, self.atom_dim, self.atom_dim))
         atom_features_neighbors = tf.gather(atom_features, pair_indices[:, 1])
         atom_features_neighbors = einops.rearrange(
             atom_features_neighbors, "... -> ... ()"
         )
-        transformed_features = tf.einsum(
-            "ik,kj->ij", [bond_features, atom_features_neighbors]
-        )
+        transformed_features = tf.matmul(bond_features, atom_features_neighbors)
         transformed_features = einops.rearrange(transformed_features, "... () -> ...")
         aggregated_features = tf.math.unsorted_segment_sum(
             transformed_features,
@@ -140,7 +138,7 @@ class MessagePassing(tf.keras.layers.Layer):
                 self.atom_dim + self.pad_length
             )
         else:
-            self.update_step = tf.keras.layers.StackedRNNCell(
+            self.update_step = tf.keras.layers.StackedRNNCells(
                 self.atom_dim + self.pad_length
             )
         self.built = True
@@ -182,13 +180,8 @@ class TransformerEncoderReadout(tf.keras.layers.Layer):
     """
 
     def __init__(
-        self,
-        num_heads: int = 8,
-        embed_dim: int = 64,
-        dense_dim: int = 512,
-        batch_size: int = 32,
-        **kwargs
-    ) -> None:
+        self, num_heads=8, embed_dim=64, dense_dim=[512], batch_size=32, **kwargs
+    ):
         """Initializes the layer.
 
         Args:
@@ -205,8 +198,8 @@ class TransformerEncoderReadout(tf.keras.layers.Layer):
         self.partition_padding = PartitionPadding(batch_size)
         self.attention = tf.keras.layers.MultiHeadAttention(num_heads, embed_dim)
         self.dense_proj = tf.keras.Sequential(
-            [
-                tf.keras.layers.Dense(dense_dim, activation="relu"),
+            [tf.keras.layers.Dense(i, activation="relu") for i in dense_dim]
+            + [
                 tf.keras.layers.Dense(embed_dim),
             ]
         )

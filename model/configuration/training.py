@@ -21,8 +21,8 @@ limitations under the License."""
 import sys
 import os
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from dataset.download_elements import download_periodic
+sys.path.append(".")
+from model.dataset.download_elements import download_periodic
 import csv
 import python_ta as pyta
 from typing import Union
@@ -94,6 +94,10 @@ def edge_network() -> dict[str, str]:
     }
 
 
+def data_splits():
+    return {"train": 0.8, "validation": 0.1, "test": 0.1, "shuffle_buffer_size": 1024}
+
+
 def model() -> dict[str, Union[str, int, list[Union[int, str]], bool, float, None]]:
     """Returns a dictionary of model features.
 
@@ -125,7 +129,7 @@ def model() -> dict[str, Union[str, int, list[Union[int, str]], bool, float, Non
         - 'save_model': A boolean representing whether or not to save the trained model.
         - 'epochs': An integer representing the number of training epochs.
         - 'strategy': A string representing the type of strategy for distributed training.
-    """
+
     # At the moment we only support the following few naive customizations.
     return {
         # Either GRU, LSTM, SimpleRNN or StackedRNN
@@ -145,29 +149,42 @@ def model() -> dict[str, Union[str, int, list[Union[int, str]], bool, float, Non
         # squared_hinge, hinge, categorical_hinge, logcosh, kullback_leibler_divergence,
         # poisson, cosine_proximity
         "loss": "binary_crossentropy",
-        # Either adam, rmsprop, adagrad, adadelta, adamax, nadam, Lion, AdamW
+        # Either adam, rmsprop, adagrad, adadelta, adafactor, adamax, nadam, lion, adamw, ftrl, sgd
         "optimizer": "adam",
         "learning_rate": 0.001,
         "beta_1": 0.9,
         "beta_2": 0.999,
         "epsilon": 1e-07,
+        "amsgrad": False,
+        "rho": 0.9,
+        "centered": False,
         "weight_decay": None,
+        "initial_accumulator_value": 0.1,
+        "beta_2_decay": -0.8,
+        "epsilon_1": 1e-30,
+        "epsilon_2": 0.001,
+        "clip_threshold": 1.0,
         "momentum": None,
         "nesterov": False,
         "clipnorm": None,
         "clipvalue": None,
         "use_ema": False,
         "ema_momentum": 0.99,
-        # Either accuracy, binary_accuracy, categorical_accuracy, top_k_categorical_accuracy,
-        # sparse_top_k_categorical_accuracy, AUC, loss
+        "learning_rate_power": -0.5,
+        "l1_regularization_strength": 0.0,
+        "l2_regularization_strength": 0.0,
+        "l2_shrinkage_regularization_strength": 0.0,
+        "beta": 0.0,
+        # Use any combination of AUC, accuracy, loss, kl
         "metrics": ["loss", "AUC"],
         "tensorboard": True,
         "plot_model": True,
         "save_model": True,
-        "epochs": 200,
+        "epochs": 1,
         # Either MirroredStrategy, TPUStrategy, MultiWorkerMirroredStrategy,
-        # CentralStorageStrategy, ParameterServerStrategy
-        "strategy": "TPUStrategy",
+        # CentralStorageStrategy, ParameterServerStrategy or None
+        "strategy": None,
+        "cluster_resolver": None,
     }
 
 

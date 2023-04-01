@@ -27,9 +27,9 @@ import sys
 import os
 import python_ta as pyta
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-
-from utils.conversions import smile_to_graph
+sys.path.append(".")
+from model.utils.conversions import smile_to_graph
+from model.dataset.download_dataset import download_dataset
 
 
 def repeatx(x: tf.Tensor, num: int) -> tf.Tensor:
@@ -66,7 +66,9 @@ def merged_batch(x_batch: tuple, y_batch: tf.Tensor) -> tuple:
     num_bonds = bond_features.row_lengths()
     molecule_indices = tf.cumsum(tf.ones_like(num_atoms)) - tf.ones_like(num_atoms)
     molecule_indicator = tf.repeat(molecule_indices, num_atoms)
+    molecule_indicator = tf.repeat(molecule_indices, num_atoms)
     gather_indices = tf.repeat(molecule_indices[:-1], num_bonds[1:])
+    increment = tf.cumsum(num_atoms[:-1])
     increment = tf.cumsum(num_atoms[:-1])
     increment = tf.pad(tf.gather(increment, gather_indices), [(num_bonds[0], 0)])
     pair_indices = pair_indices.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
@@ -103,10 +105,7 @@ def loader(
     """
     dataset = tf.data.Dataset.from_tensor_slices((x, (y)))
     if shuffle:
-        if autotune:
-            dataset = dataset.shuffle(tf.data.AUTOTUNE)
-        else:
-            dataset = dataset.shuffle(shuffle_buffer_size)
+        dataset = dataset.shuffle(buffer_size=shuffle_buffer_size)
     if autotune:
         return (
             dataset.batch(batch_size)
