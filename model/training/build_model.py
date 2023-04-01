@@ -1,11 +1,55 @@
+"""CSC111 Winter 2023 Final Project: Graph Brain
+
+This Python file defines useful function for building the model.
+
+Copyright and Usage Information
+===============================
+Copyright 2023 Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License."""
+
 import tensorflow as tf
 import einops
+import python_ta as pyta
 
 
 class EdgeNetwork(tf.keras.layers.Layer):
+    """Edge network for message passing.
+
+    Instance Attributes:
+        atom_dim (int): Dimension of atom features
+        bond_dim (int): Dimension of bond features
+        kernel (tf.Tensor): Kernel for edge network
+        bias (tf.Tensor): Bias for edge network
+        built (bool): Whether the layer has been built
+    """
+
     def build(
-        self, input_shape, kernel_initializer="glorot_uniform", bias_initializer="zeros"
-    ):
+        self,
+        input_shape: tf.TensorShape,
+        kernel_initializer: str = "glorot_uniform",
+        bias_initializer: str = "zeros",
+    ) -> None:
+        """Builds the layer.
+
+        Args:
+            input_shape (tf.TensorShape): Shape of input
+            kernel_initializer (str, optional): Initializer for kernel. Defaults to "glorot_uniform".
+            bias_initializer (str, optional): Initializer for bias. Defaults to "zeros".
+
+        Returns:
+            None
+        """
         self.atom_dim = input_shape[0][-1]
         self.bond_dim = input_shape[1][-1]
         self.kernel = self.add_weight(
@@ -20,7 +64,15 @@ class EdgeNetwork(tf.keras.layers.Layer):
         )
         self.built = True
 
-    def call(self, inputs):
+    def call(self, inputs: tf.Tensor) -> tf.Tensor:
+        """Calls the layer.
+
+        Args:
+            inputs (tf.Tensor): Input tensor
+
+        Returns:
+            tf.Tensor: Aggregated features
+        """
         atom_features, bond_features, pair_indices = inputs
         bond_features = tf.matmul(bond_features, self.kernel) + self.bias
         bond_features = tf.reshape(bond_features, (-1, self.atom_dim, self.atom_dim))
@@ -39,13 +91,41 @@ class EdgeNetwork(tf.keras.layers.Layer):
 
 
 class MessagePassing(tf.keras.layers.Layer):
-    def __init__(self, units, steps=4, edge_update="GRU", **kwargs):
+    """Message passing layer.
+
+    Instance Attributes:
+        units (int): Number of units in the layer.
+        steps (int): Number of message passing steps.
+        edge_update (str): Type of edge update.
+    """
+
+    def __init__(
+        self, units: int, steps: int = 4, edge_update: str = "GRU", **kwargs
+    ) -> None:
+        """Initializes the MessagePassing layer.
+
+        Args:
+            units (int): Number of units in the layer.
+            steps (int): Number of message passing steps.
+            edge_update (str): Type of edge update.
+
+        Returns:
+            None
+        """
         super().__init__(**kwargs)
         self.units = units
         self.steps = steps
         self.edge_update = edge_update
 
-    def build(self, input_shape):
+    def build(self, input_shape: tf.TensorShape) -> None:
+        """Builds the MessagePassing layer.
+
+        Args:
+            input_shape (tf.TensorShape): Shape of input tensor.
+
+        Returns:
+            None
+        """
         self.atom_dim = input_shape[0][-1]
         self.message_step = EdgeNetwork()
         self.pad_length = max(0, self.units - self.atom_dim)
@@ -63,7 +143,15 @@ class MessagePassing(tf.keras.layers.Layer):
             )
         self.built = True
 
-    def call(self, inputs):
+    def call(self, inputs: tf.Tensor) -> tf.Tensor:
+        """Calls the MessagePassing layer.
+
+        Args:
+            inputs (tf.Tensor): Input tensor.
+
+        Returns:
+            tf.Tensor
+        """
         atom_features, bond_features, pair_indices = inputs
         atom_features_updated = tf.pad(atom_features, [(0, 0), (0, self.pad_length)])
 
@@ -79,9 +167,32 @@ class MessagePassing(tf.keras.layers.Layer):
 
 
 class TransformerEncoderReadout(tf.keras.layers.Layer):
+    """Transformer encoder readout layer. This layer applies multi-head attention and dense projection
+    to the input tensor and returns a global average pooling of the output.
+
+    Instance Attributes:
+        partition_padding (PartitionPadding): Partition padding layer
+        attention (tf.keras.layers.MultiHeadAttention): Multi-head attention layer
+        dense_proj (tf.keras.Sequential): Dense projection layer
+        layernorm_1 (tf.keras.layers.LayerNormalization): Layer normalization layer
+        layernorm_2 (tf.keras.layers.LayerNormalization): Layer normalization layer
+        average_pooling (tf.keras.layers.GlobalAveragePooling1D): Global average pooling layer
+    """
+
     def __init__(
         self, num_heads=8, embed_dim=64, dense_dim=[512], batch_size=32, **kwargs
     ):
+        """Initializes the layer.
+
+        Args:
+            num_heads (int): Number of attention heads in the multi-head attention layer.
+            embed_dim (int): Embedding dimension in the multi-head attention layer.
+            dense_dim (int): Dense dimension in the dense projection layer.
+            batch_size (int): Batch size.
+
+        Returns:
+            None
+        """
         super().__init__(**kwargs)
 
         self.partition_padding = PartitionPadding(batch_size)
@@ -96,7 +207,15 @@ class TransformerEncoderReadout(tf.keras.layers.Layer):
         self.layernorm_2 = tf.keras.layers.LayerNormalization()
         self.average_pooling = tf.keras.layers.GlobalAveragePooling1D()
 
-    def call(self, inputs):
+    def call(self, inputs: tf.Tensor) -> tf.Tensor:
+        """Calls the layer.
+
+        Args:
+            inputs (tf.Tensor): Input tensor.
+
+        Returns:
+            tf.Tensor: Transformed tensor.
+        """
         x = self.partition_padding(inputs)
         padding_mask = tf.reduce_any(tf.not_equal(x, 0.0), axis=-1)
         padding_mask = padding_mask[:, tf.newaxis, tf.newaxis, :]
@@ -107,11 +226,34 @@ class TransformerEncoderReadout(tf.keras.layers.Layer):
 
 
 class PartitionPadding(tf.keras.layers.Layer):
-    def __init__(self, batch_size, **kwargs):
+    """Partition padding layer. This layer applies padding to atom feature tensors based on a partition function.
+    The padding is necessary because the input data can have varying numbers of atoms per molecule.
+
+    Instance Attributes:
+        batch_size (int): Batch size
+    """
+
+    def __init__(self, batch_size: int, **kwargs) -> None:
+        """Initializes the layer.
+
+        Args:
+            batch_size (int): Batch size.
+
+        Returns:
+            None
+        """
         super().__init__(**kwargs)
         self.batch_size = batch_size
 
-    def call(self, inputs):
+    def call(self, inputs: tf.Tensor) -> tf.Tensor:
+        """Calls the layer.
+
+        Args:
+            inputs (tf.Tensor): Input tensor.
+
+        Returns:
+            tf.Tensor: Transformed tensor.
+        """
         atom_features, molecule_indicator = inputs
         atom_features_partitioned = tf.dynamic_partition(
             atom_features, molecule_indicator, self.batch_size
@@ -131,16 +273,32 @@ class PartitionPadding(tf.keras.layers.Layer):
 
 
 def create_model(
-    atom_dim,
-    bond_dim,
-    batch_size=32,
-    message_units=64,
-    message_steps=4,
-    num_attention_heads=8,
-    dense_units=[512],
-    activation=["relu"],
-    edge_update="GRU",
-):
+    atom_dim: int,
+    bond_dim: int,
+    batch_size: int = 32,
+    message_units: int = 64,
+    message_steps: int = 4,
+    num_attention_heads: int = 8,
+    dense_units: list[int] = [512],
+    activation: list[str] = ["relu"],
+    edge_update: str = "GRU",
+) -> tf.keras.Model:
+    """Creates a message passing neural network.
+
+    Args:
+        atom_dim (int): The dimension of atom features.
+        bond_dim (int): The dimension of bond features.
+        batch_size (int, optional): The batch size. Defaults to 32.
+        message_units (int): The number of units in the message vectors. Defaults to 64.
+        message_steps (int): The number of message passing steps. Defaults to 4.
+        num_attention_heads (int): The number of attention heads. Defaults to 8.
+        dense_units (list[int]): A list of the number of units in each dense layer. Defaults to [512].
+        activation (list[str]): A list of the activation functions for each dense layer. Defaults to ["relu"].
+        edge_update (str): The type of edge update method. Defaults to "GRU".
+
+    Returns:
+        tf.keras.Model: A TensorFlow Keras model.
+    """
     atom_features = tf.keras.layers.Input(
         (atom_dim), dtype="float32", name="atom_features"
     )
@@ -171,3 +329,15 @@ def create_model(
         outputs=[x],
     )
     return model
+
+
+pyta.check_all(
+    "model/training/build_model.py",
+    config={
+        "extra-imports": ["tensorflow", "einops", "python_ta"],
+        "allowed-io": [],
+        "max-line-length": 120,
+        "disable": [],
+    },
+    output="pyta_outputs/pyta_output6.html",
+)

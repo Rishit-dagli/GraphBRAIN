@@ -36,10 +36,16 @@ Blood-Brain Barrier Permeability of the molecule. The prediction is displayed in
 
 Copyright and Usage Information
 ===============================
-This file is provided solely for the personal and private use of TAs, instructors and its author(s). All forms of
-distribution of this code, whether as given or with any changes, are expressly prohibited.
-
-This file is Copyright (c) 2023 by Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde."""
+Copyright 2023 Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+   http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License."""
 
 import streamlit as st
 from PIL import Image
@@ -95,20 +101,25 @@ with tab2:
     smiles = st.text_input("", placeholder="Input SMILES string here")
 
     # Creating samples for the users to try out.
-    samples = ["CCC", "CCCC", "CCCCC", "CCCCCC"]
+    samples = [
+        "Fc1ccccc1C2=NCC(=S)N(CC(F)(F)F)c3ccc(Cl)cc23",
+        "CC(C)N=C1C=C2N(c3ccc(Cl)cc3)c4ccccc4N=C2C=C1Nc5ccc(Cl)cc5",
+        "NC(=O)OCCCc1ccccc1",
+        "NCCc1ccc(O)c(O)c1",
+    ]
 
     # Creating columns for the buttons.
     gap2, col5, col6, col7, col8, gap3 = st.columns([1, 1, 1, 1, 1, 1])
 
     # Creating buttons for the samples.
     with col5:
-        b1 = st.button("Propane")
+        b1 = st.button("Quazepam")
     with col6:
-        b2 = st.button("Butane")
+        b2 = st.button("Clofazimine")
     with col7:
-        b3 = st.button("Pentane")
+        b3 = st.button("Phenprobamate")
     with col8:
-        b4 = st.button("Hexane")
+        b4 = st.button("Dopamine")
 
     # Creating an output section for the prediction.
     output = st.empty()
