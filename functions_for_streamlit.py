@@ -179,10 +179,12 @@ def set_background_black() -> None:
 
 # Checking the code for errors using python_ta.
 pyta.check_all(
+    "functions_for_streamlit.py",
     config={
         "extra-imports": ["streamlit", "PIL", "python_ta"],
         "allowed-io": [],
         "max-line-length": 120,
+        "disable": [],
     },
-    output="pyta_output2.txt",
+    output="pyta_outputs/pyta_output2.html",
 )

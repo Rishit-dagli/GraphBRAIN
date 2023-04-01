@@ -178,6 +178,7 @@ def bbbp_dataset(
 
 
 pyta.check_all(
+    "model/dataset/loader.py",
     config={
         "extra-imports": [
             "tensorflow",
@@ -190,6 +191,7 @@ pyta.check_all(
         ],
         "allowed-io": [],
         "max-line-length": 120,
+        "disable": [],
     },
-    output="pyta_output9.txt",
+    output="pyta_outputs/pyta_output9.html",
 )

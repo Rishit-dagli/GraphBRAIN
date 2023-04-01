@@ -194,10 +194,12 @@ class BondFeatureEncoder(FeatureEncoder):
 
 
 pyta.check_all(
+    "model/utils/feature_encoder.py",
     config={
         "extra-imports": ["tensorflow", "numpy", "python_ta"],
         "allowed-io": [],
         "max-line-length": 120,
+        "disable": [],
     },
-    output="pyta_output5.txt",
+    output="pyta_outputs/pyta_output5.html",
 )

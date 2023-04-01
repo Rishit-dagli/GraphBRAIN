@@ -47,10 +47,12 @@ def predict(smile: list, model: tf.keras.Model) -> tf.Tensor:
 
 
 pyta.check_all(
+    "model/inference/infer.py",
     config={
         "extra-imports": ["tensorflow", "sys", "os", "pandas", "python_ta"],
         "allowed-io": [],
         "max-line-length": 120,
+        "disable": [],
     },
-    output="pyta_output8.txt",
+    output="pyta_outputs/pyta_output8.html",
 )

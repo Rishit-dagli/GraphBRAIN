@@ -140,10 +140,12 @@ with tab2:
 
 # Checking the code for errors using python_ta.
 pyta.check_all(
+    "main.py",
     config={
         "extra-imports": ["streamlit", "PIL", "python_ta"],
         "allowed-io": [],
         "max-line-length": 120,
+        "disable": [],
     },
-    output="pyta_output1.txt",
+    output="pyta_outputs/pyta_output1.html",
 )

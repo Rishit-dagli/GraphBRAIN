@@ -116,10 +116,12 @@ def smile_to_graph(
 
 
 pyta.check_all(
+    "model/utils/conversions.py",
     config={
         "extra-imports": ["tensorflow", "rdkit", "einops", "python_ta"],
         "allowed-io": [],
         "max-line-length": 120,
+        "disable": [],
     },
-    output="pyta_output4.txt",
+    output="pyta_outputs/pyta_output4.html",
 )
