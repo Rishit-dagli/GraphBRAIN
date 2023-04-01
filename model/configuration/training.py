@@ -129,7 +129,7 @@ def model() -> dict[str, Union[str, int, list[Union[int, str]], bool, float, Non
         - 'save_model': A boolean representing whether or not to save the trained model.
         - 'epochs': An integer representing the number of training epochs.
         - 'strategy': A string representing the type of strategy for distributed training.
-
+    """
     # At the moment we only support the following few naive customizations.
     return {
         # Either GRU, LSTM, SimpleRNN or StackedRNN
