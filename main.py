@@ -59,7 +59,7 @@ from functions_for_streamlit import (
     display_goal,
     set_background_black,
     embed_molview,
-    information
+    information,
 )
 
 
@@ -130,7 +130,11 @@ with tab2:
     # Checking if the user has input a SMILES string or clicked on a button.
     if smiles and not (b1 or b2 or b3 or b4):
         try:
-            molview, description, prediction = smiles, -1, output_for_string(smiles, model)
+            molview, description, prediction = (
+                smiles,
+                -1,
+                output_for_string(smiles, model),
+            )
         except:
             molview, description, prediction = None, -1, -100
     elif b1:

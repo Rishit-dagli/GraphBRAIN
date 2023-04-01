@@ -177,6 +177,7 @@ def set_background_black() -> None:
         unsafe_allow_html=True,
     )
 
+
 information = [
     """Quazepam belongs to a class of medications called benzodiazepines. It acts on your brain to produce a calming 
     effect. This medication is used for the short-term treatment of patients with trouble sleeping (insomnia). It is 
