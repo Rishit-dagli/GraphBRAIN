@@ -9,6 +9,7 @@ from model.configuration.training import edge_network, model, data_splits
 from model.dataset.loader import bbbp_dataset, loader
 from model.dataset.download_dataset import download_dataset
 
+
 def create_and_train():
     model = create_model(
         atom_dim=x_train[0][0][0].shape[0],
@@ -199,6 +200,7 @@ def create_and_train():
     test_results = model.evaluate(test_dataset, verbose=2)
     print("Test loss:", test_results[0])
 
+
 if __name__ == "__main__":
     edge_config = edge_network()
     data_config = data_splits()
@@ -210,13 +212,28 @@ if __name__ == "__main__":
         test_size=data_config["test"],
     )
     train_dataset = loader(
-        x_train, y_train, batch_size=config["batch_size"], shuffle=True, autotune=True, shuffle_buffer_size=data_config["shuffle_buffer_size"]
+        x_train,
+        y_train,
+        batch_size=config["batch_size"],
+        shuffle=True,
+        autotune=True,
+        shuffle_buffer_size=data_config["shuffle_buffer_size"],
     )
     valid_dataset = loader(
-        x_valid, y_valid, batch_size=config["batch_size"], shuffle=True, autotune=True, shuffle_buffer_size=data_config["shuffle_buffer_size"]
+        x_valid,
+        y_valid,
+        batch_size=config["batch_size"],
+        shuffle=True,
+        autotune=True,
+        shuffle_buffer_size=data_config["shuffle_buffer_size"],
     )
     test_dataset = loader(
-        x_test, y_test, batch_size=config["batch_size"], shuffle=True, autotune=True, shuffle_buffer_size=data_config["shuffle_buffer_size"]
+        x_test,
+        y_test,
+        batch_size=config["batch_size"],
+        shuffle=True,
+        autotune=True,
+        shuffle_buffer_size=data_config["shuffle_buffer_size"],
     )
 
     strategy = None
@@ -245,4 +262,3 @@ if __name__ == "__main__":
             create_and_train()
     else:
         create_and_train()
-

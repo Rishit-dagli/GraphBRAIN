@@ -50,12 +50,7 @@ def edge_network():
 
 
 def data_splits():
-    return {
-        "train": 0.8,
-        "validation": 0.1,
-        "test": 0.1,
-        "shuffle_buffer_size": 1024
-    }
+    return {"train": 0.8, "validation": 0.1, "test": 0.1, "shuffle_buffer_size": 1024}
 
 
 def model():

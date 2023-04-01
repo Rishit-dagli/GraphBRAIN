@@ -51,7 +51,7 @@ def loader(
 ):
     dataset = tf.data.Dataset.from_tensor_slices((x, (y)))
     if shuffle:
-        dataset = dataset.shuffle(buffer_size = shuffle_buffer_size)
+        dataset = dataset.shuffle(buffer_size=shuffle_buffer_size)
     if autotune:
         return (
             dataset.batch(batch_size)
