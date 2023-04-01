@@ -95,7 +95,7 @@ def output_for_string(smiles: str, model: tf.keras.Model) -> float:
     Returns:
         prediction (float): The predicted activity score for the molecule represented by the input SMILES string.
     """
-    embed_molview(smiles)
+    # embed_molview(smiles)
     smile = []
     smile.append(smiles)
     result = predict(smile, model)

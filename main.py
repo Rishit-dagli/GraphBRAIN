@@ -58,6 +58,7 @@ from functions_for_streamlit import (
     display_desc_instr,
     display_goal,
     set_background_black,
+    embed_molview
 )
 
 
@@ -127,26 +128,36 @@ with tab2:
 
     # Checking if the user has input a SMILES string or clicked on a button.
     if smiles and not (b1 or b2 or b3 or b4):
-        prediction = output_for_string(smiles, model)
+        try:
+            molview, prediction = smiles, output_for_string(smiles, model)
+        except:
+            molview, prediction = None, -100
     elif b1:
-        prediction = output_for_button(0, samples, model)
+        molview, prediction = None, output_for_button(0, samples, model)
     elif b2:
-        prediction = output_for_button(1, samples, model)
+        molview, prediction = None, output_for_button(1, samples, model)
     elif b3:
-        prediction = output_for_button(2, samples, model)
+        molview, prediction = None, output_for_button(2, samples, model)
     elif b4:
-        prediction = output_for_button(3, samples, model)
+        molview, prediction = None, output_for_button(3, samples, model)
 
     # Displaying the prediction in the output section.
     if prediction is not None:
-        output1.write(
-            "Prediction: The Blood-Brain Barrier Permeability of the molecule is"
-            f" {math.floor((float(prediction))*100)/100}."
-        )
-        output2.write(
-            f"Since this value is {'less than 0.3' if float(prediction) < 0.3 else 'greater than 0.3'}, "
-            f"the molecule is {'not' if float(prediction) < 0.3 else ''} permeable to the Blood-Brain Barrier."
-        )
+        if prediction == -100:
+            output1.write("Error: Invalid SMILES string.")
+            output2.write("")
+        else:
+            output1.write(
+                "Prediction: The Blood-Brain Barrier Permeability of the molecule is"
+                f" {math.floor((float(prediction))*100)/100}."
+            )
+            output2.write(
+                f"Since this value is {'less than 0.3' if float(prediction) < 0.3 else 'greater than 0.3'}, "
+                f"the molecule is {'not' if float(prediction) < 0.3 else ''} permeable to the Blood-Brain Barrier."
+            )
+            if molview is not None:
+                embed_molview(molview)
+
 
 # # Checking the code for errors using python_ta.
 # pyta.check_all(
