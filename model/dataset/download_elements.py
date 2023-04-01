@@ -27,5 +27,4 @@ def download_periodic() -> str:
         else:
             raise ValueError("MD5 Checksum failed")
     else:
-        print("Periodic dataset already downloaded")
         return "periodictable.csv"
