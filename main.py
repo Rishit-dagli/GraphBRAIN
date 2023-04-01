@@ -126,15 +126,15 @@ with tab2:
 
     # Checking if the user has input a SMILES string or clicked on a button.
     if smiles and not (b1 or b2 or b3 or b4):
-        prediction = output_for_string(smiles, model)
+        prediction = round(output_for_string(smiles, model), 2)
     elif b1:
-        prediction = output_for_button(0, samples, model)
+        prediction = round(output_for_button(0, samples, model), 2)
     elif b2:
-        prediction = output_for_button(1, samples, model)
+        prediction = round(output_for_button(1, samples, model), 2)
     elif b3:
-        prediction = output_for_button(2, samples, model)
+        prediction = round(output_for_button(2, samples, model), 2)
     elif b4:
-        prediction = output_for_button(3, samples, model)
+        prediction = round(output_for_button(3, samples, model), 2)
 
     # Displaying the prediction in the output section.
     if prediction is not None:
