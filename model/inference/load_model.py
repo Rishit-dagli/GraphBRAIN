@@ -24,6 +24,7 @@ import tensorflow as tf
 import tarfile
 import python_ta as pyta
 from typing import Optional
+import os
 
 
 def _download() -> str:
@@ -33,6 +34,8 @@ def _download() -> str:
         str: The filename (str) of the downloaded model.
     """
     url = "http://store.rishit.tech/model.tar.gz"
+    if os.path.exists("model.tar.gz"):
+        return "model.tar.gz"
     filename = wget.download(url)
     return filename
 
