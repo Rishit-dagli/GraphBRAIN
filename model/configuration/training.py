@@ -14,7 +14,21 @@ def atoms():
         for row in reader:
             symbols.add(str(row[1]))
     return {
-        "element": symbols,
+        "element": {
+            "B",
+            "Br",
+            "C",
+            "Ca",
+            "Cl",
+            "F",
+            "H",
+            "I",
+            "N",
+            "Na",
+            "O",
+            "P",
+            "S",
+        },
         "valence_electrons": {0, 1, 2, 3, 4, 5, 6},
         "hydrogen_bonds": {0, 1, 2, 3, 4},
         "orbital_hybridization": {"s", "sp", "sp2", "sp3"},

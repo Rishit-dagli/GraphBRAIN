@@ -1,0 +1,17 @@
+# CSC111 Winter 2023: Python libraries we'll be using this semester.
+
+# Training and testing machine learning models
+wget==3.2
+tensorflow==2.12.0
+tensorboard==2.12.0
+rdkit==2022.9.5
+einops==0.6.0
+pandas==1.5.3
+opt-einsum==3.3.0
+numpy==1.23.5
+
+# Creating and running the web app
+streamlit==1.20.0
+
+# Testing and code checking
+python-ta~=2.4.2
