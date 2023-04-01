@@ -176,6 +176,19 @@ def set_background_black() -> None:
         unsafe_allow_html=True,
     )
 
+information = [
+    """Quazepam belongs to a class of medications called benzodiazepines. It acts on your brain to produce a calming 
+    effect. This medication is used for the short-term treatment of patients with trouble sleeping (insomnia). It is 
+    known to pass the blood-brain barrier.""",
+    """Clofazimine, sold under the brand name Lamprene, is a medication used together with rifampicin and dapsone to 
+    treat leprosy, a disease which results in a lack of ability to feel pain. This compound is known to not pass through
+     the blood-brain barrier.""",
+    """Phenprobamate is a centrally acting skeletal muscle relaxant, with additional sedative and anticonvulsant 
+    effects. This chemical is known to pass through the blood-brain barrier.""",
+    """Dopamine is a type of neurotransmitter and hormone. It plays a role in many important body functions, including 
+    movement, memory and pleasurable reward and motivation. This compound is known to not pass through the blood-brain 
+    barrier.""",
+]
 
 # Checking the code for errors using python_ta.
 # pyta.check_all(
