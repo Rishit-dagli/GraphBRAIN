@@ -101,20 +101,20 @@ with tab2:
     smiles = st.text_input("", placeholder="Input SMILES string here")
 
     # Creating samples for the users to try out.
-    samples = ["CCC", "CCCC", "CCCCC", "CCCCCC"]
+    samples = ["Fc1ccccc1C2=NCC(=S)N(CC(F)(F)F)c3ccc(Cl)cc23", "CC(C)N=C1C=C2N(c3ccc(Cl)cc3)c4ccccc4N=C2C=C1Nc5ccc(Cl)cc5", "NC(=O)OCCCc1ccccc1", "NCCc1ccc(O)c(O)c1"]
 
     # Creating columns for the buttons.
     gap2, col5, col6, col7, col8, gap3 = st.columns([1, 1, 1, 1, 1, 1])
 
     # Creating buttons for the samples.
     with col5:
-        b1 = st.button("Propane")
+        b1 = st.button("Quazepam")
     with col6:
-        b2 = st.button("Butane")
+        b2 = st.button("Clofazimine")
     with col7:
-        b3 = st.button("Pentane")
+        b3 = st.button("Phenprobamate")
     with col8:
-        b4 = st.button("Hexane")
+        b4 = st.button("Dopamine")
 
     # Creating an output section for the prediction.
     output = st.empty()
@@ -140,12 +140,10 @@ with tab2:
 
 # Checking the code for errors using python_ta.
 pyta.check_all(
-    "main.py",
     config={
         "extra-imports": ["streamlit", "PIL", "python_ta"],
         "allowed-io": [],
         "max-line-length": 120,
-        "disable": [],
     },
-    output="pyta_outputs/pyta_output1.html",
+    output="pyta_output1.txt",
 )
