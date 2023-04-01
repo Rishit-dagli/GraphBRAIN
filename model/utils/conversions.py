@@ -20,6 +20,8 @@ limitations under the License."""
 
 import rdkit
 from rdkit import Chem
+import sys
+sys.append(".")
 from model.utils.apply_feature_encoder import atom_feature_encoder, bond_feature_encoder
 import tensorflow as tf
 import einops

@@ -24,10 +24,9 @@ import os
 import pandas as pd
 import python_ta as pyta
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-
-from utils.conversions import smile_to_graph
-from dataset.loader import loader
+sys.path.append(".")
+from model.utils.conversions import smile_to_graph
+from model.dataset.loader import loader
 
 
 def predict(smile: list, model: tf.keras.Model) -> tf.Tensor:
