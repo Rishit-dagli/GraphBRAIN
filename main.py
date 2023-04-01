@@ -101,7 +101,12 @@ with tab2:
     smiles = st.text_input("", placeholder="Input SMILES string here")
 
     # Creating samples for the users to try out.
-    samples = ["Fc1ccccc1C2=NCC(=S)N(CC(F)(F)F)c3ccc(Cl)cc23", "CC(C)N=C1C=C2N(c3ccc(Cl)cc3)c4ccccc4N=C2C=C1Nc5ccc(Cl)cc5", "NC(=O)OCCCc1ccccc1", "NCCc1ccc(O)c(O)c1"]
+    samples = [
+        "Fc1ccccc1C2=NCC(=S)N(CC(F)(F)F)c3ccc(Cl)cc23",
+        "CC(C)N=C1C=C2N(c3ccc(Cl)cc3)c4ccccc4N=C2C=C1Nc5ccc(Cl)cc5",
+        "NC(=O)OCCCc1ccccc1",
+        "NCCc1ccc(O)c(O)c1",
+    ]
 
     # Creating columns for the buttons.
     gap2, col5, col6, col7, col8, gap3 = st.columns([1, 1, 1, 1, 1, 1])
