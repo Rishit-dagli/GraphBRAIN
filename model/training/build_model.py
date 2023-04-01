@@ -49,7 +49,7 @@ class MessagePassing(tf.keras.layers.Layer):
         elif self.edge_update == "SimpleRNN":
             self.update_step = tf.keras.layers.SimpleRNNCell(self.atom_dim + self.pad_length)
         else:
-            self.update_step = tf.keras.layers.StackedRNNCell(self.atom_dim + self.pad_length)
+            self.update_step = tf.keras.layers.StackedRNNCells(self.atom_dim + self.pad_length)
         self.built = True
 
     def call(self, inputs):
