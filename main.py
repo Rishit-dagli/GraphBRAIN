@@ -49,6 +49,7 @@ limitations under the License."""
 
 import streamlit as st
 from PIL import Image
+import math
 import python_ta as pyta
 from functions_for_streamlit import (
     load_model_in_cache,
@@ -109,7 +110,7 @@ with tab2:
     ]
 
     # Creating columns for the buttons.
-    gap2, col5, col6, col7, col8, gap3 = st.columns([1, 1, 1, 1, 1, 1])
+    gap2, col5, col6, col7, col8, gap3 = st.columns([0.3, 1, 1, 1, 1, 0.3])
 
     # Creating buttons for the samples.
     with col5:
@@ -122,25 +123,29 @@ with tab2:
         b4 = st.button("Dopamine")
 
     # Creating an output section for the prediction.
-    output = st.empty()
+    output1, output2 = st.empty(), st.empty()
 
     # Checking if the user has input a SMILES string or clicked on a button.
     if smiles and not (b1 or b2 or b3 or b4):
-        prediction = round(output_for_string(smiles, model), 2)
+        prediction = output_for_string(smiles, model)
     elif b1:
-        prediction = round(output_for_button(0, samples, model), 2)
+        prediction = output_for_button(0, samples, model)
     elif b2:
-        prediction = round(output_for_button(1, samples, model), 2)
+        prediction = output_for_button(1, samples, model)
     elif b3:
-        prediction = round(output_for_button(2, samples, model), 2)
+        prediction = output_for_button(2, samples, model)
     elif b4:
-        prediction = round(output_for_button(3, samples, model), 2)
+        prediction = output_for_button(3, samples, model)
 
     # Displaying the prediction in the output section.
     if prediction is not None:
-        output.write(
+        output1.write(
             "Prediction: The Blood-Brain Barrier Permeability of the molecule is"
-            f" {prediction}."
+            f" {math.floor((float(prediction))*100)/100}."
+        )
+        output2.write(
+            f"Since this value is {'less than 0.3' if float(prediction) < 0.3 else 'greater than 0.3'}, "
+            f"the molecule is {'not' if float(prediction) < 0.3 else ''} permeable to the Blood-Brain Barrier."
         )
 
 # # Checking the code for errors using python_ta.
