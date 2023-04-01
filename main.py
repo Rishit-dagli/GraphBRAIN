@@ -49,6 +49,7 @@ limitations under the License."""
 
 import streamlit as st
 from PIL import Image
+import math
 import python_ta as pyta
 from functions_for_streamlit import (
     load_model_in_cache,
@@ -57,6 +58,8 @@ from functions_for_streamlit import (
     display_desc_instr,
     display_goal,
     set_background_black,
+    embed_molview,
+    information,
 )
 
 
@@ -109,7 +112,7 @@ with tab2:
     ]
 
     # Creating columns for the buttons.
-    gap2, col5, col6, col7, col8, gap3 = st.columns([1, 1, 1, 1, 1, 1])
+    gap2, col5, col6, col7, col8, gap3 = st.columns([0.3, 1, 1, 1, 1, 0.3])
 
     # Creating buttons for the samples.
     with col5:
@@ -122,33 +125,54 @@ with tab2:
         b4 = st.button("Dopamine")
 
     # Creating an output section for the prediction.
-    output = st.empty()
+    output1, output2, output3 = st.empty(), st.empty(), st.empty()
 
     # Checking if the user has input a SMILES string or clicked on a button.
     if smiles and not (b1 or b2 or b3 or b4):
-        prediction = output_for_string(smiles, model)
+        try:
+            molview, description, prediction = (
+                smiles,
+                -1,
+                output_for_string(smiles, model),
+            )
+        except:
+            molview, description, prediction = None, -1, -100
     elif b1:
-        prediction = output_for_button(0, samples, model)
+        molview, description, prediction = None, 0, output_for_button(0, samples, model)
     elif b2:
-        prediction = output_for_button(1, samples, model)
+        molview, description, prediction = None, 1, output_for_button(1, samples, model)
     elif b3:
-        prediction = output_for_button(2, samples, model)
+        molview, description, prediction = None, 2, output_for_button(2, samples, model)
     elif b4:
-        prediction = output_for_button(3, samples, model)
+        molview, description, prediction = None, 3, output_for_button(3, samples, model)
 
     # Displaying the prediction in the output section.
     if prediction is not None:
-        output.write(
-            "Prediction: The Blood-Brain Barrier Permeability of the molecule is"
-            f" {prediction}."
-        )
+        if prediction == -100:
+            output1.write("Error: Invalid SMILES string.")
+            output2.write("")
+        else:
+            output1.write(
+                "Prediction: The Blood-Brain Barrier Permeability of the molecule is"
+                f" {math.floor((float(prediction))*100)/100}."
+            )
+            output2.write(
+                f"Since this value is {'less than 0.3' if float(prediction) < 0.3 else 'greater than 0.3'}, "
+                f"the molecule is {'not' if float(prediction) < 0.3 else ''} permeable to the Blood-Brain Barrier."
+            )
+            if molview is not None:
+                embed_molview(molview)
 
-# Checking the code for errors using python_ta.
-pyta.check_all(
-    config={
-        "extra-imports": ["streamlit", "PIL", "python_ta"],
-        "allowed-io": [],
-        "max-line-length": 120,
-    },
-    output="pyta_output1.txt",
-)
+            if 0 <= description <= 3:
+                output3.write(information[description])
+
+
+# # Checking the code for errors using python_ta.
+# pyta.check_all(
+#     config={
+#         "extra-imports": ["streamlit", "PIL", "python_ta"],
+#         "allowed-io": [],
+#         "max-line-length": 120,
+#     },
+#     output="pyta_output1.txt",
+# )

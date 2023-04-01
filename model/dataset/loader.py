@@ -174,22 +174,22 @@ def bbbp_dataset(
     data = pd.read_csv(filename, usecols=[1, 2, 3])
     return split_data(data, train_size, val_size, test_size)
 
-
-pyta.check_all(
-    "model/dataset/loader.py",
-    config={
-        "extra-imports": [
-            "tensorflow",
-            "einops",
-            "pandas",
-            "numpy",
-            "sys",
-            "os",
-            "python_ta",
-        ],
-        "allowed-io": [],
-        "max-line-length": 120,
-        "disable": [],
-    },
-    output="pyta_outputs/pyta_output9.html",
-)
+#
+# pyta.check_all(
+#     "model/dataset/loader.py",
+#     config={
+#         "extra-imports": [
+#             "tensorflow",
+#             "einops",
+#             "pandas",
+#             "numpy",
+#             "sys",
+#             "os",
+#             "python_ta",
+#         ],
+#         "allowed-io": [],
+#         "max-line-length": 120,
+#         "disable": [],
+#     },
+#     output="pyta_outputs/pyta_output9.html",
+# )

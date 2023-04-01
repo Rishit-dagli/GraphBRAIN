@@ -188,13 +188,13 @@ def model() -> dict[str, Union[str, int, list[Union[int, str]], bool, float, Non
     }
 
 
-pyta.check_all(
-    "model/configuration/training.py",
-    config={
-        "extra-imports": ["csv", "sys", "os", "typing", "python_ta"],
-        "allowed-io": ["atoms"],
-        "max-line-length": 120,
-        "disable": [],
-    },
-    output="pyta_outputs/pyta_output12.html",
-)
+# pyta.check_all(
+#     "model/configuration/training.py",
+#     config={
+#         "extra-imports": ["csv", "sys", "os", "typing", "python_ta"],
+#         "allowed-io": ["atoms"],
+#         "max-line-length": 120,
+#         "disable": [],
+#     },
+#     output="pyta_outputs/pyta_output12.html",
+# )

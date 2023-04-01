@@ -331,13 +331,13 @@ def create_model(
     return model
 
 
-pyta.check_all(
-    "model/training/build_model.py",
-    config={
-        "extra-imports": ["tensorflow", "einops", "python_ta"],
-        "allowed-io": [],
-        "max-line-length": 120,
-        "disable": [],
-    },
-    output="pyta_outputs/pyta_output6.html",
-)
+# pyta.check_all(
+#     "model/training/build_model.py",
+#     config={
+#         "extra-imports": ["tensorflow", "einops", "python_ta"],
+#         "allowed-io": [],
+#         "max-line-length": 120,
+#         "disable": [],
+#     },
+#     output="pyta_outputs/pyta_output6.html",
+# )
