@@ -58,7 +58,8 @@ from functions_for_streamlit import (
     display_desc_instr,
     display_goal,
     set_background_black,
-    embed_molview
+    embed_molview,
+    information
 )
 
 
@@ -124,22 +125,22 @@ with tab2:
         b4 = st.button("Dopamine")
 
     # Creating an output section for the prediction.
-    output1, output2 = st.empty(), st.empty()
+    output1, output2, output3 = st.empty(), st.empty(), st.empty()
 
     # Checking if the user has input a SMILES string or clicked on a button.
     if smiles and not (b1 or b2 or b3 or b4):
         try:
-            molview, prediction = smiles, output_for_string(smiles, model)
+            molview, description, prediction = smiles, -1, output_for_string(smiles, model)
         except:
-            molview, prediction = None, -100
+            molview, description, prediction = None, -1, -100
     elif b1:
-        molview, prediction = None, output_for_button(0, samples, model)
+        molview, description, prediction = None, 0, output_for_button(0, samples, model)
     elif b2:
-        molview, prediction = None, output_for_button(1, samples, model)
+        molview, description, prediction = None, 1, output_for_button(1, samples, model)
     elif b3:
-        molview, prediction = None, output_for_button(2, samples, model)
+        molview, description, prediction = None, 2, output_for_button(2, samples, model)
     elif b4:
-        molview, prediction = None, output_for_button(3, samples, model)
+        molview, description, prediction = None, 3, output_for_button(3, samples, model)
 
     # Displaying the prediction in the output section.
     if prediction is not None:
@@ -157,6 +158,9 @@ with tab2:
             )
             if molview is not None:
                 embed_molview(molview)
+
+            if 0 <= description <= 3:
+                output3.write(information[description])
 
 
 # # Checking the code for errors using python_ta.

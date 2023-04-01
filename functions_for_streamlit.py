@@ -135,7 +135,8 @@ def display_desc_instr() -> None:
     )
     inst_3 = (
         "There are 4 sample buttons below the input box to help demonstrate the"
-        " functionality of our website"
+        " functionality of our website along with displaying some real world information (functionality exclusive "
+        "to sample buttons) "
     )
     inst_4 = "Click on 'Run the Model' to try it out!"
     st.markdown(
