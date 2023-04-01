@@ -104,7 +104,7 @@ def model():
         "tensorboard": True,
         "plot_model": True,
         "save_model": True,
-        "epochs": 200,
+        "epochs": 1,
         # Either MirroredStrategy, TPUStrategy, MultiWorkerMirroredStrategy,
         # CentralStorageStrategy, ParameterServerStrategy or None
         "strategy": None,

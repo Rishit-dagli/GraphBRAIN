@@ -164,10 +164,6 @@ def create_and_train():
     model.compile(optimizer=optimizer, loss=config["loss"], metrics=metrics)
 
     log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    if config["plot_model"]:
-        tf.keras.utils.plot_model(
-            model, to_file=log_dir + "/model.png", show_shapes=True
-        )
 
     tensorboard_callback = None
     if config["tensorboard"]:
@@ -179,7 +175,7 @@ def create_and_train():
     if tensorboard_callback is not None:
         history = model.fit(
             train_dataset,
-            valid_dataset,
+            validation_data=valid_dataset,
             epochs=config["epochs"],
             verbose=2,
             class_weight={0: 2.0, 1: 0.5},
@@ -188,7 +184,7 @@ def create_and_train():
     else:
         history = model.fit(
             train_dataset,
-            valid_dataset,
+            validation_data=valid_dataset,
             epochs=config["epochs"],
             verbose=2,
             class_weight={0: 2.0, 1: 0.5},
@@ -196,6 +192,11 @@ def create_and_train():
 
     if config["save_model"]:
         tf.saved_model.save(model, log_dir + "/model")
+
+    if config["plot_model"]:
+        tf.keras.utils.plot_model(
+            model, to_file=log_dir + "/model.png", show_shapes=True
+        )
 
     test_results = model.evaluate(test_dataset, verbose=2)
     print("Test loss:", test_results[0])
