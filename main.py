@@ -143,12 +143,12 @@ with tab2:
             f" {prediction}."
         )
 
-# Checking the code for errors using python_ta.
-pyta.check_all(
-    config={
-        "extra-imports": ["streamlit", "PIL", "python_ta"],
-        "allowed-io": [],
-        "max-line-length": 120,
-    },
-    output="pyta_output1.txt",
-)
+# # Checking the code for errors using python_ta.
+# pyta.check_all(
+#     config={
+#         "extra-imports": ["streamlit", "PIL", "python_ta"],
+#         "allowed-io": [],
+#         "max-line-length": 120,
+#     },
+#     output="pyta_output1.txt",
+# )

@@ -72,13 +72,13 @@ def download_dataset() -> str:
         return "BBBP.csv"
 
 
-pyta.check_all(
-    "model/dataset/download_dataset.py",
-    config={
-        "extra-imports": ["wget", "hashlib", "os", "python_ta"],
-        "allowed-io": ["_check_md5"],
-        "max-line-length": 120,
-        "disable": [],
-    },
-    output="pyta_outputs/pyta_output11.html",
-)
+# pyta.check_all(
+#     "model/dataset/download_dataset.py",
+#     config={
+#         "extra-imports": ["wget", "hashlib", "os", "python_ta"],
+#         "allowed-io": ["_check_md5"],
+#         "max-line-length": 120,
+#         "disable": [],
+#     },
+#     output="pyta_outputs/pyta_output11.html",
+# )

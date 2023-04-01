@@ -28,7 +28,7 @@ import python_ta as pyta
 
 def _smile_to_molecule(smile: str) -> Chem.rdchem.Mol:
     """Returns the molecule corresponding to the given SMILES string.
-    
+
     Args:
         smile (str): a SMILES string
 
@@ -120,13 +120,13 @@ def smile_to_graph(
     )
 
 
-pyta.check_all(
-    "model/utils/conversions.py",
-    config={
-        "extra-imports": ["tensorflow", "rdkit", "einops", "python_ta"],
-        "allowed-io": [],
-        "max-line-length": 120,
-        "disable": [],
-    },
-    output="pyta_outputs/pyta_output4.html",
-)
+# pyta.check_all(
+#     "model/utils/conversions.py",
+#     config={
+#         "extra-imports": ["tensorflow", "rdkit", "einops", "python_ta"],
+#         "allowed-io": [],
+#         "max-line-length": 120,
+#         "disable": [],
+#     },
+#     output="pyta_outputs/pyta_output4.html",
+# )

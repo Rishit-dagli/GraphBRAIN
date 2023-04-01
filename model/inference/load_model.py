@@ -88,20 +88,20 @@ def load_model(filename: Optional[str] = None) -> tf.keras.Model:
     return model
 
 
-pyta.check_all(
-    "model/inference/load_model.py",
-    config={
-        "extra-imports": [
-            "tensorflow",
-            "hashlib",
-            "wget",
-            "tarfile",
-            "typing",
-            "python_ta",
-        ],
-        "allowed-io": ["load_model", "_check_md5"],
-        "max-line-length": 120,
-        "disable": [],
-    },
-    output="pyta_outputs/pyta_output7.html",
-)
+# pyta.check_all(
+#     "model/inference/load_model.py",
+#     config={
+#         "extra-imports": [
+#             "tensorflow",
+#             "hashlib",
+#             "wget",
+#             "tarfile",
+#             "typing",
+#             "python_ta",
+#         ],
+#         "allowed-io": ["load_model", "_check_md5"],
+#         "max-line-length": 120,
+#         "disable": [],
+#     },
+#     output="pyta_outputs/pyta_output7.html",
+# )

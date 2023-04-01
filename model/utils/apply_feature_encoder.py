@@ -46,13 +46,13 @@ def bond_feature_encoder() -> BondFeatureEncoder:
     return BondFeatureEncoder(allowed_feature_sets=bonds())
 
 
-pyta.check_all(
-    "model/utils/apply_feature_encoder.py",
-    config={
-        "extra-imports": ["sys", "os", "python_ta"],
-        "allowed-io": [],
-        "max-line-length": 120,
-        "disable": [],
-    },
-    output="pyta_outputs/pyta_output3.html",
-)
+# pyta.check_all(
+#     "model/utils/apply_feature_encoder.py",
+#     config={
+#         "extra-imports": ["sys", "os", "python_ta"],
+#         "allowed-io": [],
+#         "max-line-length": 120,
+#         "disable": [],
+#     },
+#     output="pyta_outputs/pyta_output3.html",
+# )

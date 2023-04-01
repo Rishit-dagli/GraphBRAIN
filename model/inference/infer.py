@@ -46,13 +46,13 @@ def predict(smile: list, model: tf.keras.Model) -> tf.Tensor:
     return tf.squeeze(model.predict(smile_data), axis=1)
 
 
-pyta.check_all(
-    "model/inference/infer.py",
-    config={
-        "extra-imports": ["tensorflow", "sys", "os", "pandas", "python_ta"],
-        "allowed-io": [],
-        "max-line-length": 120,
-        "disable": [],
-    },
-    output="pyta_outputs/pyta_output8.html",
-)
+# pyta.check_all(
+#     "model/inference/infer.py",
+#     config={
+#         "extra-imports": ["tensorflow", "sys", "os", "pandas", "python_ta"],
+#         "allowed-io": [],
+#         "max-line-length": 120,
+#         "disable": [],
+#     },
+#     output="pyta_outputs/pyta_output8.html",
+# )
