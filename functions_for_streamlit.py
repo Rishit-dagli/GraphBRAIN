@@ -2,37 +2,18 @@
 
 This Python file defines useful function to run the Streamlit app "Graph Brain".
 
-The application has the following functions:
-
-embed_molview(smile: str) -> None: This function takes a SMILES string representing a molecule and embeds a 3D rendering
- of the molecule using the MolView API. If an error occurs, it displays an error message.
-
-load_model_in_cache() -> tf.keras.Model: This function loads a trained Keras model for predicting the permeability of
-molecules into the Streamlit cache. If the model is not in the cache, it loads it from a file using the load_model()
-function from the model.inference.load_model module.
-
-output_for_button(button_number: int, samples: list, model: tf.keras.Model) -> float: This function takes an integer
-representing the index of a sample SMILES string, a list of sample SMILES strings, and a Keras model, and returns the
-predicted permeability of the molecule represented by the sample SMILES string.
-
-output_for_string(smiles: str, model: tf.keras.Model) -> float: This function takes a SMILES string representing a
-molecule and a Keras model, and returns the predicted permeability of the molecule.
-
-display_desc_instr() -> None: This function displays the description and instructions for using the web application.
-The description explains what the blood-brain barrier is and why it is important. The instructions explain how to use
-the web application to predict the permeability of molecules and render them in 3D.
-
-display_goal() -> None: This function displays the goal of the project, which is to predict the permeability of
-molecules through the blood-brain barrier.
-
-set_background_black() -> None: This function sets the background of the web application to black.
-
 Copyright and Usage Information
 ===============================
-This file is provided solely for the personal and private use of TAs, instructors and its author(s). All forms of
-distribution of this code, whether as given or with any changes, are expressly prohibited.
-
-This file is Copyright (c) 2023 by Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde."""
+Copyright 2023 Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+   http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License."""
 
 import streamlit as st
 from model.inference.load_model import load_model
