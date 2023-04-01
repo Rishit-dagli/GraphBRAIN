@@ -2,11 +2,11 @@ import tensorflow as tf
 import sys
 import os
 import datetime
+from build_model import create_model
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from configuration.training import edge_network, model, data_splits
 from dataset.loader import bbbp_dataset, loader
-from build_model import create_model
 
 if __name__ == "__main__":
     edge_config = edge_network()
