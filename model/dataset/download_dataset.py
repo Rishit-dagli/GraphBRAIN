@@ -2,7 +2,6 @@ import wget
 import hashlib
 import os
 
-
 def _download() -> str:
     url = "http://store.rishit.tech/BBBP.csv"
     filename = wget.download(url)

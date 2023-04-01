@@ -1,8 +1,8 @@
 import sys
 import os
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from dataset.download_elements import download_periodic
+sys.path.append(".")
+from model.dataset.download_elements import download_periodic
 import csv
 
 
@@ -54,6 +54,7 @@ def data_splits():
         "train": 0.8,
         "validation": 0.1,
         "test": 0.1,
+        "shuffle_buffer_size": 1024
     }
 
 
@@ -111,6 +112,6 @@ def model():
         "epochs": 200,
         # Either MirroredStrategy, TPUStrategy, MultiWorkerMirroredStrategy,
         # CentralStorageStrategy, ParameterServerStrategy or None
-        "strategy": "TPUStrategy",
+        "strategy": None,
         "cluster_resolver": None,
     }

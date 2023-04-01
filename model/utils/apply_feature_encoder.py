@@ -2,8 +2,9 @@ from model.utils.feature_encoder import AtomFeatureEncoder, BondFeatureEncoder
 import sys
 import os
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from configuration.training import atoms, bonds
+sys.path.append(".")
+from model.configuration.training import atoms, bonds
+from model.utils.feature_encoder import AtomFeatureEncoder, BondFeatureEncoder
 
 
 def atom_feature_encoder():

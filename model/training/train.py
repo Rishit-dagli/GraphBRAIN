@@ -2,60 +2,12 @@ import tensorflow as tf
 import sys
 import os
 import datetime
-from build_model import create_model
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from configuration.training import edge_network, model, data_splits
-from dataset.loader import bbbp_dataset, loader
-
-if __name__ == "__main__":
-    edge_config = edge_network()
-    data_config = data_splits()
-    config = model()
-    x_train, y_train, x_valid, y_valid, x_test, y_test = bbbp_dataset(
-        train_size=data_config["train"],
-        validation_size=data_config["validation"],
-        test_size=data_config["test"],
-    )
-    train_dataset = loader(
-        x_train, y_train, batch_size=config["batch_size"], shuffle=True, autotune=True
-    )
-    valid_dataset = loader(
-        x_valid, y_valid, batch_size=config["batch_size"], shuffle=True, autotune=True
-    )
-    test_dataset = loader(
-        x_test, y_test, batch_size=config["batch_size"], shuffle=True, autotune=True
-    )
-
-    strategy = None
-    if config["strategy"]:
-        if config["strategy"] == "MirroredStrategy":
-            strategy = tf.distribute.MirroredStrategy(
-                cluster_resolver=config["cluster_resolver"]
-            )
-        elif config["strategy"] == "TPUStrategy":
-            strategy = tf.distribute.TPUStrategy(
-                cluster_resolver=config["cluster_resolver"]
-            )
-        elif config["strategy"] == "MultiWorkerMirroredStrategy":
-            strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy(
-                cluster_resolver=config["cluster_resolver"]
-            )
-        elif config["strategy"] == "CentralStorageStrategy":
-            strategy = tf.distribute.experimental.CentralStorageStrategy(
-                cluster_resolver=config["cluster_resolver"]
-            )
-        elif config["strategy"] == "ParameterServerStrategy":
-            strategy = tf.distribute.experimental.ParameterServerStrategy(
-                cluster_resolver=config["cluster_resolver"]
-            )
-
-    if strategy:
-        with strategy.scope():
-            create_and_train()
-    else:
-        create_and_train()
-
+sys.path.append(".")
+from model.training.build_model import create_model
+from model.configuration.training import edge_network, model, data_splits
+from model.dataset.loader import bbbp_dataset, loader
+from model.dataset.download_dataset import download_dataset
 
 def create_and_train():
     model = create_model(
@@ -246,3 +198,51 @@ def create_and_train():
 
     test_results = model.evaluate(test_dataset, verbose=2)
     print("Test loss:", test_results[0])
+
+if __name__ == "__main__":
+    edge_config = edge_network()
+    data_config = data_splits()
+    config = model()
+    download_dataset()
+    x_train, y_train, x_valid, y_valid, x_test, y_test = bbbp_dataset(
+        train_size=data_config["train"],
+        val_size=data_config["validation"],
+        test_size=data_config["test"],
+    )
+    train_dataset = loader(
+        x_train, y_train, batch_size=config["batch_size"], shuffle=True, autotune=True, shuffle_buffer_size=data_config["shuffle_buffer_size"]
+    )
+    valid_dataset = loader(
+        x_valid, y_valid, batch_size=config["batch_size"], shuffle=True, autotune=True, shuffle_buffer_size=data_config["shuffle_buffer_size"]
+    )
+    test_dataset = loader(
+        x_test, y_test, batch_size=config["batch_size"], shuffle=True, autotune=True, shuffle_buffer_size=data_config["shuffle_buffer_size"]
+    )
+
+    strategy = None
+    if config["strategy"]:
+        if config["strategy"] == "MirroredStrategy":
+            strategy = tf.distribute.MirroredStrategy(
+                cluster_resolver=config["cluster_resolver"]
+            )
+        elif config["strategy"] == "TPUStrategy":
+            strategy = tf.distribute.TPUStrategy()
+        elif config["strategy"] == "MultiWorkerMirroredStrategy":
+            strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy(
+                cluster_resolver=config["cluster_resolver"]
+            )
+        elif config["strategy"] == "CentralStorageStrategy":
+            strategy = tf.distribute.experimental.CentralStorageStrategy(
+                cluster_resolver=config["cluster_resolver"]
+            )
+        elif config["strategy"] == "ParameterServerStrategy":
+            strategy = tf.distribute.experimental.ParameterServerStrategy(
+                cluster_resolver=config["cluster_resolver"]
+            )
+
+    if strategy:
+        with strategy.scope():
+            create_and_train()
+    else:
+        create_and_train()
+
