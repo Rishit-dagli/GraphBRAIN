@@ -199,13 +199,15 @@ path = os.path.dirname(os.path.abspath(__file__))
 pyta.check_all(
     "functions_for_streamlit.py",
     config={
-        "extra-imports": ["os",
-                          "streamlit",
-                          "PIL",
-                          "python_ta",
-                          "model.inference.load_model",
-                          "model.inference.infer",
-                          "tensorflow"],
+        "extra-imports": [
+            "os",
+            "streamlit",
+            "PIL",
+            "python_ta",
+            "model.inference.load_model",
+            "model.inference.infer",
+            "tensorflow",
+        ],
         "allowed-io": [],
         "max-line-length": 120,
         "disable": ["C0303", "E9992", "E9997"],
