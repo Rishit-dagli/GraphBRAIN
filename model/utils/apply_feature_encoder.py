@@ -49,11 +49,13 @@ path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 pyta.check_all(
     os.path.join(path, "model", "utils", "apply_feature_encoder.py"),
     config={
-        "extra-imports": ["sys",
-                          "os",
-                          "python_ta",
-                          "model.configuration.training",
-                          "model.utils.feature_encoder"],
+        "extra-imports": [
+            "sys",
+            "os",
+            "python_ta",
+            "model.configuration.training",
+            "model.utils.feature_encoder",
+        ],
         "allowed-io": [],
         "max-line-length": 120,
         "disable": ["E9992", "C0413", "W0611", "E9997"],
