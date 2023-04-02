@@ -193,12 +193,14 @@ path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 pyta.check_all(
     os.path.join(path, "model", "configuration", "training.py"),
     config={
-        "extra-imports": ["csv",
-                          "sys",
-                          "os",
-                          "typing",
-                          "python_ta",
-                          "model.dataset.download_elements"],
+        "extra-imports": [
+            "csv",
+            "sys",
+            "os",
+            "typing",
+            "python_ta",
+            "model.dataset.download_elements",
+        ],
         "allowed-io": ["atoms"],
         "max-line-length": 120,
         "disable": ["E9992", "C0413", "C0411", "W0611", "E9997"],
