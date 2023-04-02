@@ -163,13 +163,11 @@ In Figure \ref{fig:training_logs} we demonstrate the training progress of the mo
     \centering
     \includesvg[width=\linewidth]{epoch_loss.svg}
     \subcaption{}
-    \label{fig:sub_a}
   \end{minipage}\hfill
   \begin{minipage}{0.45\textwidth}
     \centering
     \includesvg[width=\linewidth]{epoch_AUC.svg}
     \subcaption{}
-    \label{fig:sub_b}
   \end{minipage}
   \caption{The training curves for (a) cross-entropy loss, lower is better and (b) area under the curve, higher is better, with respect to the number of epochs.}
   \label{fig:training_logs}
@@ -181,13 +179,11 @@ In Figure \ref{fig:training_logs} we demonstrate the training progress of the mo
     \centering
     \includesvg[width=\linewidth]{scaling_loss.svg}
     \subcaption{}
-    \label{fig:sub_a}
   \end{minipage}\hfill
   \begin{minipage}{0.45\textwidth}
     \centering
     \includesvg[width=\linewidth]{scaling_AUC.svg}
     \subcaption{}
-    \label{fig:sub_b}
   \end{minipage}
   \caption{The scaling curves for (a) cross-entropy loss, lower is better and (b) area under the curve with respect, higher is better, to the number of epochs, the full legend for these scaling curves can be found on the project's TensorBoard page. This particularly shows tuning hyperparameters for this problem was immensely helpful.}
   \label{fig:scaling_logs}
@@ -197,12 +193,12 @@ We could most certainly have built a better-performing model by building a model
 
 \subsection*{Inference}
 
-The web application only uses the trained model from the earlier steps to infer from it. Having ended up with quite a large model, which we spent time training on and understanding the quirks for, optimizing this model was of the essence and we were also able to introduce optimizations to it using multiple optimizations from Grappler \citep{48051}. The way this is implemented in code is summarized in Table.
+The web application only uses the trained model from the earlier steps to infer from it. Having ended up with quite a large model, which we spent time training on and understanding the quirks for, optimizing this model was of the essence and we were also able to introduce optimizations to it using multiple optimizations from Grappler \citep{48051}. The way this is implemented in code is summarized in Table \ref{tab:infer}.
 
 \begin{table}[ht]
 \centering
 \caption{Summary of our model inference code and where they live in the codebase.}
-\label{tab:train}
+\label{tab:infer}
 \begin{tabularx}{\textwidth}{ccX}
 \toprule
 \textbf{Directory in \texttt{model/}} & \textbf{Module} & \textbf{Description}\\
