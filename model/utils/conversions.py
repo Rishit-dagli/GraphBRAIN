@@ -128,13 +128,15 @@ path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 pyta.check_all(
     os.path.join(path, "model", "utils", "conversions.py"),
     config={
-        "extra-imports": ["tensorflow",
-                          "rdkit",
-                          "einops",
-                          "python_ta",
-                          "sys",
-                          "os",
-                          "model.utils.apply_feature_encoder"],
+        "extra-imports": [
+            "tensorflow",
+            "rdkit",
+            "einops",
+            "python_ta",
+            "sys",
+            "os",
+            "model.utils.apply_feature_encoder",
+        ],
         "allowed-io": [],
         "max-line-length": 120,
         "disable": ["E1101", "E9992", "C0413", "C0411", "W0611", "E9997"],
