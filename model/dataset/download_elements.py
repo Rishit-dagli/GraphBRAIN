@@ -72,13 +72,13 @@ def download_periodic() -> str:
         return "periodictable.csv"
 
 
-# pyta.check_all(
-#     "model/dataset/download_elements.py",
-#     config={
-#         "extra-imports": ["wget", "hashlib", "os", "python_ta"],
-#         "allowed-io": ["_check_md5"],
-#         "max-line-length": 120,
-#         "disable": [],
-#     },
-#     output="pyta_outputs/pyta_output10.html",
-# )
+pyta.check_all(
+    "model/dataset/download_elements.py",
+    config={
+        "extra-imports": ["wget", "hashlib", "os", "python_ta"],
+        "allowed-io": ["_check_md5", "download_periodic"],
+        "max-line-length": 120,
+        "disable": ["E9992", "C0411"],
+    },
+    output="pyta_outputs/pyta_output10.html",
+)

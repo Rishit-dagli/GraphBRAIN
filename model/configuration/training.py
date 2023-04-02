@@ -94,7 +94,8 @@ def edge_network() -> dict[str, str]:
     }
 
 
-def data_splits():
+def data_splits() -> dict[str, Union[float, int]]:
+    """Returns a dictionary of data split features."""
     return {"train": 0.8, "validation": 0.1, "test": 0.1, "shuffle_buffer_size": 1024}
 
 
@@ -188,13 +189,18 @@ def model() -> dict[str, Union[str, int, list[Union[int, str]], bool, float, Non
     }
 
 
-# pyta.check_all(
-#     "model/configuration/training.py",
-#     config={
-#         "extra-imports": ["csv", "sys", "os", "typing", "python_ta"],
-#         "allowed-io": ["atoms"],
-#         "max-line-length": 120,
-#         "disable": [],
-#     },
-#     output="pyta_outputs/pyta_output12.html",
-# )
+pyta.check_all(
+    "model/configuration/training.py",
+    config={
+        "extra-imports": ["csv",
+                          "sys",
+                          "os",
+                          "typing",
+                          "python_ta",
+                          "model.dataset.download_elements"],
+        "allowed-io": ["atoms"],
+        "max-line-length": 120,
+        "disable": ["E9992", "C0413", "C0411", "W0611"],
+    },
+    output="pyta_outputs/pyta_output12.html",
+)

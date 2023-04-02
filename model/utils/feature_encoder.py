@@ -40,8 +40,8 @@ class FeatureEncoder:
         Returns:
             None
         """
-        self.total_features = 0
-        self.feature_mappings = {}
+        self.total_features: int = 0
+        self.feature_mappings: dict = {}
         for feature_name, feature_set in allowed_feature_sets.items():
             sorted_feature_set = sorted(list(feature_set))
             self.feature_mappings[feature_name] = dict(
@@ -193,13 +193,13 @@ class BondFeatureEncoder(FeatureEncoder):
         return bond.GetIsConjugated()
 
 
-# pyta.check_all(
-#     "model/utils/feature_encoder.py",
-#     config={
-#         "extra-imports": ["tensorflow", "numpy", "python_ta"],
-#         "allowed-io": [],
-#         "max-line-length": 120,
-#         "disable": [],
-#     },
-#     output="pyta_outputs/pyta_output5.html",
-# )
+pyta.check_all(
+    "model/utils/feature_encoder.py",
+    config={
+        "extra-imports": ["tensorflow", "numpy", "python_ta"],
+        "allowed-io": [],
+        "max-line-length": 120,
+        "disable": ["E9992", "W0237"],
+    },
+    output="pyta_outputs/pyta_output5.html",
+)

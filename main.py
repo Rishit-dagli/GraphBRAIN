@@ -47,9 +47,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License."""
 
+import math
 import streamlit as st
 from PIL import Image
-import math
 import python_ta as pyta
 from functions_for_streamlit import (
     load_model_in_cache,
@@ -167,12 +167,15 @@ with tab2:
                 output3.write(information[description])
 
 
-# # Checking the code for errors using python_ta.
-# pyta.check_all(
-#     config={
-#         "extra-imports": ["streamlit", "PIL", "python_ta"],
-#         "allowed-io": [],
-#         "max-line-length": 120,
-#     },
-#     output="pyta_output1.txt",
-# )
+# Checking the code for errors using python_ta.
+pyta.check_all(
+    config={
+        "extra-imports": ["streamlit", "PIL", "python_ta", "functions_for_streamlit", "math"],
+        "allowed-io": [],
+        "max-line-length": 120,
+        "disable": ["forbidden-top-level-code",
+                    "invalid-name",
+                    "forbidden-global-variables"],
+    },
+    output="pyta_outputs/pyta_output1.html",
+)

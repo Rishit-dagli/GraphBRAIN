@@ -16,10 +16,10 @@ See the License for the specific language governing permissions and
 limitations under the License."""
 
 import streamlit as st
-from model.inference.load_model import load_model
-from model.inference.infer import predict
 import tensorflow as tf
 import python_ta as pyta
+from model.inference.load_model import load_model
+from model.inference.infer import predict
 
 
 def embed_molview(smile: str) -> None:
@@ -167,11 +167,11 @@ def display_goal() -> None:
 def set_background_black() -> None:
     """Set the background of the website to black."""
     st.markdown(
-        f"""
+        """
          <style>
-         .stApp {{
+         .stApp {
              background-color:black
-         }}
+         }
          </style>
          """,
         unsafe_allow_html=True,
@@ -193,13 +193,18 @@ information = [
 ]
 
 # Checking the code for errors using python_ta.
-# pyta.check_all(
-#     "functions_for_streamlit.py",
-#     config={
-#         "extra-imports": ["streamlit", "PIL", "python_ta"],
-#         "allowed-io": [],
-#         "max-line-length": 120,
-#         "disable": [],
-#     },
-#     output="pyta_outputs/pyta_output2.html",
-# )
+pyta.check_all(
+    "functions_for_streamlit.py",
+    config={
+        "extra-imports": ["streamlit",
+                          "PIL",
+                          "python_ta",
+                          "model.inference.load_model",
+                          "model.inference.infer",
+                          "tensorflow"],
+        "allowed-io": [],
+        "max-line-length": 120,
+        "disable": ["C0303", "E9992", "E9997"],
+    },
+    output="pyta_outputs/pyta_output2.html",
+)

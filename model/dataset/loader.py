@@ -79,8 +79,8 @@ def merged_batch(x_batch: tuple, y_batch: tf.Tensor) -> tuple:
 
 
 def loader(
-    x: tf.TypeSpec,
-    y: tf.TypeSpec,
+    x: tuple[tf.RaggedTensor, tf.RaggedTensor, tf.RaggedTensor],
+    y: pd.Series,
     batch_size: int = 32,
     shuffle: bool = True,
     autotune: bool = True,

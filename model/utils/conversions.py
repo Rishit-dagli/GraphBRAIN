@@ -123,13 +123,18 @@ def smile_to_graph(
     )
 
 
-# pyta.check_all(
-#     "model/utils/conversions.py",
-#     config={
-#         "extra-imports": ["tensorflow", "rdkit", "einops", "python_ta"],
-#         "allowed-io": [],
-#         "max-line-length": 120,
-#         "disable": [],
-#     },
-#     output="pyta_outputs/pyta_output4.html",
-# )
+pyta.check_all(
+    "model/utils/conversions.py",
+    config={
+        "extra-imports": ["tensorflow",
+                          "rdkit",
+                          "einops",
+                          "python_ta",
+                          "sys",
+                          "model.utils.apply_feature_encoder"],
+        "allowed-io": [],
+        "max-line-length": 120,
+        "disable": ["E1101", "E9992", "C0413", "C0411", "W0611"],
+    },
+    output="pyta_outputs/pyta_output4.html",
+)
