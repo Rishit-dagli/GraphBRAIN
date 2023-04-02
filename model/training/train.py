@@ -1,5 +1,28 @@
+"""CSC111 Winter 2023 Final Project: Graph Brain
+
+This module implements a function `create_and_train` that creates a deep learning model and trains it.
+The configuration of the model is set in a separate configuration file called `training.py`.
+The model is created using the function `create_model` from the module `model.training.build_model`.
+The input and output shapes of the model are determined by the shapes of the training data `x_train` and `y_train`.
+The training data is loaded using the function `loader` from the module `model.dataset.loader`.
+
+Copyright and Usage Information
+===============================
+Copyright 2023 Pranjal Agrawal, Rishit Dagli, Shivesh Prakash and Tanmay Shinde
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License."""
+
 import sys
-import os
 import os
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
@@ -13,7 +36,15 @@ from model.dataset.loader import bbbp_dataset, loader
 from model.dataset.download_dataset import download_dataset
 
 
-def create_and_train():
+def create_and_train() -> None:
+    """Creates and trains a deep learning model.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     model = create_model(
         atom_dim=x_train[0][0][0].shape[0],
         bond_dim=x_train[1][0][0].shape[0],
