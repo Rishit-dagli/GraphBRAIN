@@ -331,8 +331,9 @@ def create_model(
     return model
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import python_ta as pyta
+
     path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     pyta.check_all(
         os.path.join(path, "model", "training", "build_model.py"),
