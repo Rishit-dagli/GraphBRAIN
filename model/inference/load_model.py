@@ -102,7 +102,7 @@ pyta.check_all(
             "tarfile",
             "typing",
             "python_ta",
-            "os"
+            "os",
         ],
         "allowed-io": ["load_model", "_check_md5", "download_model"],
         "max-line-length": 120,
