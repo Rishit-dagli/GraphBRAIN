@@ -28,7 +28,7 @@ Awesome! If you want to contribute to this project, you're always welcome! See [
 ## License
 
 ```
-Copyright 2022 Rishit Dagli, Shivesh Prakash, Tanmay Shinde, Pranjal Agrawal
+Copyright 2023 Rishit Dagli, Shivesh Prakash, Tanmay Shinde, Pranjal Agrawal
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
