@@ -71,8 +71,9 @@ def download_periodic() -> str:
         return "periodictable.csv"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import python_ta as pyta
+
     path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     pyta.check_all(
         os.path.join(path, "model", "dataset", "download_elements.py"),
