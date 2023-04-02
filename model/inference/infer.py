@@ -44,8 +44,9 @@ def predict(smile: list, model: tf.keras.Model) -> tf.Tensor:
     return tf.squeeze(model.predict(smile_data), axis=1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import python_ta as pyta
+
     path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     pyta.check_all(
         os.path.join(path, "model", "inference", "infer.py"),

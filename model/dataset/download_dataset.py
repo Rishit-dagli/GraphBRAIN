@@ -71,8 +71,9 @@ def download_dataset() -> str:
         return "BBBP.csv"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import python_ta as pyta
+
     path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     pyta.check_all(
         os.path.join(path, "model", "dataset", "download_dataset.py"),

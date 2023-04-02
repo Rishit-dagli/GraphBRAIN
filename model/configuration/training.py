@@ -190,6 +190,7 @@ def model() -> dict[str, Union[str, int, list[Union[int, str]], bool, float, Non
 if __name__ == "__main__":
     import os
     import python_ta as pyta
+
     path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     pyta.check_all(
         os.path.join(path, "model", "configuration", "training.py"),
