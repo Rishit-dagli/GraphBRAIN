@@ -6,10 +6,6 @@ jobs:
   build_latex:
   
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: project_report
         
     steps:
       - name: Checkout code
@@ -18,7 +14,7 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: main.tex
+          root_file: project_report/main.tex
           
       - name: Upload PDF file
         uses: actions/upload-artifact@v3
