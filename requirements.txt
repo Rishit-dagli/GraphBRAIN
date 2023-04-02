@@ -12,7 +12,7 @@ numpy==1.23.5
 pydot==1.4.2
 graphviz==0.20.1
 
-# Creating and running the web app
+# Creating and running the web application
 streamlit==1.20.0
 
 # Testing and code checking
