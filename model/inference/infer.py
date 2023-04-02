@@ -49,13 +49,15 @@ path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 pyta.check_all(
     os.path.join(path, "model", "inference", "infer.py"),
     config={
-        "extra-imports": ["tensorflow",
-                          "sys",
-                          "os",
-                          "pandas",
-                          "python_ta",
-                          "model.utils.conversions",
-                          "model.dataset.loader"],
+        "extra-imports": [
+            "tensorflow",
+            "sys",
+            "os",
+            "pandas",
+            "python_ta",
+            "model.utils.conversions",
+            "model.dataset.loader",
+        ],
         "allowed-io": [],
         "max-line-length": 120,
         "disable": ["E9992", "C0413", "C0411", "W0611", "E9997"],
