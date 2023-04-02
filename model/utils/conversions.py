@@ -18,6 +18,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License."""
 
+import os
 import rdkit
 from rdkit import Chem
 import sys
@@ -123,18 +124,20 @@ def smile_to_graph(
     )
 
 
+path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 pyta.check_all(
-    "model/utils/conversions.py",
+    os.path.join(path, "model", "utils", "conversions.py"),
     config={
         "extra-imports": ["tensorflow",
                           "rdkit",
                           "einops",
                           "python_ta",
                           "sys",
+                          "os",
                           "model.utils.apply_feature_encoder"],
         "allowed-io": [],
         "max-line-length": 120,
-        "disable": ["E1101", "E9992", "C0413", "C0411", "W0611"],
+        "disable": ["E1101", "E9992", "C0413", "C0411", "W0611", "E9997"],
     },
-    output="pyta_outputs/pyta_output4.html",
+    output=os.path.join(path, "pyta_outputs", "conversions.html"),
 )

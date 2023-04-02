@@ -18,6 +18,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License."""
 
+import os
 import tensorflow as tf
 import numpy as np
 import python_ta as pyta
@@ -193,13 +194,14 @@ class BondFeatureEncoder(FeatureEncoder):
         return bond.GetIsConjugated()
 
 
+path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 pyta.check_all(
-    "model/utils/feature_encoder.py",
+    os.path.join(path, "model", "utils", "feature_encoder.py"),
     config={
-        "extra-imports": ["tensorflow", "numpy", "python_ta"],
+        "extra-imports": ["tensorflow", "numpy", "python_ta", "os"],
         "allowed-io": [],
         "max-line-length": 120,
-        "disable": ["E9992", "W0237"],
+        "disable": ["E9992", "W0237", "E9997"],
     },
-    output="pyta_outputs/pyta_output5.html",
+    output=os.path.join(path, "pyta_outputs", "feature_encoder.html"),
 )

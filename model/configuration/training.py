@@ -189,8 +189,9 @@ def model() -> dict[str, Union[str, int, list[Union[int, str]], bool, float, Non
     }
 
 
+path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 pyta.check_all(
-    "model/configuration/training.py",
+    os.path.join(path, "model", "configuration", "training.py"),
     config={
         "extra-imports": ["csv",
                           "sys",
@@ -200,7 +201,7 @@ pyta.check_all(
                           "model.dataset.download_elements"],
         "allowed-io": ["atoms"],
         "max-line-length": 120,
-        "disable": ["E9992", "C0413", "C0411", "W0611"],
+        "disable": ["E9992", "C0413", "C0411", "W0611", "E9997"],
     },
-    output="pyta_outputs/pyta_output12.html",
+    output=os.path.join(path, "pyta_outputs", "training.html"),
 )

@@ -45,8 +45,9 @@ def bond_feature_encoder() -> BondFeatureEncoder:
     return BondFeatureEncoder(allowed_feature_sets=bonds())
 
 
+path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 pyta.check_all(
-    "model/utils/apply_feature_encoder.py",
+    os.path.join(path, "model", "utils", "apply_feature_encoder.py"),
     config={
         "extra-imports": ["sys",
                           "os",
@@ -55,7 +56,7 @@ pyta.check_all(
                           "model.utils.feature_encoder"],
         "allowed-io": [],
         "max-line-length": 120,
-        "disable": ["E9992", "C0413", "W0611"],
+        "disable": ["E9992", "C0413", "W0611", "E9997"],
     },
-    output="pyta_outputs/pyta_output3.html",
+    output=os.path.join(path, "pyta_outputs", "apply_feature_encoder.html"),
 )

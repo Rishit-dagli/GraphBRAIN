@@ -18,6 +18,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License."""
 
+import os
 import tensorflow as tf
 import einops
 import python_ta as pyta
@@ -331,13 +332,14 @@ def create_model(
     return model
 
 
+path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 pyta.check_all(
-    "model/training/build_model.py",
+    os.path.join(path, "model", "training", "build_model.py"),
     config={
-        "extra-imports": ["tensorflow", "einops", "python_ta"],
+        "extra-imports": ["tensorflow", "einops", "python_ta", "os"],
         "allowed-io": [],
         "max-line-length": 120,
         "disable": [],
     },
-    output="pyta_outputs/pyta_output6.html",
+    output=os.path.join(path, "pyta_outputs", "build_model.html"),
 )

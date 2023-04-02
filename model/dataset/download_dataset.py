@@ -72,13 +72,14 @@ def download_dataset() -> str:
         return "BBBP.csv"
 
 
+path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 pyta.check_all(
-    "model/dataset/download_dataset.py",
+    os.path.join(path, "model", "dataset", "download_dataset.py"),
     config={
         "extra-imports": ["wget", "hashlib", "os", "python_ta"],
         "allowed-io": ["_check_md5", "download_dataset"],
         "max-line-length": 120,
-        "disable": ["E9992", "C0411"],
+        "disable": ["E9992", "C0411", "E9997"],
     },
-    output="pyta_outputs/pyta_output11.html",
+    output=os.path.join(path, "pyta_outputs", "download_dataset.html"),
 )

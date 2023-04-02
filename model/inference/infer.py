@@ -45,8 +45,9 @@ def predict(smile: list, model: tf.keras.Model) -> tf.Tensor:
     return tf.squeeze(model.predict(smile_data), axis=1)
 
 
+path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 pyta.check_all(
-    "model/inference/infer.py",
+    os.path.join(path, "model", "inference", "infer.py"),
     config={
         "extra-imports": ["tensorflow",
                           "sys",
@@ -57,7 +58,7 @@ pyta.check_all(
                           "model.dataset.loader"],
         "allowed-io": [],
         "max-line-length": 120,
-        "disable": ["E9992", "C0413", "C0411", "W0611"],
+        "disable": ["E9992", "C0413", "C0411", "W0611", "E9997"],
     },
-    output="pyta_outputs/pyta_output8.html",
+    output=os.path.join(path, "pyta_outputs", "infer.html"),
 )

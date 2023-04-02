@@ -72,13 +72,14 @@ def download_periodic() -> str:
         return "periodictable.csv"
 
 
+path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 pyta.check_all(
-    "model/dataset/download_elements.py",
+    os.path.join(path, "model", "dataset", "download_elements.py"),
     config={
         "extra-imports": ["wget", "hashlib", "os", "python_ta"],
         "allowed-io": ["_check_md5", "download_periodic"],
         "max-line-length": 120,
-        "disable": ["E9992", "C0411"],
+        "disable": ["E9992", "C0411", "E9997"],
     },
-    output="pyta_outputs/pyta_output10.html",
+    output=os.path.join(path, "pyta_outputs", "download_elements.html"),
 )

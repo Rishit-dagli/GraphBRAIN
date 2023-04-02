@@ -15,6 +15,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License."""
 
+import os
 import streamlit as st
 import tensorflow as tf
 import python_ta as pyta
@@ -192,11 +193,14 @@ information = [
     barrier.""",
 ]
 
+path = os.path.dirname(os.path.abspath(__file__))
+
 # Checking the code for errors using python_ta.
 pyta.check_all(
     "functions_for_streamlit.py",
     config={
-        "extra-imports": ["streamlit",
+        "extra-imports": ["os",
+                          "streamlit",
                           "PIL",
                           "python_ta",
                           "model.inference.load_model",
@@ -206,5 +210,5 @@ pyta.check_all(
         "max-line-length": 120,
         "disable": ["C0303", "E9992", "E9997"],
     },
-    output="pyta_outputs/pyta_output2.html",
+    output=os.path.join(path, "pyta_outputs", "functions_for_streamlit.html"),
 )
