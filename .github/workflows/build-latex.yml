@@ -15,7 +15,7 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
           root_file: main.tex
-          working_directory: project_report
+          working_directory: project_report/
           
       - name: Upload PDF file
         uses: actions/upload-artifact@v3
