@@ -14,10 +14,11 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: project_report/main.tex
+          root_file: main.tex
+          working_directory: project_report
           
       - name: Upload PDF file
         uses: actions/upload-artifact@v3
         with:
           name: PDF
-          path: main.pdf
+          path: project_report/main.pdf
