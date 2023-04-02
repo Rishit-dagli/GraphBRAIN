@@ -160,8 +160,10 @@ with tab2:
                 f" {math.floor((float(prediction))*100)/100}."
             )
             output2.write(
-                f"Since this value is {'less than 0.3' if float(prediction) < 0.3 else 'greater than 0.3'}, "
-                f"the molecule is {'not' if float(prediction) < 0.3 else ''} permeable to the Blood-Brain Barrier."
+                "Since this value is"
+                f" {'less than 0.3' if float(prediction) < 0.3 else 'greater than 0.3'},"
+                f" the molecule is {'not' if float(prediction) < 0.3 else ''} permeable"
+                " to the Blood-Brain Barrier."
             )
             if molview is not None:
                 embed_molview(molview)
