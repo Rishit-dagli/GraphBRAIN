@@ -22,7 +22,6 @@ import tensorflow as tf
 import sys
 import os
 import pandas as pd
-import python_ta as pyta
 
 sys.path.append(".")
 from model.utils.conversions import smile_to_graph
@@ -45,22 +44,24 @@ def predict(smile: list, model: tf.keras.Model) -> tf.Tensor:
     return tf.squeeze(model.predict(smile_data), axis=1)
 
 
-path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-pyta.check_all(
-    os.path.join(path, "model", "inference", "infer.py"),
-    config={
-        "extra-imports": [
-            "tensorflow",
-            "sys",
-            "os",
-            "pandas",
-            "python_ta",
-            "model.utils.conversions",
-            "model.dataset.loader",
-        ],
-        "allowed-io": [],
-        "max-line-length": 120,
-        "disable": ["E9992", "C0413", "C0411", "W0611", "E9997"],
-    },
-    output=os.path.join(path, "pyta_outputs", "infer.html"),
-)
+if __name__ == '__main__':
+    import python_ta as pyta
+    path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    pyta.check_all(
+        os.path.join(path, "model", "inference", "infer.py"),
+        config={
+            "extra-imports": [
+                "tensorflow",
+                "sys",
+                "os",
+                "pandas",
+                "python_ta",
+                "model.utils.conversions",
+                "model.dataset.loader",
+            ],
+            "allowed-io": [],
+            "max-line-length": 120,
+            "disable": ["E9992", "C0413", "C0411", "W0611", "E9997"],
+        },
+        output=os.path.join(path, "pyta_outputs", "infer.html"),
+    )

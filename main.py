@@ -51,7 +51,7 @@ import os
 import math
 import streamlit as st
 from PIL import Image
-import python_ta as pyta
+
 from functions_for_streamlit import (
     load_model_in_cache,
     output_for_button,
@@ -168,26 +168,3 @@ with tab2:
 
             if 0 <= description <= 3:
                 output3.write(information[description])
-
-
-# Checking the code for errors using python_ta.
-pyta.check_all(
-    config={
-        "extra-imports": [
-            "streamlit",
-            "PIL",
-            "python_ta",
-            "functions_for_streamlit",
-            "math",
-            "os",
-        ],
-        "allowed-io": [],
-        "max-line-length": 120,
-        "disable": [
-            "forbidden-top-level-code",
-            "invalid-name",
-            "forbidden-global-variables",
-        ],
-    },
-    output=os.path.join(path, "pyta_outputs", "main.html"),
-)

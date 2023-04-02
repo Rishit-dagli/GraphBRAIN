@@ -19,12 +19,10 @@ See the License for the specific language governing permissions and
 limitations under the License."""
 
 import sys
-import os
 
 sys.path.append(".")
 from model.dataset.download_elements import download_periodic
 import csv
-import python_ta as pyta
 from typing import Union
 
 
@@ -189,21 +187,24 @@ def model() -> dict[str, Union[str, int, list[Union[int, str]], bool, float, Non
     }
 
 
-path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-pyta.check_all(
-    os.path.join(path, "model", "configuration", "training.py"),
-    config={
-        "extra-imports": [
-            "csv",
-            "sys",
-            "os",
-            "typing",
-            "python_ta",
-            "model.dataset.download_elements",
-        ],
-        "allowed-io": ["atoms"],
-        "max-line-length": 120,
-        "disable": ["E9992", "C0413", "C0411", "W0611", "E9997"],
-    },
-    output=os.path.join(path, "pyta_outputs", "training.html"),
-)
+if __name__ == "__main__":
+    import os
+    import python_ta as pyta
+    path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    pyta.check_all(
+        os.path.join(path, "model", "configuration", "training.py"),
+        config={
+            "extra-imports": [
+                "csv",
+                "sys",
+                "os",
+                "typing",
+                "python_ta",
+                "model.dataset.download_elements",
+            ],
+            "allowed-io": ["atoms"],
+            "max-line-length": 120,
+            "disable": ["E9992", "C0413", "C0411", "W0611", "E9997"],
+        },
+        output=os.path.join(path, "pyta_outputs", "training.html"),
+    )

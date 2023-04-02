@@ -18,7 +18,6 @@ limitations under the License."""
 import os
 import streamlit as st
 import tensorflow as tf
-import python_ta as pyta
 from model.inference.load_model import load_model
 from model.inference.infer import predict
 
@@ -193,24 +192,24 @@ information = [
     barrier.""",
 ]
 
-path = os.path.dirname(os.path.abspath(__file__))
 
-# Checking the code for errors using python_ta.
-pyta.check_all(
-    "functions_for_streamlit.py",
-    config={
-        "extra-imports": [
-            "os",
-            "streamlit",
-            "PIL",
-            "python_ta",
-            "model.inference.load_model",
-            "model.inference.infer",
-            "tensorflow",
-        ],
-        "allowed-io": [],
-        "max-line-length": 120,
-        "disable": ["C0303", "E9992", "E9997"],
-    },
-    output=os.path.join(path, "pyta_outputs", "functions_for_streamlit.html"),
-)
+if __name__ == "__main__":
+    path = os.path.dirname(os.path.abspath(__file__))
+    pyta.check_all(
+        "functions_for_streamlit.py",
+        config={
+            "extra-imports": [
+                "os",
+                "streamlit",
+                "PIL",
+                "python_ta",
+                "model.inference.load_model",
+                "model.inference.infer",
+                "tensorflow",
+            ],
+            "allowed-io": [],
+            "max-line-length": 120,
+            "disable": ["C0303", "E9992", "E9997"],
+        },
+        output=os.path.join(path, "pyta_outputs", "functions_for_streamlit.html"),
+    )

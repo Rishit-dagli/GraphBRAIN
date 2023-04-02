@@ -21,7 +21,6 @@ limitations under the License."""
 import wget
 import hashlib
 import os
-import python_ta as pyta
 
 
 def _download() -> str:
@@ -72,14 +71,16 @@ def download_periodic() -> str:
         return "periodictable.csv"
 
 
-path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-pyta.check_all(
-    os.path.join(path, "model", "dataset", "download_elements.py"),
-    config={
-        "extra-imports": ["wget", "hashlib", "os", "python_ta"],
-        "allowed-io": ["_check_md5", "download_periodic"],
-        "max-line-length": 120,
-        "disable": ["E9992", "C0411", "E9997"],
-    },
-    output=os.path.join(path, "pyta_outputs", "download_elements.html"),
-)
+if __name__ == '__main__':
+    import python_ta as pyta
+    path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    pyta.check_all(
+        os.path.join(path, "model", "dataset", "download_elements.py"),
+        config={
+            "extra-imports": ["wget", "hashlib", "os", "python_ta"],
+            "allowed-io": ["_check_md5", "download_periodic"],
+            "max-line-length": 120,
+            "disable": ["E9992", "C0411", "E9997"],
+        },
+        output=os.path.join(path, "pyta_outputs", "download_elements.html"),
+    )

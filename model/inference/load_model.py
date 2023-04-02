@@ -22,7 +22,6 @@ import wget
 import hashlib
 import tensorflow as tf
 import tarfile
-import python_ta as pyta
 from typing import Optional
 import os
 
@@ -91,22 +90,24 @@ def load_model(filename: Optional[str] = None) -> tf.keras.Model:
     return model
 
 
-path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-pyta.check_all(
-    os.path.join(path, "model", "inference", "load_model.py"),
-    config={
-        "extra-imports": [
-            "tensorflow",
-            "hashlib",
-            "wget",
-            "tarfile",
-            "typing",
-            "python_ta",
-            "os",
-        ],
-        "allowed-io": ["load_model", "_check_md5", "download_model"],
-        "max-line-length": 120,
-        "disable": ["E9992", "R1732", "C0411", "E9997"],
-    },
-    output=os.path.join(path, "pyta_outputs", "load_model.html"),
-)
+if __name__ == "__main__":
+    import python_ta as pyta
+    path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    pyta.check_all(
+        os.path.join(path, "model", "inference", "load_model.py"),
+        config={
+            "extra-imports": [
+                "tensorflow",
+                "hashlib",
+                "wget",
+                "tarfile",
+                "typing",
+                "python_ta",
+                "os",
+            ],
+            "allowed-io": ["load_model", "_check_md5", "download_model"],
+            "max-line-length": 120,
+            "disable": ["E9992", "R1732", "C0411", "E9997"],
+        },
+        output=os.path.join(path, "pyta_outputs", "load_model.html"),
+    )

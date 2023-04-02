@@ -20,7 +20,6 @@ limitations under the License."""
 
 import sys
 import os
-import python_ta as pyta
 
 sys.path.append(".")
 from model.configuration.training import atoms, bonds
@@ -45,20 +44,22 @@ def bond_feature_encoder() -> BondFeatureEncoder:
     return BondFeatureEncoder(allowed_feature_sets=bonds())
 
 
-path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-pyta.check_all(
-    os.path.join(path, "model", "utils", "apply_feature_encoder.py"),
-    config={
-        "extra-imports": [
-            "sys",
-            "os",
-            "python_ta",
-            "model.configuration.training",
-            "model.utils.feature_encoder",
-        ],
-        "allowed-io": [],
-        "max-line-length": 120,
-        "disable": ["E9992", "C0413", "W0611", "E9997"],
-    },
-    output=os.path.join(path, "pyta_outputs", "apply_feature_encoder.html"),
-)
+if __name__ == '__main__':
+    import python_ta as pyta
+    path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    pyta.check_all(
+        os.path.join(path, "model", "utils", "apply_feature_encoder.py"),
+        config={
+            "extra-imports": [
+                "sys",
+                "os",
+                "python_ta",
+                "model.configuration.training",
+                "model.utils.feature_encoder",
+            ],
+            "allowed-io": [],
+            "max-line-length": 120,
+            "disable": ["E9992", "C0413", "W0611", "E9997"],
+        },
+        output=os.path.join(path, "pyta_outputs", "apply_feature_encoder.html"),
+    )

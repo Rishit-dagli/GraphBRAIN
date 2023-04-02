@@ -21,7 +21,6 @@ limitations under the License."""
 import os
 import tensorflow as tf
 import einops
-import python_ta as pyta
 
 
 class EdgeNetwork(tf.keras.layers.Layer):
@@ -332,14 +331,16 @@ def create_model(
     return model
 
 
-path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-pyta.check_all(
-    os.path.join(path, "model", "training", "build_model.py"),
-    config={
-        "extra-imports": ["tensorflow", "einops", "python_ta", "os"],
-        "allowed-io": [],
-        "max-line-length": 120,
-        "disable": [],
-    },
-    output=os.path.join(path, "pyta_outputs", "build_model.html"),
-)
+if __name__ == '__main__':
+    import python_ta as pyta
+    path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    pyta.check_all(
+        os.path.join(path, "model", "training", "build_model.py"),
+        config={
+            "extra-imports": ["tensorflow", "einops", "python_ta", "os"],
+            "allowed-io": [],
+            "max-line-length": 120,
+            "disable": [],
+        },
+        output=os.path.join(path, "pyta_outputs", "build_model.html"),
+    )

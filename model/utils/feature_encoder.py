@@ -21,7 +21,6 @@ limitations under the License."""
 import os
 import tensorflow as tf
 import numpy as np
-import python_ta as pyta
 
 
 class FeatureEncoder:
@@ -194,14 +193,16 @@ class BondFeatureEncoder(FeatureEncoder):
         return bond.GetIsConjugated()
 
 
-path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-pyta.check_all(
-    os.path.join(path, "model", "utils", "feature_encoder.py"),
-    config={
-        "extra-imports": ["tensorflow", "numpy", "python_ta", "os"],
-        "allowed-io": [],
-        "max-line-length": 120,
-        "disable": ["E9992", "W0237", "E9997"],
-    },
-    output=os.path.join(path, "pyta_outputs", "feature_encoder.html"),
-)
+if __name__ == "__main__":
+    import python_ta as pyta
+    path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    pyta.check_all(
+        os.path.join(path, "model", "utils", "feature_encoder.py"),
+        config={
+            "extra-imports": ["tensorflow", "numpy", "python_ta", "os"],
+            "allowed-io": [],
+            "max-line-length": 120,
+            "disable": ["E9992", "W0237", "E9997"],
+        },
+        output=os.path.join(path, "pyta_outputs", "feature_encoder.html"),
+    )

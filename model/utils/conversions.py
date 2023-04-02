@@ -27,7 +27,6 @@ sys.path.append(".")
 from model.utils.apply_feature_encoder import atom_feature_encoder, bond_feature_encoder
 import tensorflow as tf
 import einops
-import python_ta as pyta
 
 
 def _smile_to_molecule(smile: str) -> Chem.rdchem.Mol:
@@ -124,22 +123,24 @@ def smile_to_graph(
     )
 
 
-path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-pyta.check_all(
-    os.path.join(path, "model", "utils", "conversions.py"),
-    config={
-        "extra-imports": [
-            "tensorflow",
-            "rdkit",
-            "einops",
-            "python_ta",
-            "sys",
-            "os",
-            "model.utils.apply_feature_encoder",
-        ],
-        "allowed-io": [],
-        "max-line-length": 120,
-        "disable": ["E1101", "E9992", "C0413", "C0411", "W0611", "E9997"],
-    },
-    output=os.path.join(path, "pyta_outputs", "conversions.html"),
-)
+if __name__ == "__main__":
+    import python_ta as pyta
+    path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    pyta.check_all(
+        os.path.join(path, "model", "utils", "conversions.py"),
+        config={
+            "extra-imports": [
+                "tensorflow",
+                "rdkit",
+                "einops",
+                "python_ta",
+                "sys",
+                "os",
+                "model.utils.apply_feature_encoder",
+            ],
+            "allowed-io": [],
+            "max-line-length": 120,
+            "disable": ["E1101", "E9992", "C0413", "C0411", "W0611", "E9997"],
+        },
+        output=os.path.join(path, "pyta_outputs", "conversions.html"),
+    )
