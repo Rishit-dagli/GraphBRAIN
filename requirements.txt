@@ -1,4 +1,4 @@
-# CSC111 Winter 2023: Python libraries we'll be using this semester.
+# CSC111 Winter 2023: Python libraries we will be using for this project.
 
 # Training and testing machine learning models
 wget==3.2
