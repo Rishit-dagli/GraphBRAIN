@@ -173,12 +173,21 @@ with tab2:
 # Checking the code for errors using python_ta.
 pyta.check_all(
     config={
-        "extra-imports": ["streamlit", "PIL", "python_ta", "functions_for_streamlit", "math", "os"],
+        "extra-imports": [
+            "streamlit",
+            "PIL",
+            "python_ta",
+            "functions_for_streamlit",
+            "math",
+            "os",
+        ],
         "allowed-io": [],
         "max-line-length": 120,
-        "disable": ["forbidden-top-level-code",
-                    "invalid-name",
-                    "forbidden-global-variables"],
+        "disable": [
+            "forbidden-top-level-code",
+            "invalid-name",
+            "forbidden-global-variables",
+        ],
     },
     output=os.path.join(path, "pyta_outputs", "main.html"),
 )
