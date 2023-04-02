@@ -38,7 +38,7 @@ def atoms() -> dict[str, set]:
     """
     filename = download_periodic()
     symbols = set()
-    with open(filename, "r") as file:
+    with open(filename, "r", encoding='utf-8') as file:
         reader = csv.reader(file)
         for row in reader:
             symbols.add(str(row[1]))
