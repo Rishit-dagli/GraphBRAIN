@@ -72,7 +72,7 @@ def merged_batch(x_batch: tuple, y_batch: tf.Tensor) -> tuple:
     increment = tf.cumsum(num_atoms[:-1])
     increment = tf.pad(tf.gather(increment, gather_indices), [(num_bonds[0], 0)])
     pair_indices = pair_indices.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
-    pair_indices = pair_indices + increment[:, tf.newaxis]
+    pair_indices = pair_indices + einops.rearrange(increment, 'i ... -> i 1 ...')
     atom_features = atom_features.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
     bond_features = bond_features.merge_dims(outer_axis=0, inner_axis=1).to_tensor()
     return (atom_features, bond_features, pair_indices, molecule_indicator), y_batch
