@@ -237,6 +237,29 @@ def create_and_train() -> None:
 
 
 if __name__ == "__main__":
+    import python_ta as pyta
+
+    path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    pyta.check_all(
+        os.path.join(path, "model", "training", "train.py"),
+        config={
+            "extra-imports": [
+                "sys",
+                "os",
+                "tensorflow",
+                "datetime",
+                "model.training.build_model",
+                "model.configuration.training",
+                "model.dataset.loader",
+                "model.dataset.download_dataset",
+            ],
+            "allowed-io": ["create_and_train"],
+            "max-line-length": 120,
+            "disable": ["E9992", "C0413", "W0621", "E9969", "R0912", "W0612", "C0411", "W0611"],
+        },
+        output=os.path.join(path, "pyta_outputs", "train.html"),
+    )
+
     edge_config = edge_network()
     data_config = data_splits()
     config = model()
