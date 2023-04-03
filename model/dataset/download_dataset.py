@@ -29,8 +29,12 @@ def _download() -> str:
     Returns:
         str: The filename of the downloaded dataset as a string.
     """
-    url = "http://store.rishit.tech/BBBP.csv"
-    filename = wget.download(url)
+    try:
+        url = "http://store.rishit.tech/BBBP.csv"
+        filename = wget.download(url)
+    except:
+        url = "https://github.com/Rishit-dagli/csc111-project/releases/download/weights/BBBP.csv"
+        filename = wget.download(url)
     return filename
 
 

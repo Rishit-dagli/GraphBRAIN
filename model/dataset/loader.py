@@ -25,11 +25,9 @@ import pandas as pd
 import numpy as np
 import sys
 import os
-import python_ta as pyta
 
 sys.path.append(".")
 from model.utils.conversions import smile_to_graph
-from model.dataset.download_dataset import download_dataset
 
 
 def repeatx(x: tf.Tensor, num: int) -> tf.Tensor:
@@ -142,12 +140,12 @@ def split_data(
     y_train = data.iloc[train_index].p_np
 
     valid_index = permuted_indices[
-        int(data.shape[0] * train_size) : int(data.shape[0] * (1.0 - test_size))
+        int(data.shape[0] * train_size): int(data.shape[0] * (1.0 - test_size))
     ]
     x_valid = smile_to_graph(data.iloc[valid_index].smiles)
     y_valid = data.iloc[valid_index].p_np
 
-    test_index = permuted_indices[int(data.shape[0] * (1.0 - test_size)) :]
+    test_index = permuted_indices[int(data.shape[0] * (1.0 - test_size)):]
     x_test = smile_to_graph(data.iloc[test_index].smiles)
     y_test = data.iloc[test_index].p_np
     return x_train, y_train, x_valid, y_valid, x_test, y_test
@@ -176,22 +174,28 @@ def bbbp_dataset(
     return split_data(data, train_size, val_size, test_size)
 
 
-#
-# pyta.check_all(
-#     "model/dataset/loader.py",
-#     config={
-#         "extra-imports": [
-#             "tensorflow",
-#             "einops",
-#             "pandas",
-#             "numpy",
-#             "sys",
-#             "os",
-#             "python_ta",
-#         ],
-#         "allowed-io": [],
-#         "max-line-length": 120,
-#         "disable": [],
-#     },
-#     output="pyta_outputs/pyta_output9.html",
-# )
+if __name__ == "__main__":
+    import python_ta as pyta
+    path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+    pyta.check_all(
+        os.path.join(path, "model", "dataset", "loader.py"),
+        config={
+            "extra-imports": [
+                "tensorflow",
+                "einops",
+                "pandas",
+                "numpy",
+                "sys",
+                "os",
+                "python_ta",
+                "model.dataset.download_dataset",
+                "model.utils.conversions",
+                "model.dataset.download_dataset",
+            ],
+            "allowed-io": [],
+            "max-line-length": 120,
+            "disable": ["E9992", "C0413", "R0913", "C0411", "C0412", "W0611", "E9959"],
+        },
+        output=os.path.join(path, "pyta_outputs", "loader.html"),
+    )

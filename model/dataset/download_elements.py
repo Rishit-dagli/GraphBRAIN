@@ -29,8 +29,12 @@ def _download() -> str:
     Returns:
         A string representing the name of the downloaded file.
     """
-    url = "http://store.rishit.tech/periodictable.csv"
-    filename = wget.download(url)
+    try:
+        url = "http://store.rishit.tech/periodictable.csv"
+        filename = wget.download(url)
+    except:
+        url = "https://github.com/Rishit-dagli/csc111-project/releases/download/weights/periodictable.csv"
+        filename = wget.download(url)
     return filename
 
 
