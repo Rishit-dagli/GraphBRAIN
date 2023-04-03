@@ -34,7 +34,9 @@ Brain penetration is essential for compounds where the site of action is within 
 
 {\bf The goal of the project is to predict the blood-brain barrier permeability of a molecule.} As explained above, this is an important problem because it can help researchers design drugs that can effectively target the brain while minimizing side effects.
 
-The dataset we use is the 'BBBP: Binary labels of blood-brain barrier penetration(permeability)' classification dataset readily available as a part of MoleculeNet \citep{wu2018moleculenet} which contains 2,050 molecules and each molecule comes with a name, label, and SMILES string. The label is a boolean integer which denotes if a given compound can pass through the blood-brain barrier or not.
+The dataset we use is the 'BBBP: Binary labels of blood-brain barrier penetration(permeability)' classification dataset readily available as a part of MoleculeNet \citep{wu2018moleculenet} which contains 2,050 molecules and each molecule comes with a name, label, and SMILES string. This data is given in the form of a \texttt{.csv} file and we use all the columns of this dataset. The label is a boolean integer which denotes if a given compound can pass through the blood-brain barrier or not. 
+
+We also use the Periodic Table dataset introduced by \cite{periodicdataset} which contains a mapping from the element names to their symbols and some additional information. This data is also available as a \texttt{.csv} file. We only use the symbol and atomic names from this dataset.
 
 \section*{Computational Overview}
 
@@ -227,13 +229,13 @@ We use the following packages apart from the ones taught in the course:
 The requirements.txt file mentions all the python libraries that will be required to run this project. We have mentioned all the libraries that have been used to train and test the model, and also all the libraries required to load the model as part of running our project. Furthermore, our program will also require you to install streamlit version 1.20.0 to create and run the web app. Lastly, we have also used python-ta for testing and checking the correctness of our code. Alternatively, you can run the following command in the terminal to install all dependencies for this project:
 
 \begin{verbatim}
-    pip install requirements.txt
+    pip install -r requirements.txt
 \end{verbatim}
 
 There are 2 ways to run our project, one where you can train the model yourself and the other where you can run the model that we have pre-trained and run the project with it.
 
 \subsection*{Running the App}
-Our submission for the final project includes a zip folder containing all the files that are required for running our project. This folder contains the \texttt{requirements.txt}, \texttt{main.py}, other files created for running the project, and all the files of the machine learning model as well. Once you extract all the files from the zipped folder, you need to open the project on PyCharm and run the \texttt{main.py} file with the following \texttt{streamlit run} command:
+Our submission for the final project includes a zip folder containing all the files that are required for running our project. This folder contains the \texttt{requirements.txt}, \texttt{main.py}, other files created for running the project, and all the files of the machine learning model as well. First, extract all the files from the zipped folder. If you are running this project without internet connectivity, please extract the file named \texttt{data\_model.zip} and copy the three files it contains to the root directory containing \texttt{main.py}. If you have internet connectivity, this step is not needed. Then, you need to open the project on PyCharm and run the \texttt{main.py} file with the following \texttt{streamlit run} command:
 
 \begin{verbatim}
     streamlit run main.py
@@ -274,7 +276,9 @@ This step is not required to run the application, running the application just t
 
 \paragraph{Modifying the configuration:} The first step in training any model is modifying the configuration for the training. The configuration file is present at \texttt{model/configuration/training.py}. This file dictates how the training takes place and any options. We provide a sample configuration to add the graders in quickly running a single training epoch on a CPU. However, one could easily make changes to this file to do the full training (as described later this last for $300$ epochs), if the grader plans to do the full training, we suggest using at least 4 GPUs or a TPU pod.
 
-\paragraph{Training the Model:} Once any changes to the configuration (if required) are made we would need to install a library to create model plots (this installation is only required if \texttt{"plot\_model": True,} is present in the configuration):
+\paragraph{Training the Model:} Once any changes to the configuration (if required) are made.
+
+We would need to install a library to create model plots (this installation is only required if \texttt{"plot\_model": True,} is present in the configuration, that is if the configuration has been changed):
 
 \begin{verbatim}
     sudo apt-get update
@@ -313,7 +317,7 @@ Traditional methods for determining blood-brain barrier permeability are time-co
 
 Talking about limitations and obstacles, one of the major limitations we faced in training our model was the limited quantity of datasets we had at our disposal. While the quality of the datasets we used was very good, it was the quantity that limited us in training our model. The dataset we used had only data of about 2050 molecules in total. Training our model on limited data meant it would not be perfect and accurate a hundred percent of the times, and we have found this to be the case for some complex unpredictable molecules. There might be some exceptional cases where the molecule is expected to be non-permeable through the blood-brain barrier, but the model might predict it as being permeable. 
 
-Another problem we faced while implementing the UI od the website was figuring out how we could embed a 3D view of the molecule on the website. We wanted to include an interactive part to the website by integrating a 3D view of the molecule given by the user, but we faced a lot of difficulties while trying to implement this. We tried multiple software like rdkit and Indigo, but all of these implementations failed. Finally, we used MolView to implement this feature and were able to figure out how to correctly embed it in our website.
+Another problem we faced while implementing the UI of the website was figuring out how we could embed a 3D view of the molecule on the website. We wanted to include an interactive part to the website by integrating a 3D view of the molecule given by the user, but we faced a lot of difficulties while trying to implement this. We tried multiple software like rdkit and Indigo, but all of these implementations failed. Finally, we used MolView to implement this feature and were able to figure out how to correctly embed it in our website.
 
 Also, while writing the code, we had written most of our code on a MacOS device thus the file paths and directories we used were relative to MacOS. Later, when we tried running the project on a Windows device, we realized that it was causing the website to fail because the file paths couldn’t be recognized. Thus, we had to go back and make the appropriate changes in our code so that it would be compatible with any operating system.
 
