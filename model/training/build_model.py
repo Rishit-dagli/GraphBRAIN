@@ -76,7 +76,15 @@ class EdgeNetwork(tf.keras.layers.Layer):
         atom_features, bond_features, pair_indices = inputs
         bond_features = tf.matmul(bond_features, self.kernel) + self.bias
         bond_features = tf.reshape(bond_features, (-1, self.atom_dim, self.atom_dim))
-        atom_features_neighbors = tf.gather(atom_features, pair_indices[:, 1])
+
+        pair_indices_0 = []
+        for x in pair_indices:
+            pair_indices_0.append(x[0])
+        pair_indices_1 = []
+        for x in pair_indices:
+            pair_indices_1.append(x[1])
+
+        atom_features_neighbors = tf.gather(atom_features, tf.stack(pair_indices_1, 0))
         atom_features_neighbors = einops.rearrange(
             atom_features_neighbors, "... -> ... ()"
         )
@@ -84,7 +92,7 @@ class EdgeNetwork(tf.keras.layers.Layer):
         transformed_features = einops.rearrange(transformed_features, "... () -> ...")
         aggregated_features = tf.math.unsorted_segment_sum(
             transformed_features,
-            pair_indices[:, 0],
+            pair_indices_0,
             num_segments=tf.shape(atom_features)[0],
         )
         return aggregated_features
@@ -218,7 +226,7 @@ class TransformerEncoderReadout(tf.keras.layers.Layer):
         """
         x = self.partition_padding(inputs)
         padding_mask = tf.reduce_any(tf.not_equal(x, 0.0), axis=-1)
-        padding_mask = padding_mask[:, tf.newaxis, tf.newaxis, :]
+        padding_mask = einops.rearrange(padding_mask, "i ... -> i 1 1 ...")
         attention_output = self.attention(x, x, attention_mask=padding_mask)
         proj_input = self.layernorm_1(x + attention_output)
         proj_output = self.layernorm_2(proj_input + self.dense_proj(proj_input))
