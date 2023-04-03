@@ -102,7 +102,9 @@ def load_model(filename: Optional[str] = None) -> tf.keras.Model:
 
 if __name__ == "__main__":
     import python_ta as pyta
+    import doctest
 
+    doctest.testmod()
     path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     pyta.check_all(
         os.path.join(path, "model", "inference", "load_model.py"),

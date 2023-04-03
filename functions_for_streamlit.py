@@ -195,7 +195,9 @@ information = [
 
 if __name__ == "__main__":
     import python_ta as pyta
+    import doctest
 
+    doctest.testmod()
     path = os.path.dirname(os.path.abspath(__file__))
     pyta.check_all(
         "functions_for_streamlit.py",
