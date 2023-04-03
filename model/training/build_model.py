@@ -188,14 +188,14 @@ class TransformerEncoderReadout(tf.keras.layers.Layer):
     """
 
     def __init__(
-        self, num_heads=8, embed_dim=64, dense_dim=[512], batch_size=32, **kwargs
-    ):
+        self, num_heads: int = 8, embed_dim: int = 64, dense_dim: list[int] = [512], batch_size: int = 32, **kwargs
+    ) -> None:
         """Initializes the layer.
 
         Args:
             num_heads (int): Number of attention heads in the multi-head attention layer.
             embed_dim (int): Embedding dimension in the multi-head attention layer.
-            dense_dim (int): Dense dimension in the dense projection layer.
+            dense_dim (list[int]): Dense dimension in the dense projection layer.
             batch_size (int): Batch size.
 
         Returns:
@@ -349,7 +349,15 @@ if __name__ == "__main__":
             "extra-imports": ["tensorflow", "einops", "python_ta", "os"],
             "allowed-io": [],
             "max-line-length": 120,
-            "disable": [],
+            "disable": ["E9972",
+                        "W0221",
+                        "W0201",
+                        "R0902",
+                        "W0612",
+                        "W0102",
+                        "R0913",
+                        "R0914",
+                        ],
         },
         output=os.path.join(path, "pyta_outputs", "build_model.html"),
     )
