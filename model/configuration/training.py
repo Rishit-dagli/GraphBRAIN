@@ -177,7 +177,7 @@ def model() -> dict[str, Union[str, int, list[Union[int, str]], bool, float, Non
         # Use any combination of AUC, accuracy, loss, kl
         "metrics": ["loss", "AUC"],
         "tensorboard": True,
-        "plot_model": True,
+        "plot_model": False,
         "save_model": True,
         "epochs": 1,
         # Either MirroredStrategy, TPUStrategy, MultiWorkerMirroredStrategy,

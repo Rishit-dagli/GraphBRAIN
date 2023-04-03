@@ -33,6 +33,8 @@ def _download() -> str:
         str: The filename (str) of the downloaded model.
     """
     url = "http://store.rishit.tech/model.tar.gz"
+    if os.path.exists("model.tar"):
+        return "model.tar"
     if os.path.exists("model.tar.gz"):
         return "model.tar.gz"
     filename = wget.download(url)
