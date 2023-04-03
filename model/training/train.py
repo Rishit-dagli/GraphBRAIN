@@ -255,7 +255,16 @@ if __name__ == "__main__":
             ],
             "allowed-io": ["create_and_train"],
             "max-line-length": 120,
-            "disable": ["E9992", "C0413", "W0621", "E9969", "R0912", "W0612", "C0411", "W0611"],
+            "disable": [
+                "E9992",
+                "C0413",
+                "W0621",
+                "E9969",
+                "R0912",
+                "W0612",
+                "C0411",
+                "W0611",
+            ],
         },
         output=os.path.join(path, "pyta_outputs", "train.html"),
     )

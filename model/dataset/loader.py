@@ -140,12 +140,12 @@ def split_data(
     y_train = data.iloc[train_index].p_np
 
     valid_index = permuted_indices[
-        int(data.shape[0] * train_size): int(data.shape[0] * (1.0 - test_size))
+        int(data.shape[0] * train_size) : int(data.shape[0] * (1.0 - test_size))
     ]
     x_valid = smile_to_graph(data.iloc[valid_index].smiles)
     y_valid = data.iloc[valid_index].p_np
 
-    test_index = permuted_indices[int(data.shape[0] * (1.0 - test_size)):]
+    test_index = permuted_indices[int(data.shape[0] * (1.0 - test_size)) :]
     x_test = smile_to_graph(data.iloc[test_index].smiles)
     y_test = data.iloc[test_index].p_np
     return x_train, y_train, x_valid, y_valid, x_test, y_test
@@ -176,6 +176,7 @@ def bbbp_dataset(
 
 if __name__ == "__main__":
     import python_ta as pyta
+
     path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
     pyta.check_all(
